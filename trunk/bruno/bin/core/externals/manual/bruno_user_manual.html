@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang='en' xml:lang='en'>
+<head>
+<meta http-equiv='Content-type' content='text/html; charset=utf-8' />
+<title>Bruno user manual</title>
+<link type="text/css" rel="stylesheet" href="daisy_manual.css"/>
+</head>
+<body>
+
+<h1 id="title">Bruno user manual</h1>
+
+<ul class="linklist">
+<li><a href="#intro">Introduction</a></li>
+<li><a href="#workflow">Workflow</a>
+<ul>
+  <li><a href="#flow_driverselect">1. Select a driver</a></li>
+  <li><a href="#flow_docadd">2. Add document(s)</a></li>
+  <li><a href="#flow_outpath">3. Select output path</a></li>
+  <li><a href="#flow_save">4. Generate the fileset</a></li>
+  <li><a href="#flow_done">5. Done</a></li>
+ </ul>
+</li>
+<li><a href="#qa">How do I...</a>
+ <ul>
+  <li><a href="#addcss">Determine whether a CSS should be appended to the output content document</a></li>
+  <li><a href="#along">Bring images and other auxuilliary files along</a></li>
+  <li><a href="#changebehav">Change Brunos behavior</a></li>
+ </ul> 
+</li>
+<li><a href="#gloss">Glossary</a></li>
+</ul>
+
+<h2 id="intro">Introduction</h2>
+<p>Bruno is a tool that creates text-only DTBs from source documents. If the output is set to be Daisy 2.02, you will be able to open it in existing production tools (such as lpStudio/Pro, Sigtuna DAR3, and MyStudioPC) to record audio. 
+</p>
+
+<div class="notice">
+Bruno primarily creates Daisy 2.02 filesets, using XHTML 1.0 documents as input. Bruno also includes experimental support for creating Z39.86-2005 filesets, using DTBOOK documents as input. The Z39.86-2005 mode is currently experimental only, and bugs or problems encountered in this mode are not guaranteed to be fixed by the Daisy Consortium developers. 
+</div>
+
+<h2 id="workflow">Workflow</h2>
+<h3 id="flow_driverselect">1. Select a driver</h3>
+<p>Select a <code><a href="#driver">driver</a></code> from the driver dropdown list. Bruno ships with two default drivers. If you want to create a Daisy 2.02 <a href="#fileset">fileset</a>, you should select the driver called "2.02 xhtml default".</p>
+
+<h3 id="flow_docadd">2. Add document(s)</h3>
+<p>Add one or more source documents by pressing the <code>add</code> button, or <kbd>CTRL+O</kbd>.</p>
+ 
+ <div class="notice">
+ If you are creating a Daisy 2.02 fileset, the added source documents should be XHTML 1.0 documents.
+ If you are creating a Z39.86-2005 fileset, the added source documents should be DTBOOK 2005 documents.
+ </div>
+ 
+<div class="notice"> When documents are added, they will be automatically validated by Bruno. In the <code>status</code> column of the list view, you can tell whether the added document is valid or not. If an invalid document is added, the <code>infobar</code> textarea will show error information. Bruno requires that all added documents are valid before he allows you to continue. If an added document is not valid, you will have do fix it by using a markup editor of your choice, and then pressing the <code>revalidate</code> button while having the previously erroneous document selected in the list view.
+</div>
+
+<div class="notice">
+All documents must contain namespace attributes. For an XHTML document, this means that an <code>xmlns</code> attribute with the following value must be appended to the <code>&lt;html&gt;</code> element, thus:<br/>
+<code class="example">
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+</code>
+</div>
+
+
+
+<p>If several documents have been added, their sequential order can be modified by selecting a document in the list view, and pressing the <code>up</code> button (<kbd>CTRL+U</kbd>), or the <code>down</code> button (<kbd>CTRL+D</kbd>). 
+</p>
+
+<p>If you have added bibliographic metadata in the source document, Bruno will find it and make sure it is preserved.</p>
+
+<h3 id="flow_outpath">3. Select output path</h3>
+<p>In the <code>output path</code> text box, type the desired output path. Alternatively, press the <code>browse</code> button (<kbd>CTRL+B</kbd>) to create or point to the destination folder.</p>
+<div class="notice">
+If you type an output path that does not exist, Bruno will attempt to create it automatically.
+</div>
+
+<h3 id="flow_save">4. Generate the fileset</h3>
+<p>Press the <code>create fileset</code> button (<kbd>CTRL+S</kbd>). Bruno will now generate the fileset. The <code>infobar</code> text area will show the text "all done" when Bruno has finished.
+</p>
+
+<h3 id="flow_done">5. Done.</h3>
+<p>Before going any further, <strong>validate the output</strong>. Currently, Bruno only validates input, not output.</p> 
+<p>If your ambition is to have audio in this DTB, you can now open the DTB in your production tool and start recording. Start the production tool, select "open", and browse to the folder that you selected as output path in step 3 above.</p>
+
+<div class="notice">
+If you are using a production tool that makes use of the MDF technology, note that you can not use the included MDF file as a basis for recreating the fileset (such as can be done via the <code>modify fileset</code> option in the <code>file set tab</code> of the lpStudio/Pro main screen for example). The MDF included by Bruno is a dummy and does not represent the true markup definition. 
+</div>
+
+
+<h2 id="qa">How do I...</h2>
+
+<h3 id="addcss">Determine whether a CSS should be appended to the output content document</h3>
+<p>By default, a CSS file exists in the <code>/externals/css/</code> subfolder of the Bruno application folder. This will be appended to all content documents that do not already have CSS included. If you do not want Bruno to add a CSS, delete the css file in the css subfolder, or change its extension to something else than ".css". If you want to use another CSS than the one that ships with Bruno, delete the existing CSS and copy your preferred CSS into the "css" folder. The only requirement is that the CSS file has the extension ".css".</p>
+
+<h3 id="along">Bring images and other auxilliary files along</h3>
+<p>If your source documents reference images or other auxilliary files (such as CSS), you need not do anything. Bruno will automatically find these files and copy them along to the output directory. Thus, when pressing the <code>add</code> button, all you need to add is the source document itself.</p>
+
+<h3 id="changebehav">Change Brunos behavior</h3>
+<p>If you are not satisfied with the way Bruno creates synchronization points in the content document, you have the two following alternatives:
+</p>
+<ol>
+<li>Use the class attribute values "sync-omit" and "sync-force" on the elements you are not happy with to explicitly tell Bruno how to behave.</li>
+<li>Create a customized driver. This requires high technical skill. The process is described further in the <a href=" bruno_driver.html">driver documentation</a>.
+</li>
+</ol>
+
+<h2 id="gloss">Glossary</h2>
+<dl>
+<dt id="driver">driver</dt>
+<dd>A driver is an external document that Bruno uses to guide his behavior. All drivers reside in the <code>/externals/drivers/</code> subdirectory of the Bruno application directory. It is possible, but requires high technical skill, to create your own driver. This process is described further in the <a href="bruno_driver.html">driver documentation</a>.
+</dd>
+
+<dt id="fileset">fileset</dt>
+<dd>A fileset is a term used to describe the collection of files and documents that make up a Daisy DTB. Most files in the fileset will be part of the finalized product, but some are only used during the production stages. When a Daisy 2.02 fileset is created, Bruno creates both kinds of files, to make sure you will be able to open the DTB in your production tool.	
+</dd>
+</dl>
+</body>
+</html>
