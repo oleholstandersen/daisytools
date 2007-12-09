@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE smil PUBLIC "-//W3C//DTD SMIL 1.0//EN" "http://www.w3.org/TR/REC-smil/SMIL10.dtd">
+<smil>
+	<head>
+		<meta name="dc:identifier" content="C1093a"/>
+		<meta name="dc:title" content="Valentin Haüy - the father of the education for the blind"/>
+		<meta name="dc:format" content="Daisy 2.02"/>
+		<meta name="ncc:timeInThisSmil" content="02:53:11.857"/>
+		<meta name="ncc:generator" content="Regenerator 0.6.108"/>
+		<layout>
+			<region id="txtView"/>
+		</layout>
+	</head>
+	<body>
+		<ref src="hauy_0001.smil" title="Valentin Haüy - The father of the education for the blind" id="rgn_smil_0001"/>
+		<ref src="hauy_0002.smil" title="Summary" id="rgn_smil_0002"/>
+		<ref src="hauy_0003.smil" title="Key words" id="rgn_smil_0003"/>
+		<ref src="hauy_0004.smil" title="List of contents" id="rgn_smil_0004"/>
+		<ref src="hauy_0005.smil" title="Preface" id="rgn_smil_0005"/>
+		<ref src="hauy_0006.smil" title="1. Research questions" id="rgn_smil_0006"/>
+		<ref src="hauy_0007.smil" title="2. Purpose, method and sources" id="rgn_smil_0007"/>
+		<ref src="hauy_0008.smil" title="3. Valentin Haüy" id="rgn_smil_0008"/>
+		<ref src="hauy_0009.smil" title="3.1 Introduction" id="rgn_smil_0009"/>
+		<ref src="hauy_0010.smil" title="3.2 Biographical background" id="rgn_smil_0010"/>
+		<ref src="hauy_0011.smil" title="3.3 The market in St Ovid's Square" id="rgn_smil_0011"/>
+		<ref src="hauy_0012.smil" title="3.4 Maria Theresia von Paradis (1733-1808)" id="rgn_smil_0012"/>
+		<ref src="hauy_0013.smil" title="3.5 Haüy's meeting with Lesueur and the founding of l'Institution des Jeunes Aveugles" id="rgn_smil_0013"/>
+		<ref src="hauy_0014.smil" title="3.6 Valentin Haüy's teaching methods" id="rgn_smil_0014"/>
+		<ref src="hauy_0015.smil" title="3.7 The French Revolution" id="rgn_smil_0015"/>
+		<ref src="hauy_0016.smil" title="3.8 Musée des Aveugles" id="rgn_smil_0016"/>
+		<ref src="hauy_0017.smil" title="3.9 Valentin Haüy in Russia" id="rgn_smil_0017"/>
+		<ref src="hauy_0018.smil" title="3.9.1 An invitation from Alexander I" id="rgn_smil_0018"/>
+		<ref src="hauy_0019.smil" title="3.9.2 Berlin" id="rgn_smil_0019"/>
+		<ref src="hauy_0020.smil" title="3.9.3 In St Petersburg" id="rgn_smil_0020"/>
+		<ref src="hauy_0021.smil" title="3.9.4 Haüy's last will and testament" id="rgn_smil_0021"/>
+		<ref src="hauy_0022.smil" title="3.9.5 The education of deaf pupils in St Petersburg" id="rgn_smil_0022"/>
+		<ref src="hauy_0023.smil" title="3.10 Haüy's telegraph" id="rgn_smil_0023"/>
+		<ref src="hauy_0024.smil" title="3.11 The final years" id="rgn_smil_0024"/>
+		<ref src="hauy_0025.smil" title="4. The importance of Haüy in the education of the blind in Sweden and elsewhere" id="rgn_smil_0025"/>
+		<ref src="hauy_0026.smil" title="5. Discussion and conclusions" id="rgn_smil_0026"/>
+		<ref src="hauy_0027.smil" title="References" id="rgn_smil_0027"/>
+		<ref src="hauy_0028.smil" title="Literature" id="rgn_smil_0028"/>
+		<ref src="hauy_0029.smil" title="Articles" id="rgn_smil_0029"/>
+		<ref src="hauy_0030.smil" title="Electronic media" id="rgn_smil_0030"/>
+	</body>
+</smil>

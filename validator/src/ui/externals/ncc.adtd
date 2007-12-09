@@ -1,0 +1,495 @@
+<!-- ncc.adtd version 2002-12-22
+	THIS IS NOT A DTD
+
+	This is a Attribute DTD that is based upon the W3C DTD specification.
+	It overrides and extends the DTD specification in several ways;
+
+	Entities:
+		All entities are parsed immediatley, disregarding any dtd parse rules whatsoever.
+
+	Attribute lists:
+		An !ATTLIST defines valid attributes and their contents, each !ATTLIST belongs to
+		a certain element, which is the first field in the !ATTLIST declaration. One
+		!ATTLIST can contain one or several attribute defintions, each one separated with
+		a xml whitespace. Each !ATTLIST attribute declaration contains:
+
+		1) Attribute Name
+		2) Attribute contents
+		3) Attribute contents case dependency
+		4) DTD legacy (unused)
+
+		Attribute contents can be written with standard xml rules like "('on' | 'off)?".
+		All attribute contents are adtd-specific, definitions like #PCDATA or ID does not
+		exist unless defined as an entity:
+
+		<ENTITY %PCDATA "[a-zA-Z0-9_.]">
+		<!ATTLIST audio id %PCDATA; CI #IMPLIED>
+
+		Attribute contents case dependency defines wheter the contents of the attribute is
+		case sensetive or insensetive. This field should contain 'CS' (for case sensetive)
+		or 'CI' (for case insensetive).
+
+		The fourth field in the !ATTLIST attribute declaration is unused for the moment.
+
+	Attribute correlation list:
+		The attribute correlation list is a new type of dtd declaration. The ATTCORLIST
+		has one 'master' attribute that controls the contents of one or several other
+		attributes. The ATTCORLIST can also decide if the particular element/attribute
+		correlation is demanded within the document, if the required
+		element/attribute combination is missing, the document is not regarded as
+		valid.
+
+		The following example declares that if a 'meta' element occurs that has a
+		'name' attribute with the contents 'capitolofsweden' (case sensetive) then the
+		element MUST have a second attribute called 'content' that has the content
+		'stockholm' (case insensetive).
+
+		<!ATTCORLIST meta name ('capitolofsweden') CS content ('stockholm') CI #>
+
+		At the end of the ATTCORLIST there is a flag for the number of allowed
+		instances. Valid values are '#' (for one), '#+' (for one or more), '#?'
+		(for zero or one) and '#*' (for zero or more). The sample above MUST occur only
+		one time, if any more elements with the name 'meta' and a 'name' attribute
+		with the value 'captiolofsweden' are found, the test will fail.
+
+		Further there are two more types for 'optional-recommended' that will give
+		warnings if there is zero occurances of the ATTCORLIST specified. These types
+		are '#?r' (for zero or one) and	'#*r' (for zero or more).
+
+	Limitations:
+		This ADTD does NOT handle 'not' statements whitin DTD rules ('a' | 'b' | 'c')- .
+
+		Non-mandatory rules must be written last in series, i.e. if you want to be
+		able to write out both HH:MM:SS and H:M:S you must write
+		(H, H?, ':', M, M?, ':', S, S?) instead of (H?, H, ':', M?, M, ':', S?, S)
+
+		Entities are parsed from beginning to top, no recursive parsing is being done
+		so if enteties are used before they are defined, the loading process of the
+		ADTD will fail;
+
+		<!ENTITY % ilike "'i like', %water;">
+		<!ENTITY % water "'w','a','t','e','r'">
+
+		* This will not work within a ADTD
+-->
+
+<!ENTITY %S "('&#32;' | '&#9;' | '&#13;' | '&#10;')">
+
+<!-- ***********************************************************************************
+     * ISO 8601                                                                        *
+     ***********************************************************************************
+-->
+
+<!ENTITY %DIGIT "[0-9]">
+<!ENTITY %YEAR4 "(%DIGIT;, %DIGIT;, %DIGIT;, %DIGIT;)">
+<!ENTITY %MONTH "(('10') | ('11') | ('12') | ('0', ([1-9])))">
+<!ENTITY %DAY "(('0', [1-9]) | ([1-2], [0-9]) | ('30' | '31'))">
+<!ENTITY %YYYY-MM-DD "(%YEAR4;, ('-')?, %MONTH;, ('-')?, %DAY;)">
+<!ENTITY %ISO8601 "(%YYYY-MM-DD; | %YEAR4;)">
+
+<!ENTITY %2DIGITS "(%DIGIT;, %DIGIT;)">
+<!ENTITY %TIMEDIGITS "((([0-5])?, [0-9]) | ([0-9]))">
+<!ENTITY %Seconds "%TIMEDIGITS;">
+<!ENTITY %Minutes "%TIMEDIGITS;">
+<!ENTITY %Hours "(%DIGIT;, (%DIGIT;)?)">
+<!ENTITY %HHMMSS "(%Hours;, ':', %Minutes;, ':', %Seconds;)">
+
+<!-- ***********************************************************************************
+     * ISO 0639                                                                        *
+     ***********************************************************************************
+-->
+
+<!ENTITY %ISO639 "(('AB') | ('OM') | ('AA') | ('AF') | ('SQ') | ('AM') | ('AR') | ('HY') |
+  ('AS') | ('AY') | ('AZ') | ('BA') | ('EU') | ('BN') | ('DZ') | ('BH') | ('BI') | ('BR') |
+  ('BG') | ('MY') | ('BE') | ('KM') | ('CA') | ('ZH') | ('CO') | ('HR') | ('CS') | ('DA') |
+  ('NL') | ('EN') | ('EO') | ('ET') | ('FO') | ('FJ') | ('FI') | ('FR') | ('FY') | ('GL') |
+  ('KA') | ('DE') | ('EL') | ('KL') | ('GN') | ('GU') | ('HA') | ('HE') | ('HI') | ('HU') |
+  ('IS') | ('ID') | ('IA') | ('IE') | ('IU') | ('IK') | ('GA') | ('IT') | ('JA') | ('JV') |
+  ('KN') | ('KS') | ('KK') | ('RW') | ('KY') | ('RN') | ('KO') | ('KU') | ('LO') | ('LA') |
+  ('LV') | ('LN') | ('LT') | ('MK') | ('MG') | ('MS') | ('ML') | ('MT') | ('MI') | ('MR') |
+  ('MO') | ('MN') | ('NA') | ('NE') | ('NO') | ('OC') | ('OR') | ('PS') | ('FA') | ('PL') |
+  ('PT') | ('PA') | ('QU') | ('RM') | ('RO') | ('RU') | ('SM') | ('SG') | ('SA') | ('GD') |
+  ('SR') | ('SH') | ('ST') | ('TN') | ('SN') | ('SD') | ('SI') | ('SS') | ('SK') | ('SL') |
+  ('SO') | ('ES') | ('SU') | ('SW') | ('SV') | ('TL') | ('TG') | ('TA') | ('TT') | ('TE') |
+  ('TH') | ('BO') | ('TI') | ('TO') | ('TS') | ('TR') | ('TK') | ('TW') | ('UG') | ('UK') |
+  ('UR') | ('UZ') | ('VI') | ('VO') | ('CY') | ('WO') | ('XH') | ('YI') | ('YO') | ('ZA') |
+  ('ZU'))">
+
+<!-- ***********************************************************************************
+     * ISO 3166                                                                        *
+     ***********************************************************************************
+-->
+
+<!ENTITY %ISO3166 "('AF' | 'AL' | 'DZ' | 'AS' | 'AD' | 'AO' | 'AI' | 'AQ' | 'AG' | 'AR' |
+  'AM' | 'AW' | 'AU' | 'AT' | 'AZ' | 'BS' | 'BH' | 'BD' | 'BB' | 'BY' | 'BE' | 'BZ' |
+  'BJ' | 'BM' | 'BT' | 'BO' | 'BA' | 'BW' | 'BV' | 'BR' | 'IO' | 'BN' | 'BG' | 'BF' |
+  'BI' | 'KH' | 'CM' | 'CA' | 'CV' | 'KY' | 'CF' | 'TD' | 'CL' | 'CN' | 'CX' | 'CC' |
+  'CO' | 'KM' | 'CG' | 'CD' | 'CK' | 'CR' | 'CI' | 'HR' | 'CU' | 'CY' | 'CZ' | 'DK' |
+  'DJ' | 'DM' | 'TO' | 'TL' | 'EC' | 'EG' | 'SV' | 'GQ' | 'ER' | 'EE' | 'ET' | 'FK' |
+  'FO' | 'FJ' | 'FI' | 'FR' | 'GF' | 'PF' | 'TF' | 'GA' | 'GM' | 'GE' | 'DE' | 'GH' |
+  'GI' | 'GR' | 'GL' | 'GD' | 'GU' | 'GP' | 'GT' | 'GN' | 'GW' | 'GY' | 'HT' | 'HM' |
+  'VA' | 'HN' | 'HK' | 'HU' | 'IS' | 'IN' | 'ID' | 'IR' | 'IQ' | 'IE' | 'IL' | 'IT' |
+  'JM' | 'JP' | 'JO' | 'KZ' | 'KE' | 'KI' | 'KP' | 'KR' | 'KW' | 'KG' | 'LA' | 'LV' |
+  'LB' | 'LS' | 'LR' | 'LY' | 'LI' | 'LT' | 'LU' | 'MO' | 'MK' | 'MG' | 'MW' | 'MY' |
+  'MV' | 'ML' | 'MT' | 'MH' | 'MQ' | 'MR' | 'MU' | 'YT' | 'MX' | 'FM' | 'MD' | 'MC' |
+  'MN' | 'MS' | 'MA' | 'MZ' | 'MM' | 'NA' | 'NR' | 'NP' | 'NL' | 'AN' | 'NC' | 'NZ' |
+  'NI' | 'NE' | 'NG' | 'NU' | 'NF' | 'MP' | 'NO' | 'OM' | 'PK' | 'PW' | 'PS' | 'PA' |
+  'PG' | 'PY' | 'PE' | 'PH' | 'PN' | 'PL' | 'PT' | 'PR' | 'QA' | 'RE' | 'RO' | 'RU' |
+  'RW' | 'SH' | 'KN' | 'LC' | 'PM' | 'VC' | 'WS' | 'SM' | 'ST' | 'SA' | 'SN' | 'SC' |
+  'SL' | 'SG' | 'SK' | 'SI' | 'SB' | 'SO' | 'ZA' | 'GS' | 'ES' | 'LK' | 'SD' | 'SR' |
+  'SJ' | 'SZ' | 'SE' | 'CH' | 'SY' | 'TW' | 'TJ' | 'TZ' | 'TH' | 'TG' | 'TK' | 'TO' |
+  'TT' | 'TN' | 'TR' | 'TM' | 'TC' | 'TV' | 'UG' | 'UA' | 'AE' | 'GB' | 'US' | 'UM' |
+  'UY' | 'UZ' | 'VU' | 'VE' | 'VN' | 'VG' | 'VI' | 'WF' | 'EH' | 'YE' | 'YU' | 'ZM' |
+  'ZW')">
+
+<!-- ***********************************************************************************
+     * IANA characterset list                                                          *
+     ***********************************************************************************
+-->
+
+<!ENTITY % ANSI_X3.4-1968 "('ANSI_X3.4-1968' | 'iso-ir-6' | 'ANSI_X3.4-1986' | 'ISO_646.irv:1991' | 'ASCII' | 'ISO646-US' | 'US-ASCII' | 'us' | 'IBM367' | 'cp367' | 'csASCII')">
+<!ENTITY % ISO-10646-UTF-1 "('ISO-10646-UTF-1' | 'csISO10646UTF1')">
+<!ENTITY % ISO_646.basic:1983 "('ISO_646.basic:1983' | 'ref' | 'csISO646basic1983')">
+<!ENTITY % INVARIANT "('INVARIANT' | 'csINVARIANT')">
+<!ENTITY % ISO_646.irv:1983 "('ISO_646.irv:1983' | 'iso-ir-2' | 'irv' | 'csISO2IntlRefVersion')">
+<!ENTITY % BS_4730 "('BS_4730' | 'iso-ir-4' | 'ISO646-GB' | 'gb' | 'uk' | 'csISO4UnitedKingdom')">
+<!ENTITY % NATS-SEFI "('NATS-SEFI' | 'iso-ir-8-1' | 'csNATSSEFI')">
+<!ENTITY % NATS-SEFI-ADD "('NATS-SEFI-ADD' | 'iso-ir-8-2' | 'csNATSSEFIADD')">
+<!ENTITY % NATS-DANO "('NATS-DANO' | 'iso-ir-9-1' | 'csNATSDANO')">
+<!ENTITY % NATS-DANO-ADD "('NATS-DANO-ADD' | 'iso-ir-9-2' | 'csNATSDANOADD')">
+<!ENTITY % SEN_850200_B "('SEN_850200_B' | 'iso-ir-10' | 'FI' | 'ISO646-FI' | 'ISO646-SE' | 'se' | 'csISO10Swedish')">
+<!ENTITY % SEN_850200_C "('SEN_850200_C' | 'iso-ir-11' | 'ISO646-SE2' | 'se2' | 'csISO11SwedishForNames')">
+<!ENTITY % KS_C_5601-1987 "('KS_C_5601-1987' | 'iso-ir-149' | 'KS_C_5601-1989' | 'KSC_5601' | 'korean' | 'csKSC56011987')">
+<!ENTITY % ISO-2022-KR "('ISO-2022-KR' | 'csISO2022KR')">
+<!ENTITY % EUC-KR "('EUC-KR' | 'csEUCKR')">
+<!ENTITY % ISO-2022-JP "('ISO-2022-JP' | 'csISO2022JP')">
+<!ENTITY % ISO-2022-JP-2 "('ISO-2022-JP-2' | 'csISO2022JP2')">
+<!ENTITY % ISO-2022-CN "('ISO-2022-CN')">
+<!ENTITY % ISO-2022-CN-EXT "('ISO-2022-CN-EXT')">
+<!ENTITY % JIS_C6220-1969-jp "('JIS_C6220-1969-jp' | 'JIS_C6220-1969' | 'iso-ir-13' | 'katakana' | 'x0201-7' | 'csISO13JISC6220jp')">
+<!ENTITY % JIS_C6220-1969-ro "('JIS_C6220-1969-ro' | 'iso-ir-14' | 'jp' | 'ISO646-JP' | 'csISO14JISC6220ro')">
+<!ENTITY % IT "('IT' | 'iso-ir-15' | 'ISO646-IT' | 'csISO15Italian')">
+<!ENTITY % PT "('PT' | 'iso-ir-16' | 'ISO646-PT' | 'csISO16Portuguese')">
+<!ENTITY % ES "('ES' | 'iso-ir-17' | 'ISO646-ES' | 'csISO17Spanish')">
+<!ENTITY % greek7-old "('greek7-old' | 'iso-ir-18' | 'csISO18Greek7Old')">
+<!ENTITY % latin-greek "('latin-greek' | 'iso-ir-19' | 'csISO19LatinGreek')">
+<!ENTITY % DIN_66003 "('DIN_66003' | 'iso-ir-21' | 'de' | 'ISO646-DE' | 'csISO21German')">
+<!ENTITY % NF_Z_62-010_1973 "('NF_Z_62-010_(1973)' | 'iso-ir-25' | 'ISO646-FR1' | 'csISO25French')">
+<!ENTITY % Latin-greek-1 "('Latin-greek-1' | 'iso-ir-27' | 'csISO27LatinGreek1')">
+<!ENTITY % ISO_5427 "('ISO_5427' | 'iso-ir-37' | 'csISO5427Cyrillic')">
+<!ENTITY % JIS_C6226-1978 "('JIS_C6226-1978' | 'iso-ir-42' | 'csISO42JISC62261978')">
+<!ENTITY % BS_viewdata "('BS_viewdata' | 'iso-ir-47' | 'csISO47BSViewdata')">
+<!ENTITY % INIS "('INIS' | 'iso-ir-49' | 'csISO49INIS')">
+<!ENTITY % INIS-8 "('INIS-8' | 'iso-ir-50' | 'csISO50INIS8')">
+<!ENTITY % INIS-cyrillic "('INIS-cyrillic' | 'iso-ir-51' | 'csISO51INISCyrillic')">
+<!ENTITY % ISO_5427:1981 "('ISO_5427:1981' | 'iso-ir-54' | 'ISO5427Cyrillic1981')">
+<!ENTITY % ISO_5428:1980 "('ISO_5428:1980' | 'iso-ir-55' | 'csISO5428Greek')">
+<!ENTITY % GB_1988-80 "('GB_1988-80' | 'iso-ir-57' | 'cn' | 'ISO646-CN' | 'csISO57GB1988')">
+<!ENTITY % GB_2312-80 "('GB_2312-80' | 'iso-ir-58' | 'chinese' | 'csISO58GB231280')">
+<!ENTITY % NS_4551-1 "('NS_4551-1' | 'iso-ir-60' | 'ISO646-NO' | 'no' | 'csISO60DanishNorwegian' | 'csISO60Norwegian1')">
+<!ENTITY % NS_4551-2 "('NS_4551-2' | 'ISO646-NO2' | 'iso-ir-61' | 'no2' | 'csISO61Norwegian2')">
+<!ENTITY % NF_Z_62-010 "('NF_Z_62-010' | 'iso-ir-69' | 'ISO646-FR' | 'fr' | 'csISO69French')">
+<!ENTITY % videotex-suppl "('videotex-suppl' | 'iso-ir-70' | 'csISO70VideotexSupp1')">
+<!ENTITY % PT2 "('PT2' | 'iso-ir-84' | 'ISO646-PT2' | 'csISO84Portuguese2')">
+<!ENTITY % ES2 "('ES2' | 'iso-ir-85' | 'ISO646-ES2' | 'csISO85Spanish2')">
+<!ENTITY % MSZ_7795.3 "('MSZ_7795.3' | 'iso-ir-86' | 'ISO646-HU' | 'hu' | 'csISO86Hungarian')">
+<!ENTITY % JIS_C6226-1983 "('JIS_C6226-1983' | 'iso-ir-87' | 'x0208' | 'JIS_X0208-1983' | 'csISO87JISX0208')">
+<!ENTITY % greek7 "('greek7' | 'iso-ir-88' | 'csISO88Greek7')">
+<!ENTITY % ASMO_449 "('ASMO_449' | 'ISO_9036' | 'arabic7' | 'iso-ir-89' | 'csISO89ASMO449')">
+<!ENTITY % iso-ir-90 "('iso-ir-90' | 'csISO90')">
+<!ENTITY % JIS_C6229-1984-a "('JIS_C6229-1984-a' | 'iso-ir-91' | 'jp-ocr-a' | 'csISO91JISC62291984a')">
+<!ENTITY % JIS_C6229-1984-b "('JIS_C6229-1984-b' | 'iso-ir-92' | 'ISO646-JP-OCR-B' | 'jp-ocr-b' | 'csISO92JISC62991984b')">
+<!ENTITY % JIS_C6229-1984-b-add "('JIS_C6229-1984-b-add' | 'iso-ir-93' | 'jp-ocr-b-add' | 'csISO93JIS62291984badd')">
+<!ENTITY % JIS_C6229-1984-hand "('JIS_C6229-1984-hand' | 'iso-ir-94' | 'jp-ocr-hand' | 'csISO94JIS62291984hand')">
+<!ENTITY % JIS_C6229-1984-hand-add "('JIS_C6229-1984-hand-add' | 'iso-ir-95' | 'jp-ocr-hand-add' | 'csISO95JIS62291984handadd')">
+<!ENTITY % JIS_C6229-1984-kana "('JIS_C6229-1984-kana' | 'iso-ir-96' | 'csISO96JISC62291984kana')">
+<!ENTITY % ISO_2033-1983 "('ISO_2033-1983' | 'iso-ir-98' | 'e13b' | 'csISO2033')">
+<!ENTITY % ANSI_X3.110-1983 "('ANSI_X3.110-1983' | 'iso-ir-99' | 'CSA_T500-1983' | 'NAPLPS' | 'csISO99NAPLPS')">
+<!ENTITY % ISO_8859-1:1987 "('ISO_8859-1:1987' | 'iso-ir-100' | 'ISO_8859-1' | 'ISO-8859-1' | 'latin1' | 'l1' | 'IBM819' | 'CP819' | 'csISOLatin1')">
+<!ENTITY % ISO_8859-2:1987 "('ISO_8859-2:1987' | 'iso-ir-101' | 'ISO_8859-2' | 'ISO-8859-2' | 'latin2' | 'l2' | 'csISOLatin2')">
+<!ENTITY % T.61-7bit "('T.61-7bit' | 'iso-ir-102' | 'csISO102T617bit')">
+<!ENTITY % T.61-8bit "('T.61-8bit' | 'T.61' | 'iso-ir-103' | 'csISO103T618bit')">
+<!ENTITY % ISO_8859-3:1988 "('ISO_8859-3:1988' | 'iso-ir-109' | 'ISO_8859-3' | 'ISO-8859-3' | 'latin3' | 'l3' | 'csISOLatin3')">
+<!ENTITY % ISO_8859-4:1988 "('ISO_8859-4:1988' | 'iso-ir-110' | 'ISO_8859-4' | 'ISO-8859-4' | 'latin4' | 'l4' | 'csISOLatin4')">
+<!ENTITY % ECMA-cyrillic "('ECMA-cyrillic' | 'iso-ir-111' | 'csISO111ECMACyrillic')">
+<!ENTITY % CSA_Z243.4-1985-1 "('CSA_Z243.4-1985-1' | 'iso-ir-121' | 'ISO646-CA' | 'csa7-1' | 'ca' | 'csISO121Canadian1')">
+<!ENTITY % CSA_Z243.4-1985-2 "('CSA_Z243.4-1985-2' | 'iso-ir-122' | 'ISO646-CA2' | 'csa7-2' | 'csISO122Canadian2')">
+<!ENTITY % CSA_Z243.4-1985-gr "('CSA_Z243.4-1985-gr' | 'iso-ir-123' | 'csISO123CSAZ24341985gr')">
+<!ENTITY % ISO_8859-6:1987 "('ISO_8859-6:1987' | 'iso-ir-127' | 'ISO_8859-6' | 'ISO-8859-6' | 'ECMA-114' | 'ASMO-708' | 'arabic' | 'csISOLatinArabic')">
+<!ENTITY % ISO_8859-6-E "('ISO_8859-6-E' | 'csISO88596E' | 'ISO-8859-6-E')">
+<!ENTITY % ISO_8859-6-I "('ISO_8859-6-I' | 'csISO88596I' | 'ISO-8859-6-I')">
+<!ENTITY % ISO_8859-7:1987 "('ISO_8859-7:1987' | 'iso-ir-126' | 'ISO_8859-7' | 'ISO-8859-7' | 'ELOT_928' | 'ECMA-118' | 'greek' | 'greek8' | 'csISOLatinGreek')">
+<!ENTITY % T.101-G2 "('T.101-G2' | 'iso-ir-128' | 'csISO128T101G2')">
+<!ENTITY % ISO_8859-8:1988 "('ISO_8859-8:1988' | 'iso-ir-138' | 'ISO_8859-8' | 'ISO-8859-8' | 'hebrew' | 'csISOLatinHebrew')">
+<!ENTITY % ISO_8859-8-E "('ISO_8859-8-E' | 'csISO88598E' | 'ISO-8859-8-E')">
+<!ENTITY % ISO_8859-8-I "('ISO_8859-8-I' | 'csISO88598I' | 'ISO-8859-8-I')">
+<!ENTITY % CSN_369103 "('CSN_369103' | 'iso-ir-139' | 'csISO139CSN369103')">
+<!ENTITY % JUS_I.B1.002 "('JUS_I.B1.002' | 'iso-ir-141' | 'ISO646-YU' | 'js' | 'yu' | 'csISO141JUSIB1002')">
+<!ENTITY % ISO_6937-2-add "('ISO_6937-2-add' | 'iso-ir-142' | 'csISOTextComm')">
+<!ENTITY % IEC_P27-1 "('IEC_P27-1' | 'iso-ir-143' | 'csISO143IECP271')">
+<!ENTITY % ISO_8859-5:1988 "('ISO_8859-5:1988' | 'iso-ir-144' | 'ISO_8859-5' | 'ISO-8859-5' | 'cyrillic' | 'csISOLatinCyrillic')">
+<!ENTITY % JUS_I.B1.003-serb "('JUS_I.B1.003-serb' | 'iso-ir-146' | 'serbian' | 'csISO146Serbian')">
+<!ENTITY % JUS_I.B1.003-mac "('JUS_I.B1.003-mac' | 'macedonian' | 'iso-ir-147' | 'csISO147Macedonian')">
+<!ENTITY % ISO_8859-9:1989 "('ISO_8859-9:1989' | 'iso-ir-148' | 'ISO_8859-9' | 'ISO-8859-9' | 'latin5' | 'l5' | 'csISOLatin5')">
+<!ENTITY % greek-ccitt "('greek-ccitt' | 'iso-ir-150' | 'csISO150' | 'csISO150GreekCCITT')">
+<!ENTITY % NC_NC00-10:81 "('NC_NC00-10:81' | 'cuba' | 'iso-ir-151' | 'ISO646-CU' | 'csISO151Cuba')">
+<!ENTITY % ISO_6937-2-25 "('ISO_6937-2-25' | 'iso-ir-152' | 'csISO6937Add')">
+<!ENTITY % GOST_19768-74 "('GOST_19768-74' | 'ST_SEV_358-88' | 'iso-ir-153' | 'csISO153GOST1976874')">
+<!ENTITY % ISO_8859-supp "('ISO_8859-supp' | 'iso-ir-154' | 'latin1-2-5' | 'csISO8859Supp')">
+<!ENTITY % ISO_10367-box "('ISO_10367-box' | 'iso-ir-155' | 'csISO10367Box')">
+<!ENTITY % ISO-8859-10 "('ISO-8859-10' | 'iso-ir-157' | 'l6' | 'ISO_8859-10:1992' | 'csISOLatin6' | 'latin6')">
+<!ENTITY % latin-lap "('latin-lap' | 'lap' | 'iso-ir-158' | 'csISO158Lap')">
+<!ENTITY % JIS_X0212-1990 "('JIS_X0212-1990' | 'x0212' | 'iso-ir-159' | 'csISO159JISX02121990')">
+<!ENTITY % DS_2089 "('DS_2089' | 'DS2089' | 'ISO646-DK' | 'dk' | 'csISO646Danish')">
+<!ENTITY % us-dk "('us-dk' | 'csUSDK')">
+<!ENTITY % dk-us "('dk-us' | 'csDKUS')">
+<!ENTITY % JIS_X0201 "('JIS_X0201' | 'X0201' | 'csHalfWidthKatakana')">
+<!ENTITY % KSC5636 "('KSC5636' | 'ISO646-KR' | 'csKSC5636')">
+<!ENTITY % ISO-10646-UCS-2 "('ISO-10646-UCS-2' | 'csUnicode')">
+<!ENTITY % ISO-10646-UCS-4 "('ISO-10646-UCS-4' | 'csUCS4')">
+<!ENTITY % DEC-MCS "('DEC-MCS' | 'dec' | 'csDECMCS')">
+<!ENTITY % hp-roman8 "('hp-roman8' | 'roman8' | 'r8' | 'csHPRoman8')">
+<!ENTITY % macintosh "('macintosh' | 'mac' | 'csMacintosh')">
+<!ENTITY % IBM037 "('IBM037' | 'cp037' | 'ebcdic-cp-us' | 'ebcdic-cp-ca' | 'ebcdic-cp-wt' | 'ebcdic-cp-nl' | 'csIBM037')">
+<!ENTITY % IBM038 "('IBM038' | 'EBCDIC-INT' | 'cp038' | 'csIBM038')">
+<!ENTITY % IBM273 "('IBM273' | 'CP273' | 'csIBM273')">
+<!ENTITY % IBM274 "('IBM274' | 'EBCDIC-BE' | 'CP274' | 'csIBM274')">
+<!ENTITY % IBM275 "('IBM275' | 'EBCDIC-BR' | 'cp275' | 'csIBM275')">
+<!ENTITY % IBM277 "('IBM277' | 'EBCDIC-CP-DK' | 'EBCDIC-CP-NO' | 'csIBM277')">
+<!ENTITY % IBM278 "('IBM278' | 'CP278' | 'ebcdic-cp-fi' | 'ebcdic-cp-se' | 'csIBM278')">
+<!ENTITY % IBM280 "('IBM280' | 'CP280' | 'ebcdic-cp-it' | 'csIBM280')">
+<!ENTITY % IBM281 "('IBM281' | 'EBCDIC-JP-E' | 'cp281' | 'csIBM281')">
+<!ENTITY % IBM284 "('IBM284' | 'CP284' | 'ebcdic-cp-es' | 'csIBM284')">
+<!ENTITY % IBM285 "('IBM285' | 'CP285' | 'ebcdic-cp-gb' | 'csIBM285')">
+<!ENTITY % IBM290 "('IBM290' | 'cp290' | 'EBCDIC-JP-kana' | 'csIBM290')">
+<!ENTITY % IBM297 "('IBM297' | 'cp297' | 'ebcdic-cp-fr' | 'csIBM297')">
+<!ENTITY % IBM420 "('IBM420' | 'cp420' | 'ebcdic-cp-ar1' | 'csIBM420')">
+<!ENTITY % IBM423 "('IBM423' | 'cp423' | 'ebcdic-cp-gr' | 'csIBM423')">
+<!ENTITY % IBM424 "('IBM424' | 'cp424' | 'ebcdic-cp-he' | 'csIBM424')">
+<!ENTITY % IBM437 "('IBM437' | 'cp437' | '437' | 'csPC8CodePage437')">
+<!ENTITY % IBM500 "('IBM500' | 'CP500' | 'ebcdic-cp-be' | 'ebcdic-cp-ch' | 'csIBM500')">
+<!ENTITY % IBM775 "('IBM775' | 'cp775' | 'csPC775Baltic')">
+<!ENTITY % IBM850 "('IBM850' | 'cp850' | '850' | 'csPC850Multilingual')">
+<!ENTITY % IBM851 "('IBM851' | 'cp851' | '851' | 'csIBM851')">
+<!ENTITY % IBM852 "('IBM852' | 'cp852' | '852' | 'csPCp852')">
+<!ENTITY % IBM855 "('IBM855' | 'cp855' | '855' | 'csIBM855')">
+<!ENTITY % IBM857 "('IBM857' | 'cp857' | '857' | 'csIBM857')">
+<!ENTITY % IBM860 "('IBM860' | 'cp860' | '860' | 'csIBM860')">
+<!ENTITY % IBM861 "('IBM861' | 'cp861' | '861' | 'cp-is' | 'csIBM861')">
+<!ENTITY % IBM862 "('IBM862' | 'cp862' | '862' | 'csPC862LatinHebrew')">
+<!ENTITY % IBM863 "('IBM863' | 'cp863' | '863' | 'csIBM863')">
+<!ENTITY % IBM864 "('IBM864' | 'cp864' | 'csIBM864')">
+<!ENTITY % IBM865 "('IBM865' | 'cp865' | '865' | 'csIBM865')">
+<!ENTITY % IBM866 "('IBM866' | 'cp866' | '866' | 'csIBM866')">
+<!ENTITY % IBM868 "('IBM868' | 'CP868' | 'cp-ar' | 'csIBM868')">
+<!ENTITY % IBM869 "('IBM869' | 'cp869' | '869' | 'cp-gr' | 'csIBM869')">
+<!ENTITY % IBM870 "('IBM870' | 'CP870' | 'ebcdic-cp-roece' | 'ebcdic-cp-yu' | 'csIBM870')">
+<!ENTITY % IBM871 "('IBM871' | 'CP871' | 'ebcdic-cp-is' | 'csIBM871')">
+<!ENTITY % IBM880 "('IBM880' | 'cp880' | 'EBCDIC-Cyrillic' | 'csIBM880')">
+<!ENTITY % IBM891 "('IBM891' | 'cp891' | 'csIBM891')">
+<!ENTITY % IBM903 "('IBM903' | 'cp903' | 'csIBM903')">
+<!ENTITY % IBM904 "('IBM904' | 'cp904' | '904' | 'csIBBM904')">
+<!ENTITY % IBM905 "('IBM905' | 'CP905' | 'ebcdic-cp-tr' | 'csIBM905')">
+<!ENTITY % IBM918 "('IBM918' | 'CP918' | 'ebcdic-cp-ar2' | 'csIBM918')">
+<!ENTITY % IBM1026 "('IBM1026' | 'CP1026' | 'csIBM1026')">
+<!ENTITY % EBCDIC-AT-DE "('EBCDIC-AT-DE' | 'csIBMEBCDICATDE')">
+<!ENTITY % EBCDIC-AT-DE-A "('EBCDIC-AT-DE-A' | 'csEBCDICATDEA')">
+<!ENTITY % EBCDIC-CA-FR "('EBCDIC-CA-FR' | 'csEBCDICCAFR')">
+<!ENTITY % EBCDIC-DK-NO "('EBCDIC-DK-NO' | 'csEBCDICDKNO')">
+<!ENTITY % EBCDIC-DK-NO-A "('EBCDIC-DK-NO-A' | 'csEBCDICDKNOA')">
+<!ENTITY % EBCDIC-FI-SE "('EBCDIC-FI-SE' | 'csEBCDICFISE')">
+<!ENTITY % EBCDIC-FI-SE-A "('EBCDIC-FI-SE-A' | 'csEBCDICFISEA')">
+<!ENTITY % EBCDIC-FR "('EBCDIC-FR' | 'csEBCDICFR')">
+<!ENTITY % EBCDIC-IT "('EBCDIC-IT' | 'csEBCDICIT')">
+<!ENTITY % EBCDIC-PT "('EBCDIC-PT' | 'csEBCDICPT')">
+<!ENTITY % EBCDIC-ES "('EBCDIC-ES' | 'csEBCDICES')">
+<!ENTITY % EBCDIC-ES-A "('EBCDIC-ES-A' | 'csEBCDICESA')">
+<!ENTITY % EBCDIC-ES-S "('EBCDIC-ES-S' | 'csEBCDICESS')">
+<!ENTITY % EBCDIC-UK "('EBCDIC-UK' | 'csEBCDICUK')">
+<!ENTITY % EBCDIC-US "('EBCDIC-US' | 'csEBCDICUS')">
+<!ENTITY % UNKNOWN-8BIT "('UNKNOWN-8BIT' | 'csUnknown8BiT')">
+<!ENTITY % MNEMONIC "('MNEMONIC' | 'csMnemonic')">
+<!ENTITY % MNEM "('MNEM' | 'csMnem')">
+<!ENTITY % VISCII "('VISCII' | 'csVISCII')">
+<!ENTITY % VIQR "('VIQR' | 'csVIQR')">
+<!ENTITY % KOI8-R "('KOI8-R' | 'csKOI8R')">
+<!ENTITY % KOI8-U "('KOI8-U')">
+<!ENTITY % IBM00858 "('IBM00858' | 'CCSID00858' | 'CP00858' | 'PC-Multilingual-850+euro')">
+<!ENTITY % IBM00924 "('IBM00924' | 'CCSID00924' | 'CP00924' | 'ebcdic-Latin9--euro')">
+<!ENTITY % IBM01140 "('IBM01140' | 'CCSID01140' | 'CP01140' | 'ebcdic-us-37+euro')">
+<!ENTITY % IBM01141 "('IBM01141' | 'CCSID01141' | 'CP01141' | 'ebcdic-de-273+euro')">
+<!ENTITY % IBM01142 "('IBM01142' | 'CCSID01142' | 'CP01142' | 'ebcdic-dk-277+euro' | 'ebcdic-no-277+euro')">
+<!ENTITY % IBM01143 "('IBM01143' | 'CCSID01143' | 'CP01143' | 'ebcdic-fi-278+euro' | 'ebcdic-se-278+euro')">
+<!ENTITY % IBM01144 "('IBM01144' | 'CCSID01144' | 'CP01144' | 'ebcdic-it-280+euro')">
+<!ENTITY % IBM01145 "('IBM01145' | 'CCSID01145' | 'CP01145' | 'ebcdic-es-284+euro')">
+<!ENTITY % IBM01146 "('IBM01146' | 'CCSID01146' | 'CP01146' | 'ebcdic-gb-285+euro')">
+<!ENTITY % IBM01147 "('IBM01147' | 'CCSID01147' | 'CP01147' | 'ebcdic-fr-297+euro')">
+<!ENTITY % IBM01148 "('IBM01148' | 'CCSID01148' | 'CP01148' | 'ebcdic-international-500+euro')">
+<!ENTITY % IBM01149 "('IBM01149' | 'CCSID01149' | 'CP01149' | 'ebcdic-is-871+euro')">
+<!ENTITY % Big5-HKSCS "('Big5-HKSCS')">
+<!ENTITY % UNICODE-1-1 "('UNICODE-1-1' | 'csUnicode11')">
+<!ENTITY % SCSU "('SCSU')">
+<!ENTITY % UTF-7 "('UTF-7')">
+<!ENTITY % UTF-16BE "('UTF-16BE')">
+<!ENTITY % UTF-16LE "('UTF-16LE')">
+<!ENTITY % UTF-16 "('UTF-16')">
+<!ENTITY % CESU-8 "('CESU-8' | 'csCESU-8')">
+<!ENTITY % UTF-32 "('UTF-32')">
+<!ENTITY % UTF-32BE "('UTF-32BE')">
+<!ENTITY % UTF-32LE "('UTF-32LE')">
+<!ENTITY % UNICODE-1-1-UTF-7 "('UNICODE-1-1-UTF-7' | 'csUnicode11UTF7')">
+<!ENTITY % UTF-8 "('UTF-8')">
+<!ENTITY % ISO-8859-13 "('ISO-8859-13')">
+<!ENTITY % ISO-8859-14 "('ISO-8859-14' | 'iso-ir-199' | 'ISO_8859-14:1998' | 'ISO_8859-14' | 'latin8' | 'iso-celtic' | 'l8')">
+<!ENTITY % ISO-8859-15 "('ISO-8859-15' | 'ISO_8859-15')">
+<!ENTITY % ISO-8859-16 "('ISO-8859-16' | 'ISO_8859-16')">
+<!ENTITY % GBK "('GBK' | 'CP936' | 'MS936' | 'windows-936')">
+<!ENTITY % GB18030 "('GB18030')">
+<!ENTITY % JIS_Encoding "('JIS_Encoding' | 'csJISEncoding')">
+<!ENTITY % Shift_JIS "('Shift_JIS' | 'MS_Kanji' | 'csShiftJIS')">
+<!ENTITY % Extended_UNIX_Code_Packed_Format_for_Japanese "('Extended_UNIX_Code_Packed_Format_for_Japanese' | 'csEUCPkdFmtJapanese' | 'EUC-JP')">
+<!ENTITY % Extended_UNIX_Code_Fixed_Width_for_Japanese "('Extended_UNIX_Code_Fixed_Width_for_Japanese' | 'csEUCFixWidJapanese')">
+<!ENTITY % ISO-10646-UCS-Basic "('ISO-10646-UCS-Basic' | 'csUnicodeASCII')">
+<!ENTITY % ISO-10646-Unicode-Latin1 "('ISO-10646-Unicode-Latin1' | 'csUnicodeLatin1' | 'ISO-10646')">
+<!ENTITY % ISO-10646-J-1 "('ISO-10646-J-1')">
+<!ENTITY % ISO-Unicode-IBM-1261 "('ISO-Unicode-IBM-1261' | 'csUnicodeIBM1261')">
+<!ENTITY % ISO-Unicode-IBM-1268 "('ISO-Unicode-IBM-1268' | 'csUnicodeIBM1268')">
+<!ENTITY % ISO-Unicode-IBM-1276 "('ISO-Unicode-IBM-1276' | 'csUnicodeIBM1276')">
+<!ENTITY % ISO-Unicode-IBM-1264 "('ISO-Unicode-IBM-1264' | 'csUnicodeIBM1264')">
+<!ENTITY % ISO-Unicode-IBM-1265 "('ISO-Unicode-IBM-1265' | 'csUnicodeIBM1265')">
+<!ENTITY % ISO-8859-1-Windows-3.0-Latin-1 "('ISO-8859-1-Windows-3.0-Latin-1' | 'csWindows30Latin1')">
+<!ENTITY % ISO-8859-1-Windows-3.1-Latin-1 "('ISO-8859-1-Windows-3.1-Latin-1' | 'csWindows31Latin1')">
+<!ENTITY % ISO-8859-2-Windows-Latin-2 "('ISO-8859-2-Windows-Latin-2' | 'csWindows31Latin2')">
+<!ENTITY % ISO-8859-9-Windows-Latin-5 "('ISO-8859-9-Windows-Latin-5' | 'csWindows31Latin5')">
+<!ENTITY % Adobe-Standard-Encoding "('Adobe-Standard-Encoding' | 'csAdobeStandardEncoding')">
+<!ENTITY % Ventura-US "('Ventura-US' | 'csVenturaUS')">
+<!ENTITY % Ventura-International "('Ventura-International' | 'csVenturaInternational')">
+<!ENTITY % PC8-Danish-Norwegian "('PC8-Danish-Norwegian' | 'csPC8DanishNorwegian')">
+<!ENTITY % PC8-Turkish "('PC8-Turkish' | 'csPC8Turkish')">
+<!ENTITY % IBM-Symbols "('IBM-Symbols' | 'csIBMSymbols')">
+<!ENTITY % IBM-Thai "('IBM-Thai' | 'csIBMThai')">
+<!ENTITY % HP-Legal "('HP-Legal' | 'csHPLegal')">
+<!ENTITY % HP-Pi-font "('HP-Pi-font' | 'csHPPiFont')">
+<!ENTITY % HP-Math8 "('HP-Math8' | 'csHPMath8')">
+<!ENTITY % Adobe-Symbol-Encoding "('Adobe-Symbol-Encoding' | 'csHPPSMath')">
+<!ENTITY % HP-DeskTop "('HP-DeskTop' | 'csHPDesktop')">
+<!ENTITY % Ventura-Math "('Ventura-Math' | 'csVenturaMath')">
+<!ENTITY % Microsoft-Publishing "('Microsoft-Publishing' | 'csMicrosoftPublishing')">
+<!ENTITY % Windows-31J "('Windows-31J' | 'csWindows31J')">
+<!ENTITY % GB2312 "('GB2312' | 'csGB2312')">
+<!ENTITY % Big5 "('Big5' | 'csBig5')">
+<!ENTITY % windows-1250 "('windows-1250')">
+<!ENTITY % windows-1251 "('windows-1251')">
+<!ENTITY % windows-1252 "('windows-1252')">
+<!ENTITY % windows-1253 "('windows-1253')">
+<!ENTITY % windows-1254 "('windows-1254')">
+<!ENTITY % windows-1255 "('windows-1255')">
+<!ENTITY % windows-1256 "('windows-1256')">
+<!ENTITY % windows-1257 "('windows-1257')">
+<!ENTITY % windows-1258 "('windows-1258')">
+<!ENTITY % TIS-620 "('TIS-620')">
+<!ENTITY % HZ-GB-2312 "('HZ-GB-2312')">
+<!ENTITY % charset "(%ANSI_X3.4-1968; | %ISO-10646-UTF-1; | %ISO_646.basic:1983; | %INVARIANT; | %ISO_646.irv:1983; | %BS_4730; | %NATS-SEFI; | %NATS-SEFI-ADD; | %NATS-DANO; | %NATS-DANO-ADD; | %SEN_850200_B; | %SEN_850200_C; | %KS_C_5601-1987; | %ISO-2022-KR; | %EUC-KR; | %ISO-2022-JP; | %ISO-2022-JP-2; | %ISO-2022-CN; | %ISO-2022-CN-EXT; | %JIS_C6220-1969-jp; | %JIS_C6220-1969-ro; | %IT; | %PT; | %ES; | %greek7-old; | %latin-greek; | %DIN_66003; | %NF_Z_62-010_1973; | %Latin-greek-1; | %ISO_5427; | %JIS_C6226-1978; | %BS_viewdata; | %INIS; | %INIS-8; | %INIS-cyrillic; | %ISO_5427:1981; | %ISO_5428:1980; | %GB_1988-80; | %GB_2312-80; | %NS_4551-1; | %NS_4551-2; | %NF_Z_62-010; | %videotex-suppl; | %PT2; | %ES2; | %MSZ_7795.3; | %JIS_C6226-1983; | %greek7; | %ASMO_449; | %iso-ir-90; | %JIS_C6229-1984-a; | %JIS_C6229-1984-b; | %JIS_C6229-1984-b-add; | %JIS_C6229-1984-hand; | %JIS_C6229-1984-hand-add; | %JIS_C6229-1984-kana; | %ISO_2033-1983; | %ANSI_X3.110-1983; | %ISO_8859-1:1987; | %ISO_8859-2:1987; | %T.61-7bit; | %T.61-8bit; | %ISO_8859-3:1988; | %ISO_8859-4:1988; | %ECMA-cyrillic; | %CSA_Z243.4-1985-1; | %CSA_Z243.4-1985-2; | %CSA_Z243.4-1985-gr; | %ISO_8859-6:1987; | %ISO_8859-6-E; | %ISO_8859-6-I; | %ISO_8859-7:1987; | %T.101-G2; | %ISO_8859-8:1988; | %ISO_8859-8-E; | %ISO_8859-8-I; | %CSN_369103; | %JUS_I.B1.002; | %ISO_6937-2-add; | %IEC_P27-1; | %ISO_8859-5:1988; | %JUS_I.B1.003-serb; | %JUS_I.B1.003-mac; | %ISO_8859-9:1989; | %greek-ccitt; | %NC_NC00-10:81; | %ISO_6937-2-25; | %GOST_19768-74; | %ISO_8859-supp; | %ISO_10367-box; | %ISO-8859-10; | %latin-lap; | %JIS_X0212-1990; | %DS_2089; | %us-dk; | %dk-us; | %JIS_X0201; | %KSC5636; | %ISO-10646-UCS-2; | %ISO-10646-UCS-4; | %DEC-MCS; | %hp-roman8; | %macintosh; | %IBM037; | %IBM038; | %IBM273; | %IBM274; | %IBM275; | %IBM277; | %IBM278; | %IBM280; | %IBM281; | %IBM284; | %IBM285; | %IBM290; | %IBM297; | %IBM420; | %IBM423; | %IBM424; | %IBM437; | %IBM500; | %IBM775; | %IBM850; | %IBM851; | %IBM852; | %IBM855; | %IBM857; | %IBM860; | %IBM861; | %IBM862; | %IBM863; | %IBM864; | %IBM865; | %IBM866; | %IBM868; | %IBM869; | %IBM870; | %IBM871; | %IBM880; | %IBM891; | %IBM903; | %IBM904; | %IBM905; | %IBM918; | %IBM1026; | %EBCDIC-AT-DE; | %EBCDIC-AT-DE-A; | %EBCDIC-CA-FR; | %EBCDIC-DK-NO; | %EBCDIC-DK-NO-A; | %EBCDIC-FI-SE; | %EBCDIC-FI-SE-A; | %EBCDIC-FR; | %EBCDIC-IT; | %EBCDIC-PT; | %EBCDIC-ES; | %EBCDIC-ES-A; | %EBCDIC-ES-S; | %EBCDIC-UK; | %EBCDIC-US; | %UNKNOWN-8BIT; | %MNEMONIC; | %MNEM; | %VISCII; | %VIQR; | %KOI8-R; | %KOI8-U; | %IBM00858; | %IBM00924; | %IBM01140; | %IBM01141; | %IBM01142; | %IBM01143; | %IBM01144; | %IBM01145; | %IBM01146; | %IBM01147; | %IBM01148; | %IBM01149; | %Big5-HKSCS; | %UNICODE-1-1; | %SCSU; | %UTF-7; | %UTF-16BE; | %UTF-16LE; | %UTF-16; | %CESU-8; | %UTF-32; | %UTF-32BE; | %UTF-32LE; | %UNICODE-1-1-UTF-7; | %UTF-8; | %ISO-8859-13; | %ISO-8859-14; | %ISO-8859-15; | %ISO-8859-16; | %GBK; | %GB18030; | %JIS_Encoding; | %Shift_JIS; | %Extended_UNIX_Code_Packed_Format_for_Japanese; | %Extended_UNIX_Code_Fixed_Width_for_Japanese; | %ISO-10646-UCS-Basic; | %ISO-10646-Unicode-Latin1; | %ISO-10646-J-1; | %ISO-Unicode-IBM-1261; | %ISO-Unicode-IBM-1268; | %ISO-Unicode-IBM-1276; | %ISO-Unicode-IBM-1264; | %ISO-Unicode-IBM-1265; | %ISO-8859-1-Windows-3.0-Latin-1; | %ISO-8859-1-Windows-3.1-Latin-1; | %ISO-8859-2-Windows-Latin-2; | %ISO-8859-9-Windows-Latin-5; | %Adobe-Standard-Encoding; | %Ventura-US; | %Ventura-International; | %PC8-Danish-Norwegian; | %PC8-Turkish; | %IBM-Symbols; | %IBM-Thai; | %HP-Legal; | %HP-Pi-font; | %HP-Math8; | %Adobe-Symbol-Encoding; | %HP-DeskTop; | %Ventura-Math; | %Microsoft-Publishing; | %Windows-31J; | %GB2312; | %Big5; | %windows-1250; | %windows-1251; | %windows-1252; | %windows-1253; | %windows-1254; | %windows-1255; | %windows-1256; | %windows-1257; | %windows-1258; | %TIS-620; | %HZ-GB-2312;)">
+
+<!-- ***********************************************************************************
+     * XML valid characters                                                            *
+     ***********************************************************************************
+-->
+
+<!ENTITY %PCDATA "([#x9;#xA;#xD;#x20;-#xD7FF;#xE000;-#xFFFD;#x10000;-#x10FFFF;])+">
+
+<!-- ***********************************************************************************
+     * Excerpt from RFC 2396                                                           *
+     ***********************************************************************************
+-->
+
+<!ENTITY % digit "([0-9])">
+<!ENTITY % upalpha "([A-Z])">
+<!ENTITY % lowalpha "([a-z])">
+<!ENTITY % alpha "(%lowalpha; | %upalpha;)">
+<!ENTITY % alphanum "(%alpha; | %digit;)">
+<!ENTITY % hex "(%digit; | ([A-F]) | ([a-f]))">
+<!ENTITY % escaped "('%', %hex;, %hex;)">
+<!ENTITY % mark "('-' | '_' | '.' | '!' | '~' | '*' | [#x27;] | '(' | ')')">
+<!ENTITY % unreserved "(%alphanum; | %mark;)">
+<!ENTITY % reserved "(';' | '/' | '?' | ':' | '@' | '&' | '=' | '+' | '$' | ',')"
+<!ENTITY % uric "(%reserved; | %unreserved; | %escaped;)">
+
+<!ENTITY % fragment "(%uric;*)">
+
+<!ENTITY % pchar "(%unreserved; | %escaped; | ';' | '@' | '&' | '=' | '+' | '$' | ',')">
+<!ENTITY % param "(%pchar;*)">
+<!ENTITY % segment "(%pchar;*, (';', %param;)*)">
+<!ENTITY % path_segments "(%segment;, ('/', %segment;)*)">
+
+<!ENTITY % rel_segment "((%unreserved; | %escaped; | ';' | '@' | '&' | '=' | '+' | '$' |
+  ',')+)">
+
+<!ENTITY % abs_path "('/', %path_segments;)">
+<!ENTITY % rel_path "(%rel_segment;, (%abs_path;)?)">
+
+<!ENTITY % relativeURIExcerpt "(%rel_path;)">
+<!ENTITY % URI-referenceExcerpt "(%relativeURIExcerpt;, ('#', %fragment;)?)">
+
+<!-- ***********************************************************************************
+     * Custom                                                                          *
+     ***********************************************************************************
+-->
+
+<!ENTITY %href "href %URI-referenceExcerpt; CI #IMPLIED">
+<!ENTITY %rel "rel (([0-9])+, ' of ', ([0-9])+) CI #IMPLIED">
+
+<!ATTLIST a %href; %rel;>
+
+<!ATTCORLIST meta name ('ncc:charset') CS content (%charset;) CI #>
+<!ATTCORLIST meta name ('dc:date') CS content (%ISO8601;) CS #>
+<!ATTCORLIST meta name ('dc:format') CS content ('Daisy 2.02') CI #>
+<!ATTCORLIST meta name ('dc:identifier') CS content (%PCDATA;) CI #>
+<!ATTCORLIST meta name ('dc:publisher') CS content (%PCDATA;) CI #>
+<!ATTCORLIST meta name ('ncc:pageFront') CS content ((%DIGIT;)+) CS #>
+<!ATTCORLIST meta name ('ncc:pageNormal') CS content ((%DIGIT;)+) CS #>
+<!ATTCORLIST meta name ('ncc:pageSpecial') CS content ((%DIGIT;)+) CS #>
+<!ATTCORLIST meta name ('dc:title') CS content (%PCDATA;) CI #>
+<!ATTCORLIST meta name ('ncc:tocItems') CS content ((%DIGIT;)+) CS #>
+<!ATTCORLIST meta name ('ncc:totalTime') CS content (%HHMMSS;) CS #>
+
+<!ATTCORLIST meta name ('dc:creator') CS content (%PCDATA;) CI #+>
+<!ATTCORLIST meta name ('dc:language') CS content (%ISO639;, ('-', %ISO3166;)?) CI #+>
+
+<!ATTCORLIST meta name ('ncc:footnotes') CS content ((%DIGIT;)+) CS #?>
+<!ATTCORLIST meta name ('ncc:generator') CS content (%PCDATA;) CI #?>
+<!ATTCORLIST meta name ('ncc:kByteSize') CS content ((%DIGIT;)+, (('.' | ','), (%DIGIT;)+)?) CS #?>
+<!ATTCORLIST meta name ('ncc:prodNotes') CS content ((%DIGIT;)+) CS #?>
+<!ATTCORLIST meta name ('ncc:producedDate') CS content (%ISO8601;) CS #?>
+<!ATTCORLIST meta name ('ncc:producer') CS content (%PCDATA;) CI #?>
+<!ATTCORLIST meta name ('ncc:setInfo') CS content ((%DIGIT;)+, ' ', 'of', ' ', (%DIGIT;)+)
+	CI #?>
+<!ATTCORLIST meta name ('ncc:sidebars') CS content ((%DIGIT;)+) CS #?>
+<!ATTCORLIST meta name ('ncc:sourceDate') CS content (%ISO8601;) CS #?>
+<!ATTCORLIST meta name ('ncc:sourceRights') CS content (%PCDATA;) CI #?>
+<!ATTCORLIST meta name ('ncc:sourceTitle') CS content (%PCDATA;) CI #?>
+
+<!ATTCORLIST meta name ('ncc:revision') CS content ((%DIGIT;)+) CS #?>
+<!ATTCORLIST meta name ('ncc:revisionDate') CS content (%ISO8601;) CS #?>
+
+<!ATTCORLIST meta name ('dc:contributor') CS content (%PCDATA;) CI #*>
+<!ATTCORLIST meta name ('dc:coverage') CS content (%PCDATA;) CI #*>
+<!ATTCORLIST meta name ('dc:description') CS content (%PCDATA;) CI #*>
+<!ATTCORLIST meta name ('dc:relation') CS content (%PCDATA;) CI #*>
+<!ATTCORLIST meta name ('dc:rights') CS content (%PCDATA;) CI #*>
+<!ATTCORLIST meta name ('dc:type') CS content (%PCDATA;) CI #*>
+
+<!ATTCORLIST meta name ('ncc:depth') CS content ([1-6]) CS #?r>
+<!ATTCORLIST meta name ('ncc:files') CS content ((%DIGIT;)+) CS #?r>
+<!ATTCORLIST meta name ('ncc:maxPageNormal') CS content ((%DIGIT;)+) CS #?r>
+<!ATTCORLIST meta name ('dc:source') CS content (%PCDATA;) CI #?r>
+<!ATTCORLIST meta name ('ncc:sourceDate') CS content (%ISO8601;) CS #?r>
+<!ATTCORLIST meta name ('ncc:sourceEdition') CS content (%PCDATA;) CI #?r>
+<!ATTCORLIST meta name ('ncc:sourcePublisher') CS content (%PCDATA;) CI #?r>
+
+<!ATTCORLIST meta http-equiv (%PCDATA;) CI content (%PCDATA;) CI #?r>
+<!ATTCORLIST meta name ('ncc:multimediaType') CS content (('audioOnly') | ('audioNcc') |
+	('audioPartText') | ('audioFullText') | ('textPartAudio') | ('textNcc')) CI #?r>
+
+<!ATTCORLIST meta name ('ncc:narrator') CS content (%PCDATA;) CI #*r>
+<!ATTCORLIST meta name ('dc:subject') CS content (%PCDATA;) CI #*r>

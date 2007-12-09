@@ -1,0 +1,470 @@
+<?xml version="1.0"?>
+<!-- version 20030910 MG -->
+<!DOCTYPE validator [
+
+<!-- File Integrity tests -->
+
+  <!ENTITY fileExists "
+  	<test context='exists' name='file exists' shortDesc='file not found' longDesc='file cannot not be found'
+  	failType='error' failClass='critical' link='' />
+  " >
+  <!ENTITY fileHasValidName "
+  	<test context='hasValidName' name='file has valid name'
+  	shortDesc='invalid filename' longDesc='invalid filename' failType='error'
+  	failClass='critical' link='' />
+  " >
+  
+  <!-- mg added 20050330: -->
+  <!ENTITY fileHasRecommendedName "
+  	<test context='hasRecommendedName' name='file has recommended name'
+  	shortDesc='filename' longDesc='filename not recommended' failType='warning'
+  	failClass='non-critical' link='http://www.daisy.org/publications/specifications/daisy_202.html#tnAuName' />
+  " >
+
+  <!ENTITY fileIsReadable "
+  	<test context='isReadable' name='file is readable'
+  	shortDesc='file cannot be read' longDesc='the file could not be read from the storage media' failType='error'
+  	failClass='critical' link='' />
+  " >
+
+  <!ENTITY fileIntegrity "
+  	<subcategory name='file validation' context='fi'>
+		&fileExists;
+		&fileHasValidName;
+		&fileHasRecommendedName;
+		&fileIsReadable;
+	</subcategory>
+  ">
+
+<!-- XML Integrity tests -->
+
+  <!ENTITY isWellformedXML "
+  	<test context='isWellFormed' name='file is wellformed'
+  	shortDesc='document malformed' longDesc='the document is not well-formed' failType='error'
+  	failClass='critical' link='http://www.w3.org/TR/2000/REC-xml-20001006' />
+  " >
+  <!ENTITY hasDocumenttype "
+  	<test context='hasDoctype' name='document has doctype declaration'
+  	shortDesc='missing doctype' longDesc='no DOCTYPE declaration was found in the document' failType='error'
+  	failClass='critical' link='http://www.w3.org/TR/2000/REC-xml-20001006#sec-prolog-dtd' />
+  " >
+  <!ENTITY documenttypeValid "
+  	<test context='doctypeValid' name='documenttype is valid'
+  	shortDesc='documenttype is invalid' longDesc='the given documenttype is invalid or not supported'
+  	failType='error' failClass='critical' link='http://www.w3.org/TR/2000/REC-xml-20001006#sec-prolog-dtd' />
+  " >
+  <!ENTITY isDocumenttype "
+  	<test context='isDoctype' name='file is document'
+  	shortDesc='file/document mismatch' longDesc='the file extension does not match the type of document found inside the file' failType='error'
+  	failClass='critical' link='' />
+  " >
+  <!ENTITY validatesAgainstDTDXMLGiven "
+  <test context='dtdGiven' name='document validates to given dtd'
+  shortDesc='invalid to dtd' longDesc='document does not validate against the DTD referenced in the document' failType='error' failClass='critical'
+  link='' />
+  " >
+  <!ENTITY validatesAgainstDTDXMLCustom "
+  	<test context='dtdCustom' name='document validates to custom dtd'
+  	shortDesc='invalid to dtd' longDesc='document does not validate against the custom Daisy 2.02 DTD' failType='error'
+  	failClass='critical' link='http://www.daisy.org/publications/specifications/daisy_202.html' />
+  " >
+
+  <!ENTITY xmlIntegrity "<subcategory name='document validation' context='xi'>
+				&isWellformedXML;
+				&hasDocumenttype;
+				&documenttypeValid;
+				&isDocumenttype;
+				&validatesAgainstDTDXMLGiven;
+				&validatesAgainstDTDXMLCustom;
+			  </subcategory>" >
+
+<!-- ADTD tests -->
+
+  <!ENTITY documentAttributesContentValid "
+  	<test context='attrContentValid' name='attribute has valid content'
+  	shortDesc='attribute value' longDesc='the value of this attribute is not valid' failType='error'
+  	failClass='critical' link='http://www.daisy.org/publications/specifications/daisy_202.html' />
+  " >
+  <!ENTITY intraElementAttributesCorrelationValid "
+  	<test context='missing'
+  	name='intra-element attribute correlation: missing attr'
+  	shortDesc='attribute missing ' longDesc='an expected attribute cannot be found' failType='error'
+  	failClass='critical' link='http://www.daisy.org/publications/specifications/daisy_202.html' />
+
+  	<test context='invalidContent'
+  	name='intra-element attribute correlation: invalid content in related attribute'
+  	shortDesc='attributes mismatch' longDesc='the content of one of the values in this attribute pair is invalid' failType='error'
+  	failClass='critical' link='http://www.daisy.org/publications/specifications/daisy_202.html' />
+
+  	<test context='elmAttrComb'
+  	name='intra-element attribute correlation: elm/attr combination missing'
+  	shortDesc='attribute pair error' longDesc='one of the attributes in an attribute pair is missing or occurs more than once'
+  	failType='error' failClass='critical' link='http://www.daisy.org/publications/specifications/daisy_202.html' />
+
+  	<test context='elmAttrCombRec'
+  	name='intra-element attribute correlation: elm/attr combination missing'
+  	shortDesc='attribute pair error' longDesc='one of the attributes in an attribute pair is missing or occurs more than once'
+  	failType='warning' failClass='non-critical' link='http://www.daisy.org/publications/specifications/daisy_202.html' />
+  ">
+  <!ENTITY adtd "
+  	<subcategory name='attribute dtd validation' context='adtd'>
+		&documentAttributesContentValid;
+		&intraElementAttributesCorrelationValid;
+	</subcategory>
+  ">
+
+<!-- Distribution tests -->
+
+  <!ENTITY dist "
+  	<subcategory name='distribution tests' context='dist'>
+
+  	  <test context='noUrisUseAbsolutePath' name='uris use non-absolute paths'
+  	  shortDesc='URI incorrect' longDesc='this URI (path) is not relative to the current document'
+  	  failType='error' failClass='critical' link='' />
+
+	  <test context='nccMetaFiles'
+  	  name='ncc:files contains correct number of files'
+  	  shortDesc='ncc:files' longDesc='meta element ncc:files does not match the number of files found in the DTB file set'
+  	  failType='error' failClass='non-critical'
+  	  link='http://www.daisy.org/publications/specifications/daisy_202.html#tnfiles' />
+
+	  <test context='nccMetakByteSize'
+  	  name='ncc:kByteSize contains total dtb size'
+  	  shortDesc='ncc:kByteSize' longDesc='meta element ncc:kByteSize does not match the calculated file size of the files found in the DTB file set'
+  	  failType='error' failClass='non-critical'
+  	  link='http://www.daisy.org/publications/specifications/daisy_202.html#tnkbs' /><!--nto-->
+
+	  <test context='nccSmilListCorrect'
+  	  name='ncc smil list is correct'
+  	  shortDesc='ncc smil references' longDesc='ncc does not reference all smil files that the master smil references'
+  	  failType='error' failClass='critical' link='' />
+
+	  <test context='masterSmilSmilListCorrect'
+  	  name='mastersmil smil list is correct'
+  	  shortDesc='master smil references' longDesc='master smil does not reference all smil files that the ncc references'
+  	  failType='error' failClass='critical' link='' />
+
+  	</subcategory>
+  ">
+
+
+<!-- Document smil relations -->
+  <!ENTITY docSmilRel "
+  	<category name='Document smil relations' context='documentSmilRelations'>
+
+		<test context='fileExist'
+  		name='smil file pointed at by text document exists'
+  		shortDesc='file missing' longDesc='the smil file referenced by the content document does not exist'
+  		failType='error' failClass='critical' link='' />
+
+		<test context='fragmentExist'
+  		name='smil fragment pointed at by text document exists'
+  		shortDesc='fragment missing' longDesc='the smil fragment (id attribute value) referenced does not exist'
+  		failType='error' failClass='critical' link='' />
+
+  	</category>
+  ">
+
+<!-- Smil tests -->
+
+  <!ENTITY smil_internal "
+	<category name='smil document internal validation' context='smil'>
+		&fileIntegrity;
+		&xmlIntegrity;
+		&adtd;
+		<subcategory name='smil specific tests' context='smilSpecific'>
+
+			<test context='mSeqDurAttr' name='main seq has dur attr'
+			shortDesc='dur attr missing' longDesc='dur attribute on main seq is missing'
+			failType='error' failClass='non-critical'
+			link='http://www.daisy.org/publications/specifications/daisy_202.html#tnsmSeqDur' />
+
+			<test context='mSeqDurAttrVal'
+			name='main seq dur attr corresponds to length of children' shortDesc='dur attr value'
+			longDesc='dur attribute value is invalid' failType='error'
+			failClass='non-critical' link='http://www.daisy.org/publications/specifications/daisy_202.html#tnsmSeqDur' />
+
+			<test context='timeInThisSmil'
+			name='meta TimeInThisSmil corresponds to length of audio children'
+			shortDesc='ncc:TimeInThisSmil value'
+			longDesc='incorrect value on meta element ncc:TimeInThisSmil - does not correspond to calculated duration of audio in this smil' failType='error'
+			failClass='non-critical' link='http://www.daisy.org/publications/specifications/daisy_202.html#tntits' />
+
+			<test context='oneTextPerPar'
+			name='max one text reference exists per par' shortDesc='one text per par'
+			longDesc='there is more than one text reference within the given par'
+			failType='error' failClass='critical'
+			link='http://www.daisy.org/publications/specifications/daisy_202.html#tnsmText' />
+		</subcategory>
+	</category>
+  ">
+
+<!-- Mastersmil tests -->
+
+  <!ENTITY mastersmil_internal "
+	<category name='master smil document internal validation' context='mastersmil'>
+		&fileIntegrity;
+		&xmlIntegrity;
+		&adtd;
+	</category>
+  ">
+
+<!-- Mastersmil smil relations tests -->
+
+  <!ENTITY mastersmil_smil_relations "
+	<category name='mastersmil-smil relations validation' context='masterSmilSmilRel'>
+		&fileIntegrity;
+		<test context='timeInThisSmil' name='ncc:timeInThisSmil value corresponds to smil length'
+		shortDesc='ncc:timeInThisSmil value' longDesc='incorrect value on meta element ncc:TimeInThisSmil - does not correspond to calculated duration of audio in this smil'
+		failType='error' failClass='non-critical'
+		link='http://www.daisy.org/publications/specifications/daisy_202.html#msmMtTts' />
+	</category>
+  ">
+
+<!-- Ncc tests -->
+
+  <!ENTITY ncc_internal "
+  	<category name='ncc document internal validation' context='ncc'>
+  		&fileIntegrity;
+  		&xmlIntegrity;
+  		&adtd;
+  		<subcategory name='ncc specific validation' context='nccSpecific'>
+
+  			<test context='firstBodyDescIsH1ClassTitle'
+  			name='first body descendant is an h1 with class title'
+  			shortDesc='h1 title' longDesc='the first child of body is not an h1 with class title' failType='error'
+  			failClass='critical'
+  			link='http://www.daisy.org/publications/specifications/daisy_202.html#tnH1first' /><!--nto-->
+
+  			<test context='headingsAreCorrectlyNested'
+  			name='headings are correctly sequenced'
+  			shortDesc='heading sequence' longDesc='the sequence of the heading elements is invalid' failType='error'
+  			failClass='critical'
+  			link='http://www.daisy.org/publications/specifications/daisy_202.html#tnhorder' />
+
+  			<test context='numPageNormalsCorrespondsToFile'
+  			name='number of pagenormals corresponds to meta'
+  			shortDesc='span.pagenormal' longDesc='the number of span class page-normal elements found in body does not correspond to meta ncc:pageNormal'
+  			failType='error' failClass='non-critical'
+  			link='http://www.daisy.org/publications/specifications/daisy_202.html#tnpnorm' /><!--nto-->
+
+  			<test context='numPageSpecialsCorrespondsToFile'
+  			name='number of pagespecials corresponds to meta'
+  			shortDesc='span.pagespecial' longDesc='the number of span class page-special elements found in body does not correspond to meta ncc:pageSpecial'
+  			failType='error' failClass='non-critical'
+  			link='http://www.daisy.org/publications/specifications/daisy_202.html#tnpspec' /><!--nto-->
+
+  			<test context='numPageFrontsCorrespondsToFile'
+  			name='number of pagefronts corresponds to meta'
+  			shortDesc='span.pagefront' longDesc='the number of span class page-front elements found in body does not correspond to meta ncc:pageFront'
+  			failType='error' failClass='non-critical'
+  			link='http://www.daisy.org/publications/specifications/daisy_202.html#tnpfront' /><!--nto-->
+
+  			<test context='numFootNotesCorrespondsToFile'
+  			name='number of footnotes corresponds to meta'
+  			shortDesc='span.noteref' longDesc='the number of span class noteref elements found in body does not correspond to meta ncc:footnotes'
+  			failType='error' failClass='non-critical'
+  			link='http://www.daisy.org/publications/specifications/daisy_202.html#tnfnotes' />
+
+  			<test context='numProdNotesCorrespondsToFile'
+  			name='number of prodnotes corresponds to meta'
+  			shortDesc='span.optional-prodnote' longDesc='the number of span class optional-prodnote elements found in body does not correspond to meta ncc:prodnotes'
+  			failType='error' failClass='non-critical'
+  			link='http://www.daisy.org/publications/specifications/daisy_202.html#prdnts' />
+
+  			<test context='numSidebarsCorrespondsToFile'
+  			name='number of sidebars corresponds to meta'
+  			shortDesc='span.sidebar' longDesc='the number of span class sidebar elements found in body does not correspond to meta ncc:sidebars'
+  			failType='error' failClass='non-critical'
+  			link='http://www.daisy.org/publications/specifications/daisy_202.html#tnsbars' />
+
+  			<test context='tocItems'
+  			name='number of toc items corresponds to meta'
+  			shortDesc='tocItems' longDesc='the number ToC items/NCC items does not correspond to meta ncc:tocItems'
+  			failType='error' failClass='non-critical'
+  			link='http://www.daisy.org/publications/specifications/daisy_202.html#tntocItemsP' />
+
+  			<test context='headingDepth' name='headingDepth'
+  			shortDesc='ncc:depth'
+  			longDesc='meta ncc:depth does not correspond to the heading level range found'
+  			failType='error' failClass='non-critical'
+  			link='http://www.daisy.org/publications/specifications/daisy_202.html#tn30' />
+  		</subcategory>
+  	</category>
+  ">
+
+<!-- Content tests -->
+
+  <!ENTITY content_internal "
+  	<category name='content document internal validation' context='content'>
+  		&fileIntegrity;
+  		&xmlIntegrity;
+  		&adtd;
+  	</category>
+  ">
+
+
+<!-- Ncc inter tests -->
+
+  <!ENTITY ncc_smil_relations "
+  	<category name='ncc-smil relations tests' context='nccSmilRel'>
+  		&smil_internal;
+  		&smil_media_relations;
+
+  		<test context='hrefFragmentExists' name='href fragment id exists in smil file'
+  		shortDesc='fragment missing' longDesc='the smil fragment (id attribute value) referenced does not exist' failType='error'
+  		failClass='critical'
+  		link='http://www.daisy.org/publications/specifications/daisy_202.html#ahref' />
+
+  		<test context='hrefFragmentPointsToAllowedElement'
+  		name='all ids points to accepted elements'
+  		shortDesc='id fragment destination' longDesc='the id attribute referenced is not an attribute on a par or text element' failType='error'
+  		failClass='critical'
+  		link='http://www.daisy.org/publications/specifications/daisy_202.html#ahref' />
+
+  		<test context='smilSequenceIsSequential'
+  		name='ncc smil sequence does not contain reoccuring instances'
+  		shortDesc='invalid smil sequence' longDesc='this smil file was referenced earlier in the book'
+  		failType='error' failClass='critical' link='' />
+
+  		<test context='totalTimeIsCorrect'
+  		name='meta totalTimeIsCorrect corresponds to smiltime'
+  		shortDesc='ncc:totalTime value' longDesc='meta ncc:totalTime does not correspond to the computed total playback time'
+  		failType='error' failClass='non-critical'
+  		link='http://www.daisy.org/publications/specifications/daisy_202.html#ttlTime' />
+
+  		<test context='checkFirstParOrText'
+  		name='first par or text has same id as an heading element in the ncc'
+  		shortDesc='first par reference' longDesc='this par is not referenced by an ncc heading'
+  		failType='error' failClass='non-critical'
+  		link='http://www.daisy.org/publications/specifications/daisy_202.html#tnnccSmil' />
+
+		<test context='totalElapsedTimeIsValid'
+  		name='meta totalElapsedTimeIsValid corresponds to previous smils'
+  		shortDesc='ncc:totalElapsedTime value' longDesc='the value of meta ncc:totalElapsedTime does not correspond to the total time elapsed to this point'
+  		failType='error' failClass='non-critical'
+  		link='http://www.daisy.org/publications/specifications/daisy_202.html#tnsmtet' /><!--nto-->
+  	</category>
+  ">
+
+<!-- Smil inter tests -->
+
+  <!ENTITY smil_media_relations "
+  	<category name='smil-media objects relations' context='smilMediaRel'>
+<!--  		<subcategory name='text media objects internal validation'>	-->
+  		&content_internal;
+
+  		<test context='textObjectIDExists'
+  		name='text src uri points at existing fragment in media object'
+  		shortDesc='content doc fragment' longDesc='src attribute value of text element contains a reference to a fragment (id value) in content document that does not exist'
+  		failType='error' failClass='critical'
+  		link='http://www.daisy.org/publications/specifications/daisy_202.html#tnsmTextSrc' />
+  		&docSmilRel;
+
+		<subcategory name='file validation' context='fi'>
+  			&fileExists;
+  			&fileHasRecommendedName;
+  			&fileIsReadable;
+  		</subcategory>
+
+  		<test context='fileIsValidAudioObject' name='file is valid audiofile'
+  		shortDesc='audiofile invalid' longDesc='audio file is not valid' failType='error'
+  		failClass='critical'
+  		link='http://www.daisy.org/publications/specifications/daisy_202.html#tnAudFmts' />
+
+  		<test context='fileHasValidExtension' name='audiofile has valid extension'
+  		shortDesc='audiofile extension' longDesc='this audio file does not have a valid extension' failType='error'
+  		failClass='non-critical'
+  		link='http://www.daisy.org/publications/specifications/daisy_202.html#tnAudFmts' />
+
+  		<test context='fileUsesVBR' name='audiofile doesnt use VBR'
+  		shortDesc='audiofile uses VBR' longDesc='the audiofile uses variable bitrate'
+  		failType='warning' failclass=''
+  		link='http://www.daisy.org/publications/specifications/daisy_202.html#vbrNotice' />
+
+<!--  		<test context='audioObjectClipExists' name='clip exists in audiofile'
+  		shortDesc='clip time value' longDesc='clip time value are not rendreable in audiofile' failType='error'
+  		failClass='critical'
+  		link='http://www.daisy.org/publications/specifications/daisy_202.html#tnsmCBCE' />
+-->
+  		<test context='audioObjectClipBeginExists' name='clip-begin exists in audiofile'
+  		shortDesc='clip-begin time' longDesc='clip-begin time value references a point in the audio file that does not exist' failType='error'
+  		failClass='critical'
+  		link='http://www.daisy.org/publications/specifications/daisy_202.html#tnsmCBCE' />
+
+  		<test context='audioObjectClipEndExists' name='clip-end exists in audiofile'
+  		shortDesc='clip-end time' longDesc='clip-end time value references a point in the audio file that does not exist' failType='error'
+  		failClass='critical'
+  		link='http://www.daisy.org/publications/specifications/daisy_202.html#tnsmCBCE' />
+
+  		<test context='audioObjectClipBeginVsEnd' name='clip-end is lower than clip-begin'
+  		shortDesc='clip-end less than clip-begin' longDesc='the clip-end time value is less than the clip-begin time value' failType='error'
+  		failClass='critical'
+  		link='http://www.daisy.org/publications/specifications/daisy_202.html#tnsmCBCE' />
+  	</category>
+  ">
+
+<!-- DTB tests -->
+  <!ENTITY dtb "
+		<category name='dtb validation' context='dtb'>
+			&ncc_internal;
+			&ncc_smil_relations;
+			&mastersmil_internal;
+
+	  		<subcategory name='file validation' context='mastersmil.fi'>
+				<test context='exists' name='file exists'
+				shortDesc='file not found' longDesc='this file was not found'
+				failType='warning' failClass='' link='' />
+			</subcategory>
+
+			&mastersmil_smil_relations;
+			&dist;
+		</category>
+  ">
+
+<!-- Multivolume tests -->
+
+  <!ENTITY multivolume "
+  	<category name='multivolume validation' context='multivolume'>
+		&dtb;
+		&dist;
+  		<subcategory name='multivolume specific tests' context='multivolumeSpecific'>
+
+  			<test context='numVolumes'
+  			name='setinfo contains correct number of volumes'
+  			shortDesc='ncc:setInfo' longDesc='meta ncc:setinfo element does not match the number of volumes added to the validator'
+  			failType='error' failClass='critical'
+  			link='http://www.daisy.org/publications/specifications/daisy_202.html#multvolubook' />
+
+  			<test context='allreadyExist'
+  			name='volume only exists once'
+  			shortDesc='setinfo duplicate' longDesc='either the same volume of a multi volume book was added more than once, or the same ncc:setinfo value occurs in more than one volume'
+  			failType='error' failClass='critical' link='' />
+
+  			<test context='allVolumesFound'
+  			name='all volumes are found'
+  			shortDesc='volumes not found' longDesc='all volumes in multivolume set were not found'
+  			failType='error' failClass='critical' link='' />
+  		</subcategory>
+  	</category>
+  ">
+
+]
+>
+
+<validator>
+	<validatorTestMap>
+		&ncc_internal;
+		&smil_internal;
+		&mastersmil_internal;
+		&content_internal;
+		<category name='discinfo document internal validation' context='discinfo'>
+			&fileIntegrity;
+			&xmlIntegrity;
+			&adtd;
+			&dist;
+		</category>
+		&dtb;
+		&multivolume;
+	</validatorTestMap>
+</validator>

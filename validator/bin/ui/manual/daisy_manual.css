@@ -1,0 +1,33 @@
+body {font-style: normal; font-weight: normal; font-family: arial, verdana, sans-serif; margin-right: 15em; margin-left: 7em;
+background-image: url("http://www.daisy.org/daisylogo.jpg");
+background-attachment: fixed;
+background-repeat: no-repeat;
+background-position: 96% 4%;
+}
+
+h1,h2,h3,h4,h5,h6{font-weight: bold; color: #000099; }
+h6 {font-size: 75%; margin-top: 1.2em; margin-bottom: 0.2em;}
+h5 {font-size: 80%; margin-top: 1.2em; margin-bottom: 0.2em;}
+h4 {font-size: 88%; margin-top: 2.5em; margin-bottom: 0.4em;}
+h3 {font-size: 100%; letter-spacing: 0.04em; margin-top: 2.5em; margin-bottom: 1em;}
+h2 {font-size: 115%; letter-spacing: 0.15em; margin-top: 4em;}
+h1 {font-size: 130%; margin-top: 3em; margin-bottom: 1em; letter-spacing: 0.2em;}
+
+ul.linklist {list-style: none; margin-left: 0em;}
+ul.linklist ul {list-style: none; margin-left: 2em;}
+ul.linklist a {text-decoration: none}
+
+.top {font-size: 80%; display: block;}
+.notice {border: 1px solid rgb(140,140,140); background-color: rgb(240,240,240); margin: 1.5em; padding: 1em;}
+.app {color: rgb(0,0,100);}
+.author {color:#000099; font-size:80%;}
+.comment {color:#000099; font-size:80%;}
+
+img.inline {float: right; margin-bottom: 1em; margin-left: 1em; margin-right: 1em; }
+img.block {margin-bottom: 1em; margin-right: 1em;}
+.imgdesc {font-size: 80%; display: block;}
+
+table {border-collapse: collapse;}
+th, td {border: 1px solid rgb(150,150,150); font-size: 90%; padding: 0.5em;}
+th {text-align: left; font-size: 80%;}
+table.pseudocode {background-color: rgb(240,240,240); font-size: 12; font-weight: bold; border-width: 1; border-style: solid; margin-left: +1.5em; width: 98%;}

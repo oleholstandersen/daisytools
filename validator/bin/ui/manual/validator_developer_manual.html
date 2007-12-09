@@ -1,0 +1,4455 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+ <title>Daisy 2.02 Validator Developer Manual</title>
+ <meta http-equiv='Content-type' content='text/html; charset=windows-1252'/>
+ <link type="text/css" rel="stylesheet" href="daisy_manual.css"/>
+</head>
+
+<body>
+<h1 class='title'>Daisy 2.02 Validator Developer Manual</h1>
+<div class="revision">Last revised: k ekdahl, 2003-09-10</div>
+<div class='toc'>
+<h2 id='toc'>Table of Contents</h2>
+  <ul class="linklist">
+    <li><a href='#dev_struct'>1. Developer Manual structure</a></li>
+    <li><a href='#dev_concept'>2. Concept</a></li>
+    <li><a href='#dev_depend'>3. Dependencies</a></li>
+    <li><a href='#dev_valObj'>4. Description of the validation objects</a></li>
+    <li><a href='#dev_relObj'>5. Description of the relations objects</a></li>
+    <li><a href='#dev_comObj'>6. Description of the communication objects</a></li>
+    <li><a href='#dev_vtm'>7. The VTM file</a></li>
+    <li><a href='#dev_adtd'>8. The ADTD files</a></li>
+    <li><a href='#app_tests'>Appendix 1. Validator Tests</a></li>
+  </ul>
+</div>
+
+<h2 id="dev_struct">1. Developer Manual structure</h2>
+
+<p id="sec_docstruc">The text in this manual makes use of a number of predefined expressions.</p>
+
+<table class="overview">
+<tbody>
+<tr>
+<th>Definition</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>Absolute path</td>
+<td>The full path including the last slash without
+filename</td>
+</tr>
+
+<tr>
+<td>Filename</td>
+<td>The full filename including extension</td>
+</tr>
+
+<tr>
+<td>Test</td>
+<td>A single Validator engine test</td>
+</tr>
+
+<tr>
+<td>Context</td>
+<td>A group under which several tests are found</td>
+</tr>
+</tbody>
+</table>
+
+<p class="text">Throughout the section there will be pseudocode examples written to simplify programming, scripting and markup languages.</p>
+
+<table class="overview">
+<tbody>
+<tr>
+<th>Definition</th>
+<th>Example</th>
+</tr>
+
+<tr>
+<td>Variables used are 'long' (32-bit integer), string
+(character array) boolean (has the value 'true' or 'false')</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>Comments are written within a closed pair of '/*'
+and '*/' and use italic fonts</td>
+<td><span class="comment">/* comment
+*/</span></td>
+</tr>
+
+<tr>
+<td>Functions are declared as functionName ( argument1,
+argument2) 'as' returnValue</td>
+<td>write(src as string, dest as long) as boolean</td>
+</tr>
+
+<tr>
+<td>Optional function arguments will be enclosed within
+brackets</td>
+<td>[ ]</td>
+</tr>
+
+<tr>
+<td>Strings that should be replaced with an item that
+corresponds to the text are enclosed within braces</td>
+<td>{ }</td>
+</tr>
+
+<tr>
+<td>Looping or repeating progresses are written out
+using a pair of brackets with two dots inside</td>
+<td>[..]</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id='dev_concept'>2. Concept</h2>
+
+<p>The validator engine DLL is based upon several <a href="#dev_valObj">validation objects</a>. Each object is dedicated to a specific validation purpose and could be used separate. There is also a number of <a href="#dev_relObj">relation objects</a> that are handling relations in between different validation objects, these objects are not to be used as stand alone objects. Finally there is a couple of <a  href="#dev_comObj">communication objects</a> used for communication in between the validation engine and the outside world.</p>
+
+<p>Because of the current structure of the validator engine, there is no possibility to do multiple validations at the same time. There is also no support for validation via http etc. Further, there is no current support for protected DTBs.</p>
+
+
+
+<h2 id='dev_depend'>3. Dependencies</h2>
+
+<p>The validator engine DLL makes use of a number of external components. Some of the components are custom made for the Validator Engine DLL but most are commonly available components found on any normal windows machine.</p>
+
+<table class="overview">
+<tbody>
+<tr>
+<th>Dependencies</th>
+</tr>
+
+<tr>
+<td>MSXML 4.0 or higher</td>
+</tr>
+
+<tr>
+<td>Direct X 7 or higher</td>
+</tr>
+
+<tr>
+<td>Visual Basic 6.0 runtime module</td>
+</tr>
+
+<tr>
+<td>DTDParser.dll - custom made DLL</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2 id="dev_valObj">4 Description of the validation objects</h2>
+
+<p>The validation objects are to be used as standalone objects for user validation, some of these objects are internally instantiated and called by other validation objects. These objects simple to use and requires no preparations.</p>
+
+<p>The various validation objects:</p>
+
+<table class="overview" id="tbldllvalobjs">
+<tbody>
+<tr>
+<th>Validation objects</th>
+<th>Validation type</th>
+</tr>
+
+<tr>
+<td>oValidateDTB</td>
+<td>Validation of a whole DTB file set</td>
+</tr>
+
+<tr>
+<td>oValidateMultiVolume</td>
+<td>Validation of a whole multi-volume DTB file set</td>
+</tr>
+
+<tr>
+<td>oValidateDiscinfo</td>
+<td>Validation of a single discinfo file</td>
+</tr>
+
+<tr>
+<td>oValidateNcc</td>
+<td>Validation of a single ncc file</td>
+</tr>
+
+<tr>
+<td>oValidateSmil</td>
+<td>Validation of a single smil file</td>
+</tr>
+
+<tr>
+<td>oValidateContent</td>
+<td>Validation of a single content (text source)
+file</td>
+</tr>
+
+<tr>
+<td>oValidateMasterSmil</td>
+<td>Validation of a single master smil file</td>
+</tr>
+</tbody>
+</table>
+
+<br />
+<p>All validation objects has one public function named 'fncValidate' and one public object named 'objReport'. The 'fncValidate' function is usually called with one argument, the <a  href="#sec_docstruc">absolute path and filename</a> of the target of validation. All errors that are discovered during the validation will be placed in the public 'objReport' object which is of type <a  href="#sec_dllrepobjs">oReport</a>. After validation the validation object will return a boolean value depending on it's success of validation. This boolean value will only be set to 'false' if an internal processing error occurred, regardless of any failing tests.</p>
+
+<p>Description of the 'fncValidate' arguments for each validation object:</p>
+
+<table class="overview" id="tbldllfncvalidate">
+<tbody>
+<tr>
+<th>Validation Object</th>
+<th>Function and arguments</th>
+<th>Argument usage description</th>
+</tr>
+
+<tr>
+<td>oValidateDTB</td>
+<td>fncValidate( isAbsPath as string ) as boolean</td>
+<td>isAbsPath must be the <a  href=
+"#sec_docstruc">absolute path</a></td>
+</tr>
+
+<tr>
+<td>oValidateMultiVolume</td>
+<td>fncValidate( isAbsPath() as string ) as boolean</td>
+<td>isAbsPath must be all the <a  href="#sec_docstruc">absolute paths</a> to all the volumes in the multivolume DTB fileset</td>
+</tr>
+
+<tr>
+<td>oValidateDiscinfo</td>
+<td>fncValidate( isAbsPath as string ) as boolean</td>
+<td>isAbsPath must be the <a  href="#sec_docstruc">absolute path and filename</a> to the discinfo file</td>
+</tr>
+
+<tr>
+<td>oValidateNcc</td>
+<td>fncValidate( isAbsPath as string,<br />
+optional ibolNccIsMultivolume as boolean ) as boolean</td>
+<td>isAbsPath must be the <a  href="#sec_docstruc">absolute path and filename</a> to the ncc file,<br/>
+ibolNccIsMultiVolume must be set to true if the ncc is part of a
+multivolume DTB</td>
+</tr>
+
+<tr>
+<td>oValidateSmil</td>
+<td>fncValidate( isAbsPath as string ) as boolean</td>
+<td>isAbsPath must be the <a  href=
+"#sec_docstruc">absolute path and filename</a> to the smil
+file</td>
+</tr>
+
+<tr>
+<td>oValidateContent</td>
+<td>fncValidate( isAbsPath as string ) as boolean</td>
+<td>isAbsPath must be the <a  href=
+"#sec_docstruc">absolute path and filename</a> to the content
+file</td>
+</tr>
+
+<tr>
+<td>oValidateMasterSmil</td>
+<td>fncValidate( isAbsPath as string ) as boolean</td>
+<td>isAbsPath must be the <a  href=
+"#sec_docstruc">absolute path and filename</a> to the master smil
+file</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="dev_relObj">5 Description of the relations objects</h2>
+
+<p>The relation objects differs from the <a href="#dev_valObj">validation objects</a> in the way that they are not intended for stand alone validation. Before using one of these objects the user must first validate the data intended for validation trough the corresponding <a  href="#dev_valObj">validation object</a>. Usage of these objects is limited since there are already defined <a href="#dev_valObj">validation objects</a> for most validation purposes.</p>
+
+<p>The various relation objects:</p>
+
+<table class="overview">
+<tbody>
+<tr>
+<th>Relation objects</th>
+<th>Relation validation</th>
+</tr>
+
+<tr>
+<td>oNccSmilRelations</td>
+<td>Validation of the relations in between a NCC file
+and it's referred SMIL files</td>
+</tr>
+
+<tr>
+<td>oSmilMediaRelations</td>
+<td>Validation of the relations in between a SMIL files
+and it's media object files</td>
+</tr>
+
+<tr>
+<td>oMasterSmilRel</td>
+<td>Validation of the relations in between a master SMIL
+files and it's referred SMIL files</td>
+</tr>
+</tbody>
+</table>
+
+<br />
+<p>The relations objects has, like the validation objects, a 'fncValidate' function. The relations objects differs from the <a  href="#sec_dllvalobjs">validation objects</a> in that way that they don't have a 'objReport' object. The user has to supply the 'fncValidate' function with an already initialized variable of type <a  href="#sec_dllrepobjs">oReport</a>.</p>
+
+<p>Description of the 'fncValidate' arguments for all relations objects</p>
+
+<table class="overview">
+<tbody>
+<tr>
+<th>Function and arguments</th>
+<th>Argument usage description</th>
+</tr>
+
+<tr>
+<td>fncValidate( iobjReport as oReport, isAbsPath as string, [ibolMultiVolume as boolean] ) as boolean</td>
+<td>iobjReport must be an initialized object of type <a href="#sec_dllrepobjs">oReport</a>, isAbsPath must be the <a  href="#sec_docstruc">absolute path and filename</a> of the controlling file. ibolMultiVolume is an optional boolean that must be set to 'true' if the object is part of a multi volume.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Description of the 'fncValidate' controlling file ( isAbsPath argument) for each relation object</p>
+
+<table class="overview">
+<tbody>
+<tr>
+<th>Relation object</th>
+<th>Controlling file</th>
+</tr>
+
+<tr>
+<td>oMasterSmilRel</td>
+<td>Master SMIL file</td>
+</tr>
+
+<tr>
+<td>oNccSmilRelations</td>
+<td>NCC file</td>
+</tr>
+
+<tr>
+<td>oSmilMediaRelations</td>
+<td>SMIL file</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="dev_comObj">6 Description of the communication objects</h2>
+
+<p>The communication objects handles the communication in between the validator engine and the outside world. There are two types of communication objects; the <a href="#sec_dllrepobjs">report objects</a> which contains validation report data and the <a  href="#sec_dllconobjs">control objects</a> which handles commands and event messages.</p>
+
+<h3 id="sec_dllrepobjs">The report objects</h3>
+
+<p>The report objects contains report information and provides detailed information about each failed test.</p>
+
+<table class="overview">
+<tbody>
+<tr>
+<th>Report object</th>
+<th>Content</th>
+</tr>
+
+<tr>
+<td>oReport</td>
+<td>Contains a set of oReportItem objects which together form a whole report</td>
+</tr>
+
+<tr>
+<td>oReportItem</td>
+<td>Contains information about a single error</td>
+</tr>
+</tbody>
+</table>
+
+<p>The oReportItem object contains information about each separate error. This information includes name, id, short description, long description, fail type, fail class, file, line, column, comment and link. Some of this information is dynamically collected from the <a  href="#dev_vtm">VTM</a>.</p>
+
+<table class="overview" id="tblrepitmprop">
+<tbody>
+<tr>
+<th>oReportItem property</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>sTestId As String</td>
+<td>Contains the VTM test id of the error</td>
+</tr>
+
+<tr>
+<td>sName As String</td>
+<td>Contains the VTM name of the test</td>
+</tr>
+
+<tr>
+<td>sShortDesc As String</td>
+<td>Contains the VTM short description of the error</td>
+</tr>
+
+<tr>
+<td>sLongDesc As String</td>
+<td>Contains the VTM long description of the error</td>
+</tr>
+
+<tr>
+<td>sFailType As String</td>
+<td>Contains the VTM fail type, is either "error" or
+"warning"</td>
+</tr>
+
+<tr>
+<td>sFailClass As String</td>
+<td>Contains the VTM fail class, is either "critical" or
+"non-critical"</td>
+</tr>
+
+<tr>
+<td>sAbsPath As String</td>
+<td>Contains the <a  href=
+"#sec_docstruc">absolute path and filename</a> of the file where
+the error occured</td>
+</tr>
+
+<tr>
+<td>lColumn As String</td>
+<td>Contains the column in the file where the error
+occured</td>
+</tr>
+
+<tr>
+<td>lLine As String</td>
+<td>Contains the line in the file where the error
+occured</td>
+</tr>
+
+<tr>
+<td>sComment As String</td>
+<td>Contains comments and suggestions for change</td>
+</tr>
+
+<tr>
+<td>sLink As String</td>
+<td>Contains the VTM link to the specification that has info
+about the error</td>
+</tr>
+</tbody>
+</table>
+
+<p>The oReport object contains a collection of oReportItems, information about how many tests has failed and how many has passed.</p>
+
+<table class="overview" id="tblrepfncprop">
+<tbody>
+<tr>
+<th>oReport public function or property</th>
+<th>Arguments</th>
+<th>Description</th>
+<th>Comment</th>
+</tr>
+
+<tr>
+<td>fncInsertFailedTest</td>
+<td>( isTestId as string, [isAbsPath as string], [ilLine
+as long], [ilColumn as long], [ivComment as variant] ) as
+boolean</td>
+<td>Creates a new <a  href="#sec_dllrepobjs">oReportItem</a> instance in the internal array and fills it with the given information</td>
+<td>isTestId is a VTM test id, isAbsPath is the <a href="#sec_docstruc">absolute path and filename</a> of the failing file (if test is performed on a specific file), ilLine is the line in the file where the error occured, ilColumn is the column in the file where the error occured, isComment is for comments and suggestions of change.</td>
+</tr>
+
+<tr>
+<td>fncRetrieveFailedTestItem</td>
+<td>( lItem as long, tItem as oReportItem ) as
+boolean</td>
+<td>Retrieves a pointer to a <a  href="#sec_dllrepobjs">oReportItem</a> in the internal array</td>
+<td>lItem is a variable containing the number of the report item to retrieve, tItem is an object that will receive a pointer to the specified report item.</td>
+</tr>
+
+<tr>
+<td>subInsertSuccededTest</td>
+<td>( )</td>
+<td>Increases the lSucceededTestCount variable</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>lFailedTestCount as long</td>
+<td>-</td>
+<td>Contains the number of error report items within the oReport</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>lSucceededTestCount as long</td>
+<td>-</td>
+<td>Contains the number of tests succeeded</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+
+<br />
+<br />
+<table class="pseudocode">
+<tbody>
+<tr>
+<th>Example of how to use the oReport class</th>
+</tr>
+
+<tr>
+<td><span class="comment">/* This is an example of how to insert and retrieve error report items in the oReport object */</span></td>
+</tr>
+
+<tr>
+<td>declare myReport as new oReport<br />
+declare myReportItem as oReportItem<br />
+declare lErrorItem as long<br />
+<br />
+<span class="comment">/* Notice in the declaration that the 'myReportItem' is not declared as 'new' since it is only going to be used for retrieving pointers to already existing data.<br />
+<br />
+The following lines of code will insert the error 'smilTest.seqDur' and say that the error is located in 'c:\test1.smil' on line 8 column 20. The rest of the information is left out since it's optional. After this we will present the errors to the user by using 'fncRetrieveFailedTestItem' */</span><br />
+<br />
+myReport.fncInsertFailedTest "smilTest.seqDur", "c:\test1.smil", 8, 20<br />
+<br />
+[..]<br />
+<br />
+for lErrorItem = 0 to myReport.lFailedTestCount - 1<br />
+&nbsp;&nbsp;myReport.fncRetrieveFailedTestitem lErrorItem,
+myReportItem<br />
+&nbsp;&nbsp;print "error " &amp; myReportItem.name &amp; " found in
+file " &amp; myReportItem.sAbsPath &amp; "<br />
+&nbsp;&nbsp;&nbsp;&nbsp;at line " &amp; myReportItem.lLine &amp; "
+column " &amp; myReportItem.lColumn &amp; "."<br />
+next lErrorItem<br />
+</td>
+</tr>
+</tbody>
+</table>
+
+<br />
+
+<h3 id="sec_dllconobjs">The control objects</h3>
+
+<p>The control objects are used for sending commands to the validator engine as well as receiving incoming events. There are two control objects; the oUserControl and the oEvent object.</p>
+
+<table class="overview">
+<tbody>
+<tr>
+<td>oUserControl</td>
+<td>Used for sending commands to the validator
+engine</td>
+</tr>
+
+<tr>
+<td>oEvent</td>
+<td>Used for receiving events from the validator</td>
+</tr>
+</tbody>
+</table>
+
+<p>The oUserControl objects functions</p>
+
+<table class="overview" id="tblouserfunc">
+<tbody>
+<tr>
+<th>Name</th>
+<th>Arguments</th>
+<th>Description</th>
+<th>Comment</th>
+</tr>
+
+<tr>
+<td>fncSetVtmPath</td>
+<td>( isVtmPath As String ) As Boolean</td>
+<td>Sets the path of the VTM file</td>
+<td>isVtmPath is the <a  href=
+"#sec_docstruc">absolute path</a> of the directory where the VTM
+file is located</td>
+</tr>
+
+<tr>
+<td>fncSetDTDPath</td>
+<td>( isDTDPath As String ) As Boolean</td>
+<td>Sets the path of the DTD files</td>
+<td>isDTDPath is the <a  href=
+"#sec_docstruc">absolute path</a> of the directory where the DTD
+files are located</td>
+</tr>
+
+<tr>
+<td>fncSetAdtdPath</td>
+<td>( isAdtdPath As String ) As Boolean</td>
+<td>Sets the path of the ADTD files</td>
+<td>isAdtdPath is the <a  href=
+"#sec_docstruc">absolute path</a> of the directory where the ADTD
+files are located</td>
+</tr>
+
+<tr>
+<td>fncSetTempPath</td>
+<td>( isTempPath As String )</td>
+<td>Sets the validator temporary path</td>
+<td>isTempPath is the <a  href=
+"#sec_docstruc">absolute path</a> of the directory where temporary
+files should be saved</td>
+</tr>
+
+<tr>
+<td>fncSetCancelFlag</td>
+<td>( ) As Boolean</td>
+<td>Instructs the validator to cancel validation</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>fncClearCancelFlag</td>
+<td>( ) As Boolean</td>
+<td>Clears the cancel flag, this must be done before
+attempting to do a new validation</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>fncGetCancelFlag</td>
+<td>( ) As boolean</td>
+<td>Retrieving the cancel status</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>fncGetProgress</td>
+<td>( ) As Byte</td>
+<td>Retrieves the current validation progress</td>
+<td>Returns the current validations progress in
+percent</td>
+</tr>
+
+<tr>
+<td>fncSetTimeSpan</td>
+<td>( ilSpanMs As Long ) As Long</td>
+<td>Sets the allowed fluctuation for time values found
+in different files</td>
+<td>ilSpanMs must contain the number of milliseconds
+that is the allowed fluctuation</td>
+</tr>
+</tbody>
+</table>
+
+<p>The oUserControl objects properties</p>
+
+<table class="overview" id="tblouserprop">
+<tbody>
+<tr>
+<th>Name</th>
+<th>Return type</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>propAdtdPath</td>
+<td>String</td>
+<td>Retrieves the current ADTD path</td>
+</tr>
+
+<tr>
+<td>propDTDPath</td>
+<td>String</td>
+<td>Retrieves the current DTD path</td>
+</tr>
+
+<tr>
+<td>propTempPath</td>
+<td>String</td>
+<td>Retrieves the current temporary file path</td>
+</tr>
+
+<tr>
+<td>propVtmPath</td>
+<td>Variant</td>
+<td>Retrieves the current VTM path</td>
+</tr>
+
+<tr>
+<td>xobjEvent</td>
+<td>oEvent</td>
+<td>Retrieves a pointer from the validators event handler</td>
+</tr>
+</tbody>
+</table>
+
+<br />
+<p>To retrieve events from the validator, a variable of type oEvent must be declared and set to point at the xobjEvent variable found in the oUserControl object.<br />
+<br />
+The oEvent objects events</p>
+
+<table class="overview" id="tbloeventevents">
+<tbody>
+<tr>
+<th>Name</th>
+<th>Arguments</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>evErrorLog</td>
+<td>( sError As String )</td>
+<td>This event is fired each time an internal error occurs, the sError contains an description and the location of the error</td>
+</tr>
+
+<tr>
+<td>evFailedTest</td>
+<td>( )</td>
+<td>This event is fired each time a test has failed</td>
+</tr>
+
+<tr>
+<td>evSucceededTest</td>
+<td>( )</td>
+<td>This event is fired each time a test has passed</td>
+</tr>
+
+<tr>
+<td>evProgressChanged</td>
+<td>( )</td>
+<td>This event is fired each time the current validation
+progress has changed</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2 id="dev_vtm">7. The VTM file</h2>
+
+<p>The VTM (Validator Test Map) file contains detailed information about each test performed by the validator.</p>
+
+<h3>Concept</h3>
+
+<p>The validator engine gathers information for each test from the VTM, this is the same information reported in the validator software, since it is built upon the validator engine. Thus altering the VTM changes the actual internal data content of the validator engines reports.</p>
+
+<p>The VTM is an XML document with a custom document type. This document type declares several elements among which the &lt;test&gt; element forms the very core of the VTM. Other elements that are used are &lt;category&gt; and &lt;subcategory&gt; whose purpose is to group and categorize tests.</p>
+
+<p>The VTM is taking advantage of XML to create templates and an advanced inheritance system.</p>
+
+<h3 id="vtmTest">The &lt;test&gt; element</h3>
+
+<p>The &lt;test&gt; element contains information for actual tests performed by the validator.</p>
+
+<table class="overview">
+<tbody>
+<tr>
+<th>Attribute</th>
+<th>Note</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td></td>
+<td>context</td>
+<td>The test ID</td>
+</tr>
+
+<tr>
+<td></td>
+<td>name</td>
+<td>The test name</td>
+</tr>
+
+<tr>
+<td></td>
+<td>shortDesc</td>
+<td>The short test fail description of the test</td>
+</tr>
+
+<tr>
+<td></td>
+<td>longDesc</td>
+<td>The whole test fail description of the test</td>
+</tr>
+
+<tr id="failtype">
+<td></td>
+<td>failType</td>
+<td>The fail type of the test, must be 'error' or
+'warning'</td>
+</tr>
+
+<tr id="failclass">
+<td></td>
+<td>failClass</td>
+<td>The fail class of the test. Must be 'critical' or
+'non-critical'. Only applies if failType is type 'error'</td>
+</tr>
+
+<tr>
+<td></td>
+<td>link</td>
+<td>Link to a document describing the correct behavior
+of the tested item. Common use is to link to specifications</td>
+</tr>
+</tbody>
+</table>
+
+<br />
+<p>The &lt;test&gt; attribute 'context' MUST contain a validator engine ID for the validator engine to be able to use the input data.</p>
+<p>Attributes other than 'context' can have any or no data. This data can be altered to suit different languages, quality levels of validation etc.</p>
+
+<table class="pseudocode">
+<tbody>
+<tr>
+<th>Test element example</th>
+</tr>
+
+<tr>
+<td>&lt;test context="fileIsReadable" name="File is
+readable" shortDesc="File is not readable" failType="error"
+failClass="critical" /&gt;</td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>Inheritance</h3>
+
+<p>Many tests are used several times for different validation purposes within the validator engine. To be able to differ the tests from each other the VTM uses contexts. A chain of contexts is written as a full string with a '.' separating each context, at the end of each context, a validator engine test id is found.</p>
+
+<table class="pseudocode">
+<tbody>
+<tr>
+<th>Context example</th>
+</tr>
+
+<tr>
+<td>The test 'fileIsReadable' is used for validating the readability of each single file type. To separate the different tests, contexts are used.<br />
+<br />
+As an example, while validating a SMIL file the chain of contexts
+could look something like 'smil.fileIsReadable' as an opposite to
+the NCC test that would be named 'ncc.fileIsReadable'.
+<br />
+</td>
+</tr>
+</tbody>
+</table>
+
+<p>As stated, only the last part of the
+context chain is an actual test id, the rest is mere contexts. The
+contexts are declared within the VTM with the elements
+&lt;category&gt; and &lt;subcategory&gt;.</p>
+
+<table class="overview">
+<tbody>
+<tr>
+<th>Element Name</th>
+<th>Attribute</th>
+<th>Note</th>
+</tr>
+
+<tr id="elmcategory">
+<td>category</td>
+<td>-</td>
+<td>Used to group subcategories into a specific
+context</td>
+</tr>
+
+<tr>
+<td></td>
+<td>context</td>
+<td>The context of the grouped subgroups</td>
+</tr>
+
+<tr>
+<td></td>
+<td>name</td>
+<td>The name of the context group</td>
+</tr>
+
+<tr id="elmsubcategory">
+<td>subcategory</td>
+<td>-</td>
+<td>Used to group tests or other subcategories into a
+specific context</td>
+</tr>
+
+<tr>
+<td></td>
+<td>context</td>
+<td>The context of the grouped tests</td>
+</tr>
+
+<tr>
+<td></td>
+<td>name</td>
+<td>The name of the context subgroup</td>
+</tr>
+</tbody>
+</table>
+
+<p>To place a test within a specific
+context, the user must place the specific &lt;test&gt; element
+within a &lt;category&gt; or &lt;subcategory&gt; element.
+</p>
+
+<table class="pseudocode">
+<tbody>
+<tr>
+<th>VTM context declaration example</th>
+</tr>
+
+<tr>
+<td>&lt;subcategory context='SMIL'&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;test id='fileIsReadable' [..] &gt;<br/>
+&lt;/subcategory&gt;</td>
+</tr>
+</tbody>
+</table>
+
+<p>This method would not suffice for some
+tests though, therefore the use of more extended contexts is very
+common within the VTM.<br />
+<br />
+Single DTB validation for example, validates all files within the
+DTB fileset and would have to separate the different tests with
+adding another context to the context chain.<br />
+<br />
+</p>
+
+<table class="pseudocode">
+<tbody>
+<tr>
+<th>Extended context example</th>
+</tr>
+
+<tr>
+<td>dtb.smil.fileIsReadable<br />
+dtb.ncc.fileIsReadable</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Entities</h3>
+
+<p>The frequent repetition of identical
+tests within different contexts calls for a way to create templates
+to prevent excessive writing. XML document type declarations offers
+entity declaration which is used within the VTM as a way of
+creating templates.</p>
+<p>
+While there is not only single tests that are frequently repeated,
+but whole set of tests, entities are also used to create templates
+for whole contexts. While most tests are used more than once, the
+most efficient way of creating the VTM document is to create all
+contexts as entities.</p>
+
+<table class="pseudocode">
+<tbody>
+<tr>
+<th>Entity examples</th>
+</tr>
+
+<tr>
+<td>&lt;!ENTITY fileExists "<br />
+&lt;test context='exists' name='file exists' shortDesc='file not
+found' longDesc='file not found' failType='error'
+failClass='critical' link=''/&gt;<br />
+" &gt;<br />
+<br />
+&lt;!ENTITY fileIntegrity "<br />
+&lt;category context='SMIL'&gt;<br />
+&amp;fileExists;<br />
+[..]<br />
+&lt;/category&gt;<br />
+" &gt;</td>
+</tr>
+</tbody>
+</table>
+
+<p>Contexts could provide problems while trying to differ from the 'normal' case of behavior. For example, the 'exists' test is testing if a file exists and is used for all file types (NCC/smil/mastersmil/discinfo/content/audio). This test should in almost all cases give a critical error. One example where this test should give a warning instead of a critical error is when the master SMIL file is missing during a full DTB validation.</p>
+<p>Overriding this is very simple. Declaring a new element with the same context chain makes the validator engine ignore the previous instance (within the current context only).</p>
+
+<table class="pseudocode">
+<tbody>
+<tr>
+<th>Using entities as templates and overriding them</th>
+</tr>
+
+<tr>
+<td><span class="comment">&lt;!-- Declaring
+the entity for the 'exists' test --&gt;</span> <br />
+&lt;!ENTITY fileExists "<br />
+&lt; test context='exists' name='file exists' shortDesc='file not
+found' longDesc='file not found' failType='error'
+failClass='critical' link=''/&gt;<br />
+" &gt;<br />
+<br />
+<span class="comment">&lt;!-- The context
+'fileIntegrity' integrates the 'fileExists' entity. The
+'fileIntegrity' context is used by many functions within the
+validator engine.</span> --&gt;<br />
+&lt;!ENTITY fileIntegrity "<br />
+&lt;subcategory name='file validation' context='fi'&gt;
+&amp;fileExists;<br />
+[..]<br />
+&lt;/subcategory&gt;<br />
+" &gt;<br />
+<br />
+<span class="comment">&lt;!-- The context
+'mastersmil_internal' is just one of the contexts that integrates
+the 'fileIntegrity' entity. The 'mastersmil_internal' context is
+used for single master SMIL validation and by the full DTB and
+multi volume DTB validations.</span> --&gt;<br />
+&lt;ENTITY mastersmil_internal "<br />
+&lt;category name='master SMIL document internal validation'
+context='mastersmil'<br />
+&amp;fileIntegrity;<br />
+[..]<br />
+&lt;/category&gt;<br />
+" &gt;<br />
+<br />
+<span class="comment">&lt;!-- Since it's optional to use
+a master SMIL file in a DTB, this context has to redefine the
+failType of the 'exists' test under the mastersmil tests after
+those have been included.</span> --&gt;<br />
+&lt;!ENTITY DTB "<br />
+&lt;category name='DTB validation' context='DTB'&gt;<br />
+[..]<br />
+&amp;mastersmil_internal;<br />
+&lt;subcategory name='file validation' context='mastersmil.fi'
+&gt;<br />
+&lt;test context='exists' name='file exists' shortDesc='file not
+found' longDesc='file not found in DTB directory'
+failType='warning' failClass='' link='' /&gt;<br />
+&lt;/subcategory&gt;<br />
+[..]<br />
+&lt;/category&gt;<br />
+" &gt;</td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>Base elements</h3>
+
+<p>The VTM 'validator' element is the base
+element of the VTM. Nested within the 'validator' element is the
+'validatorTestMap' where all categories and tests that are to be
+used by the validator engine must be declared.</p>
+
+<h2 id='dev_adtd'>8. The ADTD files</h2>
+
+<p>The ADTD files are based upon the W3C DTD specification but overrides and extends it in many ways. There is one ADTD for each XML based document found within a DTB.</p>
+
+<table class="overview">
+<tbody>
+<tr>
+<th>File type</th>
+<th>ADTD file name</th>
+</tr>
+
+<tr>
+<td>NCC</td>
+<td>ncc.adtd</td>
+</tr>
+
+<tr>
+<td>SMIL</td>
+<td>smil.adtd</td>
+</tr>
+
+<tr>
+<td>Content document</td>
+<td>content.adtd</td>
+</tr>
+
+<tr>
+<td>Discinfo document</td>
+<td>discinfo.adtd</td>
+</tr>
+
+<tr>
+<td>Master SMIL document</td>
+<td>msmil.adtd</td>
+</tr>
+
+<tr>
+<td>Multi volume NCC</td>
+<td>multivolume.adtd</td>
+</tr>
+</tbody>
+</table>
+
+<p>The ADTD documents takes three
+declaration objects; ENTITY, ATTLIST and ATTCORLIST.</p>
+
+<h3>The ADTD rules</h3>
+
+<p>The ADTD rules system is very similar to
+the W3C DTD specification. The system is based upon string
+expressions, occurrence suffixes, separators, entities, character
+entities, character data and spans.</p>
+
+<p>An ADTD rule set is always enclosed within a pair of parentheses, a
+typical string expression is enclosed within double (") or single
+(') quotes.
+</p>
+
+<table class="overview">
+<tbody>
+<tr>
+<th>The ADTD occurrence suffixes</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>+</td>
+<td>Must occur one or more times</td>
+</tr>
+
+<tr>
+<td>?</td>
+<td>Must occur one or zero times</td>
+</tr>
+
+<tr>
+<td>*</td>
+<td>Must occur zero or more times</td>
+</tr>
+
+<tr>
+<td>{no suffix}</td>
+<td>Must occur one time</td>
+</tr>
+</tbody>
+</table>
+
+<br />
+<table class="overview">
+<tbody>
+<tr>
+<th>The ADTD separators</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>,</td>
+<td>Both the expression before and after the ',' must be true and they must follow the given order.</td>
+</tr>
+
+<tr>
+<td>|</td>
+<td>Either the expression before the '|' OR the expression after it must be true.</td>
+</tr>
+</tbody>
+</table>
+
+<p>This system gives the user a powerful way of controlling the data flow.</p>
+
+<table class="pseudocode">
+<tbody>
+<tr>
+<th>Simple ADTD rules example</th>
+</tr>
+
+<tr>
+<td><span class="comment">/* The given data
+must according to the rules given contain the string 'black' or
+'blue' */</span> <br />
+('black' | 'blue')<br />
+<br />
+<span class="comment">/* The given data must according
+to the rules given contain 'big' and 'apple' in series. */</span>
+<br />
+('big', 'apple')<br />
+<br />
+<span class="comment">/* The given data can according to
+the rules given contain 'big' but MUST contain 'car', and if 'big'
+exists, 'car' must be in series. */</span> <br />
+(('big')?, 'car')</td>
+</tr>
+</tbody>
+</table>
+
+<p>Declaration of allowed characters are
+possible to make using the above example, though it get's somewhat
+ineffective. Using a character data or span is an better option.</p>
+<p>
+A character data set is defined as '[{the characters}]', a span is
+defined as '[{from character}-{to character}]'. These two methods
+can also be combined to form the most effective solution.</p>
+
+<table class="pseudocode">
+<tbody>
+<tr>
+<th>Extended ADTD rules example</th>
+</tr>
+
+<tr>
+<td><span class="comment">/* The given data
+must according to the rules given contain one or zero of the
+characters */</span> <br />
+([abcABC])?<br />
+<br />
+<span class="comment">/* The given data must according
+to the rules given contain one or several of the characters
+explicitly stated or found in between 'a' and 'z' ('a' and 'z'
+included) */</span> <br />
+([0123456789a-z])+</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="notice">Note that character data sets and spans are case sensitive.
+Those who are used to the standard DTD set, notice that none of the
+two NOT signs, '-' and '^', are allowed within an ADTD.
+</div>
+
+
+<p>
+Hexadecimal character entities can be used to replace characters
+where needed. A hexadecimal character entity is declared trough
+'#x{hexnumber of character};'.
+</p>
+
+<h3 class="subsection">Entities</h3>
+
+<p>Entities are declared using the standard
+!ENTITY declaration. Entities are parsed immediately, disregarding
+any standard parsing rules. Recursive parsing is not used,
+therefore the loading process of a ADTD will fail if an entity is
+used before it is declared in the file.</p>
+<p>
+No standard identifiers such as CDATA, IDTOKEN etc. are allowed.</p>
+
+<p>
+Entities are declared trough &lt;!ENTITY % {entityname} "{<a
+ href="#sec_adtdRules">rules</a>}"&gt; and are referred
+to by %{entityname}; .</p>
+
+
+<table class="pseudocode">
+<tbody>
+<tr>
+<th>Entity example</th>
+</tr>
+
+<tr>
+<td>&lt;!ENTITY % endsync-val "('last')"&gt;</td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>Attribute lists</h3>
+
+<p>Attribute lists are declared using the
+standard !ATTLIST declaration. ATTLIST objects always belongs to a
+certain element and can contain several attribute declarations for
+that specific element.</p>
+
+<p>The ATDT ATTLIST declaration differs from the standard W3C DTD
+specification in the sense that the attribute contents are binding
+and has a parameter for case sensitivity.</p>
+<p>
+ATTLIST are declared trough &lt;!ATTLIST {element name} {attribute
+name} {<a  href="#sec_adtdRules">attribute content
+rules</a>} {case sensitivity (CI for case insensitive, CS for case
+sensitive)} {DTD legacy (unused, should always be #IMPLIED)} [..]
+&gt; .</p>
+
+<table class="pseudocode">
+<tbody>
+<tr>
+<th>ATTLIST example</th>
+</tr>
+
+<tr>
+<td>&lt;!ATTLIST audio<br />
+src %URI-referenceExcerpt; CI #IMPLIED<br />
+clip-begin %NPTs; CS #IMPLIED<br />
+clip-end %NPTs; CS #IMPLIED<br />
+&gt;</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="sec_adtdRules">The attribute correlation list</h3>
+
+<p>The attribute correlation list is a
+total stepaway from the original W3C DTD specification. The
+attribute correlation list is declared trough !ATTCORLIST and
+defines attribute contents rules depending on the contents of other
+attributes within the same element.</p>
+
+<p>
+In an attribute correlation list, the first attribute name / rules
+pair is the controlling one.</p>
+
+<p>
+Declaration is done trough &lt;!ATTLIST {element} {controlling
+attributes name} <a  href="#sec_adtdRules">{contents
+rules}</a> {case sensitivity (CI for case insensitive, CS for case
+sensitive)} {attribute name} <a  href=
+"#sec_adtdRules">{attribute contents rules}</a> {case sensitivity}
+[..] # <a  href="#sec_adtdRules">{occurrence suffix}</a>
+{recommended or required, put 'r' for recommended, leave blank
+otherwise} &gt;</p>
+
+<table class="pseudocode">
+<tbody>
+<tr>
+<th>Attribute correlation list example</th>
+</tr>
+
+<tr>
+<td><span class="comment">/* The following
+example declares that if a &lt;meta&gt; element is found that has a
+'name' attribute that contains 'dc:format' (case sensitive) then
+the element must have a 'content' attribute with the contents
+'Daisy 2.02' (case insensitive). The occurrence suffix is left
+blank; the combination must exists within the given data once.
+*/</span> <br />
+<br />
+&lt;!ATTCORLIST meta name ('dc:format') CS content ('Daisy 2.02')
+CI #&gt;<br />
+<br />
+<span class="comment">/* The following example declares
+that if a &lt;meta&gt; element is found that has a 'name' attribute
+that contains 'dc:date' (case sensitive) then the element must have
+a 'scheme' attribute with the contents 'YYYY-MM-DD' (case
+insensitive) and a 'content' attribute that conforms to the form of
+date. The combination may exists within the given data once but is
+recommended. */</span> <br />
+<br />
+&lt;!ENTITY % DIGIT "[0-9]"&gt;<br />
+&lt;!ENTITY % YEAR4 "(%DIGIT;, %DIGIT;, %DIGIT;, %DIGIT;)"&gt;<br/>
+&lt;!ENTITY % MONTH "(('10') | ('11') | ('12') | ('0',
+([1-9])))"&gt;<br />
+&lt;!ENTITY % DAY "(('0', [1-9]) | ([1-2], [0-9]) | ('30' |
+'31'))"&gt;<br />
+<br />
+&lt;!ATTCORLIST meta name ('dc:date') CS scheme ('YYYY-MM-DD') CI
+contents (%YEAR4;, ('-')?, %MONTH;, ('-')?, %DAY;) CS #?r&gt;<br/>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="app_tests">Appendix 1. Validator Tests</h2>
+
+<p>Note that the list below is incomplete; the DTD and ADTD tests, appearing as single tests below, actually encompass many tests. For a full listing of tests done, the DTD and ADTD documents need to be reviewed as well.</p>
+
+<p>The core logic of the tests are contained within the VTM (Validator Test Map) file. This is available in the Validator install directory. The name of the file is "vtm.xml"</p>
+
+<table class="testTable" id="testTable">
+<tbody>
+<tr>
+<th width="40%">Name</th>
+<th width="60%">Explanation</th>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Single Ncc</p>
+</td>
+<td>
+<p class="desc">Validates a single NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-XML integrity</p>
+</td>
+<td>
+<p class="desc">Tests the XML integrity of the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is wellformed</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is a wellformed XML
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Has documenttype</p>
+</td>
+<td>
+<p class="desc">Checks wheter the document has a doctype
+statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is documenttype</p>
+</td>
+<td>
+<p class="desc">Verifies that the document corresponds to its
+doctype statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Given DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the given
+DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Custom DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the validator
+custom DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-ADTD compliance</p>
+</td>
+<td>
+<p class="desc">Tests the NCC versus the NCC ADTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Attribute content</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid
+content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-Attribute correlation</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid content
+regarding their siblings</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Is found</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Has valid content</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes has valid content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Element - attribute combination</p>
+</td>
+<td>
+<p class="desc">Verifies that the element - attribute combination
+is correct</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Heading nesting</p>
+</td>
+<td>
+<p class="desc">Verifies that all h[x]:es are nested correctly</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Page normals</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:pageNormal'
+corresponds to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Page specials</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:pageSpecial'
+corresponds to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Page fronts</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:pageFront' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Footnotes</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:footNotes' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Prodnotes</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:prodNotes' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Sidebars</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:sidebars' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Toc items</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:tocItems' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Heading depth</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:depth' corresponds to
+the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Single Smil</p>
+</td>
+<td>
+<p class="desc">Validates a single SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of the SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-XML integrity</p>
+</td>
+<td>
+<p class="desc">Tests the XML integrity of the SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is wellformed</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is a wellformed XML
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Has documenttype</p>
+</td>
+<td>
+<p class="desc">Checks wheter the document has a doctype
+statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is documenttype</p>
+</td>
+<td>
+<p class="desc">Verifies that the document corresponds to its
+doctype statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Given DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the given
+DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Custom DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the validator
+custom DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-ADTD compliance</p>
+</td>
+<td>
+<p class="desc">Tests the SMIL versus the SMIL ADTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Attribute content</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid
+content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-Attribute correlation</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid content
+regarding their siblings</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Is found</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Has valid content</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes has valid content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Element - attribute combination</p>
+</td>
+<td>
+<p class="desc">Verifies that the element - attribute combination
+is correct</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Seq dur exists</p>
+</td>
+<td>
+<p class="desc">Verifies that all &lt;seq&gt; elements has a 'dur'
+attribute</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Seq dur value</p>
+</td>
+<td>
+<p class="desc">Verifies that all 'dur' attributes contains a
+correct value</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Time in this smil</p>
+</td>
+<td>
+<p class="desc">Verifies that the meta data 'ncc:timeInThisSmil'
+contains a correct value</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Master smil</p>
+</td>
+<td>
+<p class="desc">Validates a single master SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of the master SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-XML integrity</p>
+</td>
+<td>
+<p class="desc">Tests the XML integrity of the master SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is wellformed</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is a wellformed XML
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Has documenttype</p>
+</td>
+<td>
+<p class="desc">Checks wheter the document has a doctype
+statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is documenttype</p>
+</td>
+<td>
+<p class="desc">Verifies that the document corresponds to its
+doctype statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Given DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the given
+DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Custom DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the validator
+custom DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-ADTD compliance</p>
+</td>
+<td>
+<p class="desc">Tests the master SMIL versus the master SMIL
+ADTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Attribute content</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid
+content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-Attribute correlation</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid content
+regarding their siblings</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Is found</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Has valid content</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes has valid content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Element - attribute combination</p>
+</td>
+<td>
+<p class="desc">Verifies that the element - attribute combination
+is correct</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Content</p>
+</td>
+<td>
+<p class="desc">Validates a single content document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of the content
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-XML integrity</p>
+</td>
+<td>
+<p class="desc">Tests the XML integrity of the content document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is wellformed</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is a wellformed XML
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Has documenttype</p>
+</td>
+<td>
+<p class="desc">Checks wheter the document has a doctype
+statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is documenttype</p>
+</td>
+<td>
+<p class="desc">Verifies that the document corresponds to its
+doctype statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Given DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the given
+DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Custom DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the validator
+custom DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-ADTD compliance</p>
+</td>
+<td>
+<p class="desc">Tests the content document versus the content
+ADTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Attribute content</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid
+content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-Attribute correlation</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid content
+regarding their siblings</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Is found</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Has valid content</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes has valid content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Element - attribute combination</p>
+</td>
+<td>
+<p class="desc">Verifies that the element - attribute combination
+is correct</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Discinfo</p>
+</td>
+<td>
+<p class="desc">Validates a single discinfo</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of the Discinfo
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-XML integrity</p>
+</td>
+<td>
+<p class="desc">Tests the XML integrity of the Discinfo
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is wellformed</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is a wellformed XML
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Has documenttype</p>
+</td>
+<td>
+<p class="desc">Checks wheter the document has a doctype
+statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Is documenttype</p>
+</td>
+<td>
+<p class="desc">Verifies that the document corresponds to its
+doctype statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Given DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the given
+DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Custom DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the validator
+custom DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-ADTD compliance</p>
+</td>
+<td>
+<p class="desc">Tests the Discinfo document versus the Discinfo
+ADTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Attribute content</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid
+content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-Attribute correlation</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid content
+regarding their siblings</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Is found</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Has valid content</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes has valid content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Element - attribute combination</p>
+</td>
+<td>
+<p class="desc">Verifies that the element - attribute combination
+is correct</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Single DTB</p>
+</td>
+<td>
+<p class="desc">Validates a single DTB fileset</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-Single Ncc</p>
+</td>
+<td>
+<p class="desc">Validates the DTB NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-XML integrity</p>
+</td>
+<td>
+<p class="desc">Tests the XML integrity of the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Is wellformed</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is a wellformed XML
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Has documenttype</p>
+</td>
+<td>
+<p class="desc">Checks wheter the document has a doctype
+statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Is documenttype</p>
+</td>
+<td>
+<p class="desc">Verifies that the document corresponds to its
+doctype statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Given DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the given
+DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Custom DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the validator
+custom DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-ADTD compliance</p>
+</td>
+<td>
+<p class="desc">Tests the NCC versus the NCC ADTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Attribute content</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid
+content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-Attribute correlation</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid content
+regarding their siblings</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Is found</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Has valid content</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes has valid content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Element - attribute combination</p>
+</td>
+<td>
+<p class="desc">Verifies that the element - attribute combination
+is correct</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Heading nesting</p>
+</td>
+<td>
+<p class="desc">Verifies that all h[x]:es are nested correctly</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Page normals</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:pageNormal'
+corresponds to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Page specials</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:pageSpecial'
+corresponds to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Page fronts</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:pageFront' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Footnotes</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:footNotes' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Prodnotes</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:prodNotes' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Sidebars</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:sidebars' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Toc items</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:tocItems' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Heading depth</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:depth' corresponds to
+the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-NCC - SMIL relations</p>
+</td>
+<td>
+<p class="desc">Validates the relationship inbetween the NCC and
+its SMIL files</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-Single Smil</p>
+</td>
+<td>
+<p class="desc">Validates each SMIL in the DTB fileset</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of the SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-XML integrity</p>
+</td>
+<td>
+<p class="desc">Tests the XML integrity of the SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Is wellformed</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is a wellformed XML
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Has documenttype</p>
+</td>
+<td>
+<p class="desc">Checks wheter the document has a doctype
+statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Is documenttype</p>
+</td>
+<td>
+<p class="desc">Verifies that the document corresponds to its
+doctype statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Given DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the given
+DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Custom DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the validator
+custom DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-ADTD compliance</p>
+</td>
+<td>
+<p class="desc">Tests the SMIL versus the SMIL ADTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Attribute content</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid
+content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">-Attribute correlation</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid content
+regarding their siblings</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Is found</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Has valid content</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes has valid content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Element - attribute combination</p>
+</td>
+<td>
+<p class="desc">Verifies that the element - attribute combination
+is correct</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Seq dur exists</p>
+</td>
+<td>
+<p class="desc">Verifies that all &lt;seq&gt; elements has a 'dur'
+attribute</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Seq dur value</p>
+</td>
+<td>
+<p class="desc">Verifies that all 'dur' attributes contains a
+correct value</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Time in this smil</p>
+</td>
+<td>
+<p class="desc">Verifies that the meta data 'ncc:timeInThisSmil'
+contains a correct value</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-SMIL - Media relations</p>
+</td>
+<td>
+<p class="desc">Validates the relationship inbetween the SMIL files
+and their Media files</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-Content</p>
+</td>
+<td>
+<p class="desc">Validates each content document refered to by all
+SMIL files</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of the content
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">-XML integrity</p>
+</td>
+<td>
+<p class="desc">Tests the XML integrity of the content document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Is wellformed</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is a wellformed XML
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Has documenttype</p>
+</td>
+<td>
+<p class="desc">Checks wheter the document has a doctype
+statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Is documenttype</p>
+</td>
+<td>
+<p class="desc">Verifies that the document corresponds to its
+doctype statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Given DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the given
+DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Custom DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the validator
+custom DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">-ADTD compliance</p>
+</td>
+<td>
+<p class="desc">Tests the content document versus the content
+ADTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Attribute content</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid
+content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">-Attribute correlation</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid content
+regarding their siblings</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">Is found</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">Has valid content</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes has valid content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">Element - attribute combination</p>
+</td>
+<td>
+<p class="desc">Verifies that the element - attribute combination
+is correct</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Text object ID</p>
+</td>
+<td>
+<p class="desc">Verifies that all IDs refered to by all SMIL files
+exists in the corresponding content document (text media
+object)</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-Content document - SMIL relations</p>
+</td>
+<td>
+<p class="desc">Validates the relationship inbetween the content
+document and the refered SMIL files</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the refered SMIL file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Fragment exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the refered ID exists in the refered
+SMIL file</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of all Audio media
+objects</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the refered audio file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">File is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the refered audio file is physically
+readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Allowed audio type</p>
+</td>
+<td>
+<p class="desc">Verifies that the refered audio media object is of
+an allowed audio type</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Valid extension</p>
+</td>
+<td>
+<p class="desc">Verifies that the refered audio media object has an
+valid file extension</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Clip-begin exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the given clip-start position exists
+within the refered audio media object</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Clip-end exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the given clip-end position exists
+within the refered audio media object</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Clip-begin lower than clip-end</p>
+</td>
+<td>
+<p class="desc">Verifies that the given clip-begin is lower than
+the given clip-end</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Fragment exist</p>
+</td>
+<td>
+<p class="desc">Verifies that all IDs refered to by the NCC exists
+in the corresponding SMIL file</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Points to allowed element</p>
+</td>
+<td>
+<p class="desc">Verifies that all IDs refered to by the NCC exists
+on allowed elements</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Smil list is sequencial</p>
+</td>
+<td>
+<p class="desc">Verifies that no SMIL file referations are crossing
+eachother</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Totaltime</p>
+</td>
+<td>
+<p class="desc">Verifies that the NCC meta data 'ncc:totalTime'
+corresponds to the SMIL list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">First par or text</p>
+</td>
+<td>
+<p class="desc">Verifies that the first &lt;par&gt; or &lt;text&gt;
+element in each smil is refered to by the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Totalelapsedtime</p>
+</td>
+<td>
+<p class="desc">Verifies that the SMIL meta data
+'ncc:totalElapsedTime' corresponds to the 'ncc:totalTime' of all
+previous SMIL files</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-Master SMIL</p>
+</td>
+<td>
+<p class="desc">Validates the DTB master SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of the master SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-XML integrity</p>
+</td>
+<td>
+<p class="desc">Tests the XML integrity of the master SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Is wellformed</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is a wellformed XML
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Has documenttype</p>
+</td>
+<td>
+<p class="desc">Checks wheter the document has a doctype
+statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Is documenttype</p>
+</td>
+<td>
+<p class="desc">Verifies that the document corresponds to its
+doctype statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Given DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the given
+DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Custom DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the validator
+custom DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-ADTD compliance</p>
+</td>
+<td>
+<p class="desc">Tests the master SMIL versus the master SMIL
+ADTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Attribute content</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid
+content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-Attribute correlation</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid content
+regarding their siblings</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Is found</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Has valid content</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes has valid content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Element - attribute combination</p>
+</td>
+<td>
+<p class="desc">Verifies that the element - attribute combination
+is correct</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-Master SMIL - SMIL relations</p>
+</td>
+<td>
+<p class="desc">Validates the relationship inbetween the master
+smil and its SMIL files</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of each SMIL file
+refered to by the master smil</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Time in this smil</p>
+</td>
+<td>
+<p class="desc">Verifies that the meta data 'ncc:timeInThisSmil'
+corresponds to the smil files</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-Distribution</p>
+</td>
+<td>
+<p class="desc">Tests relations inbetween various files within the
+DTB before distribution</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">All URIs use relative paths</p>
+</td>
+<td>
+<p class="desc">Verifies that all URIs are relative</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Files</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:files' is the number
+of all files included in the DTB fileset</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Multi volume DTB</p>
+</td>
+<td>
+<p class="desc">Validates a single multi volume DTB</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-Single DTB</p>
+</td>
+<td>
+<p class="desc">Validates each volume within the multi volum DTB as
+a separate DTB</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-Single Ncc</p>
+</td>
+<td>
+<p class="desc">Validates the DTB NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-XML integrity</p>
+</td>
+<td>
+<p class="desc">Tests the XML integrity of the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Is wellformed</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is a wellformed XML
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Has documenttype</p>
+</td>
+<td>
+<p class="desc">Checks wheter the document has a doctype
+statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Is documenttype</p>
+</td>
+<td>
+<p class="desc">Verifies that the document corresponds to its
+doctype statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Given DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the given
+DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Custom DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the validator
+custom DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-ADTD compliance</p>
+</td>
+<td>
+<p class="desc">Tests the NCC versus the NCC ADTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Attribute content</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid
+content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">-Attribute correlation</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid content
+regarding their siblings</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Is found</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Has valid content</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes has valid content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Element - attribute combination</p>
+</td>
+<td>
+<p class="desc">Verifies that the element - attribute combination
+is correct</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Heading nesting</p>
+</td>
+<td>
+<p class="desc">Verifies that all h[x]:es are nested correctly</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Page normals</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:pageNormal'
+corresponds to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Page specials</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:pageSpecial'
+corresponds to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Page fronts</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:pageFront' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Footnotes</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:footNotes' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Prodnotes</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:prodNotes' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Sidebars</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:sidebars' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Toc items</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:tocItems' corresponds
+to the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Heading depth</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:depth' corresponds to
+the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-NCC - SMIL relations</p>
+</td>
+<td>
+<p class="desc">Validates the relationship inbetween the NCC and
+its SMIL files</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-Single Smil</p>
+</td>
+<td>
+<p class="desc">Validates each SMIL in the DTB fileset</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of the SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">-XML integrity</p>
+</td>
+<td>
+<p class="desc">Tests the XML integrity of the SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Is wellformed</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is a wellformed XML
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Has documenttype</p>
+</td>
+<td>
+<p class="desc">Checks wheter the document has a doctype
+statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Is documenttype</p>
+</td>
+<td>
+<p class="desc">Verifies that the document corresponds to its
+doctype statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Given DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the given
+DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Custom DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the validator
+custom DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">-ADTD compliance</p>
+</td>
+<td>
+<p class="desc">Tests the SMIL versus the SMIL ADTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Attribute content</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid
+content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">-Attribute correlation</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid content
+regarding their siblings</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">Is found</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">Has valid content</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes has valid content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">Element - attribute combination</p>
+</td>
+<td>
+<p class="desc">Verifies that the element - attribute combination
+is correct</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Seq dur exists</p>
+</td>
+<td>
+<p class="desc">Verifies that all &lt;seq&gt; elements has a 'dur'
+attribute</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Seq dur value</p>
+</td>
+<td>
+<p class="desc">Verifies that all 'dur' attributes contains a
+correct value</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Time in this smil</p>
+</td>
+<td>
+<p class="desc">Verifies that the meta data 'ncc:timeInThisSmil'
+contains a correct value</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-SMIL - Media relations</p>
+</td>
+<td>
+<p class="desc">Validates the relationship inbetween the SMIL files
+and their Media files</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">-Content</p>
+</td>
+<td>
+<p class="desc">Validates each content document refered to by all
+SMIL files</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of the content
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">-XML integrity</p>
+</td>
+<td>
+<p class="desc">Tests the XML integrity of the content document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">Is wellformed</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is a wellformed XML
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">Has documenttype</p>
+</td>
+<td>
+<p class="desc">Checks wheter the document has a doctype
+statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">Is documenttype</p>
+</td>
+<td>
+<p class="desc">Verifies that the document corresponds to its
+doctype statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">Given DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the given
+DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">Custom DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the validator
+custom DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">-ADTD compliance</p>
+</td>
+<td>
+<p class="desc">Tests the content document versus the content
+ADTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">Attribute content</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid
+content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test6">-Attribute correlation</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid content
+regarding their siblings</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test7">Is found</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test7">Has valid content</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes has valid content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test7">Element - attribute combination</p>
+</td>
+<td>
+<p class="desc">Verifies that the element - attribute combination
+is correct</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Text object ID</p>
+</td>
+<td>
+<p class="desc">Verifies that all IDs refered to by all SMIL files
+exists in the corresponding content document (text media
+object)</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">-Content document - SMIL relations</p>
+</td>
+<td>
+<p class="desc">Validates the relationship inbetween the content
+document and the refered SMIL files</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the refered SMIL file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Fragment exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the refered ID exists in the refered
+SMIL file</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of all Audio media
+objects</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the refered audio file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">File is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the refered audio file is physically
+readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Allowed audio type</p>
+</td>
+<td>
+<p class="desc">Verifies that the refered audio media object is of
+an allowed audio type</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Valid extension</p>
+</td>
+<td>
+<p class="desc">Verifies that the refered audio media object has an
+valid file extension</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Clip-begin exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the given clip-start position exists
+within the refered audio media object</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Clip-end exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the given clip-end position exists
+within the refered audio media object</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Clip-begin lower than clip-end</p>
+</td>
+<td>
+<p class="desc">Verifies that the given clip-begin is lower than
+the given clip-end</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Fragment exist</p>
+</td>
+<td>
+<p class="desc">Verifies that all IDs refered to by the NCC exists
+in the corresponding SMIL file</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Points to allowed element</p>
+</td>
+<td>
+<p class="desc">Verifies that all IDs refered to by the NCC exists
+on allowed elements</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Smil list is sequencial</p>
+</td>
+<td>
+<p class="desc">Verifies that no SMIL file referations are crossing
+eachother</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Totaltime</p>
+</td>
+<td>
+<p class="desc">Verifies that the NCC meta data 'ncc:totalTime'
+corresponds to the SMIL list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">First par or text</p>
+</td>
+<td>
+<p class="desc">Verifies that the first &lt;par&gt; or &lt;text&gt;
+element in each smil is refered to by the NCC</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Totalelapsedtime</p>
+</td>
+<td>
+<p class="desc">Verifies that the SMIL meta data
+'ncc:totalElapsedTime' corresponds to the 'ncc:totalTime' of all
+previous SMIL files</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-Master SMIL</p>
+</td>
+<td>
+<p class="desc">Validates the DTB master SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of the master SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-XML integrity</p>
+</td>
+<td>
+<p class="desc">Tests the XML integrity of the master SMIL</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Is wellformed</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is a wellformed XML
+document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Has documenttype</p>
+</td>
+<td>
+<p class="desc">Checks wheter the document has a doctype
+statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Is documenttype</p>
+</td>
+<td>
+<p class="desc">Verifies that the document corresponds to its
+doctype statement</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Given DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the given
+DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Custom DTD</p>
+</td>
+<td>
+<p class="desc">Verifies that the file complies to the validator
+custom DTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-ADTD compliance</p>
+</td>
+<td>
+<p class="desc">Tests the master SMIL versus the master SMIL
+ADTD</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Attribute content</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid
+content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">-Attribute correlation</p>
+</td>
+<td>
+<p class="desc">Verifies that all XML attributes has valid content
+regarding their siblings</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Is found</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Has valid content</p>
+</td>
+<td>
+<p class="desc">Verifies that all attributes has valid content</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test5">Element - attribute combination</p>
+</td>
+<td>
+<p class="desc">Verifies that the element - attribute combination
+is correct</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-Master SMIL - SMIL relations</p>
+</td>
+<td>
+<p class="desc">Validates the relationship inbetween the master
+smil and its SMIL files</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">-File integrity</p>
+</td>
+<td>
+<p class="desc">Tests the physical integrity of each SMIL file
+refered to by the master smil</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">File exists</p>
+</td>
+<td>
+<p class="desc">Verifies that the file exists</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Has valid name</p>
+</td>
+<td>
+<p class="desc">Verifies that the file has a valid name</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test4">Is readable</p>
+</td>
+<td>
+<p class="desc">Verifies that the file is physically readable</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Time in this smil</p>
+</td>
+<td>
+<p class="desc">Verifies that the meta data 'ncc:timeInThisSmil'
+corresponds to the smil files</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">-Distribution</p>
+</td>
+<td>
+<p class="desc">Tests relations inbetween various files within the
+DTB before distribution</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">All URIs use relative paths</p>
+</td>
+<td>
+<p class="desc">Verifies that all URIs are relative</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test3">Files</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:files' is the number
+of all files included in the DTB fileset</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-Distribution</p>
+</td>
+<td>
+<p class="desc">Test relations inbetween various files within the
+multi volume DTB before distribution</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">All URIs use relative paths</p>
+</td>
+<td>
+<p class="desc">Verifies that all URIs are relative</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Files</p>
+</td>
+<td>
+<p class="desc">Verifies that meta data 'ncc:files' is the number
+of all files included in the DTB fileset</p>
+</td>
+</tr>
+
+</tbody>
+</table>
+    <p>
+      <a href="http://validator.w3.org/check/referer"><img
+          src="http://www.w3.org/Icons/valid-xhtml10"
+          alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+    </p>
+
+</body>
+</html>

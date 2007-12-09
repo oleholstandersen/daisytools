@@ -1,0 +1,7 @@
+IteratorFrmMain = 110, 110, 633, 464, , 88, 88, 611, 442, C
+IteratorMdlGlobal = 22, 22, 440, 336, 
+IteratorMdlRegistryControl = 132, 132, 636, 479, 
+IteratorMdlMultiLanguage = 44, 44, 609, 355, 
+IteratorMdlReport = 66, 66, 475, 377, 
+IteratorFileHandler = 154, 154, 656, 600, 
+IteratorFrmAbout = 198, 198, 685, 644, , 176, 176, 663, 622, C
