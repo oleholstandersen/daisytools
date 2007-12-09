@@ -1,26 +1,23 @@
 Attribute VB_Name = "mdlGlobal"
 Option Explicit
 
-' Daisy 2.02 Validator Engine
-' Copyright (C) 2002 Daisy Consortium
-'
-' This library is free software; you can redistribute it and/or
-' modify it under the terms of the GNU Lesser General Public
-' License as published by the Free Software Foundation; either
-' version 2.1 of the License, or (at your option) any later version.
-'
-' This library is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-' Lesser General Public License for more details.
-'
-' You should have received a copy of the GNU Lesser General Public
-' License along with this library; if not, write to the Free Software
-' Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-'
-' For information about the Daisy Consortium, visit www.daisy.org or contact
-' info@mail.daisy.org. For development issues, contact markus.gylling@tpb.se or
-' karl.ekdahl@tpb.se.
+ ' Daisy 2.02 Validator, Daisy 2.02 Regenerator, Bruno
+ ' The Daisy Visual Basic Tool Suite
+ ' Copyright (C) 2003,2004,2005,2006,2007,2008 Daisy Consortium
+ '
+ ' This library is free software; you can redistribute it and/or
+ ' modify it under the terms of the GNU Lesser General Public
+ ' License as published by the Free Software Foundation; either
+ ' version 2.1 of the License, or (at your option) any later version.
+ '
+ ' This library is distributed in the hope that it will be useful,
+ ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ ' Lesser General Public License for more details.
+ '
+ ' You should have received a copy of the GNU Lesser General Public
+ ' License along with this library; if not, write to the Free Software
+ ' Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 Public Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" _
   (ByVal hwnd As Long, ByVal lpOperation As String, ByVal lpFile As String, _
