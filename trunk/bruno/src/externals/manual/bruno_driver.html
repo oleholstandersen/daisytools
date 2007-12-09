@@ -1,0 +1,325 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang='en' xml:lang='en'>
+<head>
+  <meta http-equiv='Content-type' content='text/html; charset=windows-1252' />
+  <title>Bruno Driver Documentation</title>
+  <link type="text/css" rel="stylesheet" href="daisy_manual.css"/>
+</head>
+<body>
+<h1 id="title">Bruno Driver Documentation</h1>
+<h2 id="twokinds">Two kinds of Bruno</h2>
+<blockquote>
+<p>1. Ivan Pavlov's favourite dog. Through his description on how animals (and humans) can be trained to respond in a certain way to a particular stimulus, Pavlov was awarded the Nobel Prize in 1904.</p>
+</blockquote>
+<blockquote>
+<p>2. An application that creates DTB filesets from content document input. Just like Bruno the dog, Bruno the application is trained to react in certain ways to certain stimulii. However, Brunos conditioned behavior can be guided further using the so called <code>driver</code>. This document describes the driver grammar.</p>
+</blockquote>
+
+<div class="notice">Bruno ships with a set of default drivers that can be used for most content. Only if you are not happy with the output when using the default drivers, and therefore want to create your own driver, do you need to read and understand this document.</div>
+
+<div class="notice">When creating your own driver, it is recommended to make a copy of and modify one of the preexisting default drivers.</div>
+
+<h2 id="conditioned">Brunos conditioned behavior</h2>
+
+<p>Bruno has been trained to understand the basics of document oriented XML. Using this rudimentary knowledge, Bruno traverses the source documents fed to him, and creates a SMIL presentation consisting of:</p>
+<ul>
+<li>DTB content documents, that is, hybrid versions of the source document that contain SMIL references, and sometimes a slightly modified structure (see <a href="#cond_mc">mixed content models</a> below).</li>
+<li>A SMIL document. By Brunos conditioned behavior alone, this is a flat sequential structure.</li>
+</ul>
+
+<p>When creating the SMIL presentation, unless told otherwise, Bruno will behave based on the following logical rules:</p>
+<dl>
+<dt id="cond_ws">Whitespace is not content</dt>
+<dd>
+<p>Unless told otherwise, Bruno will ignore (i.e. not include in SMIL presentation) any element that contains ignorable whitespace only.</p>
+<p>In the following example, Bruno will only include the <code>&lt;td&gt;</code> elements, and ignore the <code>&lt;tr&gt;</code> and <code>&lt;table&gt;</code> elements.</p>
+<pre>
+<code class="example">
+	&lt;table&gt;
+	  &lt;tr&gt;
+	    &lt;td&gt;cell 1&lt;/td&gt;
+	    &lt;td&gt;cell 2&lt;/td&gt;
+	  &lt;/tr&gt;
+	  &lt;tr&gt;
+	    &lt;td&gt;cell 3&lt;/td&gt;
+	    &lt;td&gt;cell 4&lt;/td&gt;
+	  &lt;/tr&gt;
+	&lt;/table&gt;
+</code>
+</pre>
+</dd>
+
+<dt id="cond_mc">Mixed content should be normalized where necessary</dt>
+<dd>
+<p>There are some elements that have so called <em>mixed content models</em>. This means that they can contain both text and other elements as children. The following is an example of a paragraph having mixed content:</p>
+<pre>
+<code class="example">
+  &lt;p&gt;This is a &lt;strong&gt;mixed content&lt;/strong&gt; model.&lt;/p&gt;
+</code>
+</pre>
+<p>Unless told otherwise, Bruno will pay attention to mixed content models, and make sure that - as an example - the same content is not referenced twice via the SMIL presentation, which would happen in the example above if both <code>&lt;p&gt;</code> and <code>&lt;strong&gt;</code> was referenced from SMIL. Sometimes this results in a <em>normalization</em> that slightly modifies the content document structure by adding wrapping inline elements around text. The way the normalization is done varies depending on driver settings and the type of mixed content encountered. 
+</dd>
+</dl>
+
+<h3 id="drivergrammar">The Driver Grammar</h3>
+<p>Brunos conditioned behavior can be altered and enhanced by the settings in the <em>driver</em> document. Among the ten elements in the <code>settings</code> section of the driver grammar, the following six has the largest impact on behavior guidance. For a complete description of the grammar, see <a href="../drivers/bruno-driver.dtd">bruno-driver.dtd</a>.</p>
+
+<h3 id="six_important_elems">The six most important elements</h3>
+
+<dl>
+<dt>sync-omit</dt>
+<dd>Bruno will bypass its conditioned behavior and <em>ignore</em> element types selected here when creating the SMIL presentation.</dd>
+
+<dt>sync-force</dt>
+<dd>Bruno will bypass its conditioned behavior and <em>include</em> element types selected when creating the SMIL presentation.</dd>
+
+<dt>smil-sequence</dt>
+<dd>Elements selected here are interpreted by Bruno as elements that should be represented as sequential structures in the SMIL presentation. A typical use is to mention the <code>&lt;table&gt;</code> element here in order to make it a unique sequence in SMIL, and thereby escapable.
+<div class="notice">For Daisy 2.02 content, no element selectors should be selected in this group.</div>
+
+<dt>smil-customTest</dt>
+<dd><p>Elements selected here will be given skippability functionality within a z39.86-2005 fileset.</p>
+<div class="notice">For Daisy 2.02 content, no element selectors should be selected in this group.</div></dd>
+
+<dt>nav-include</dt>
+<dd>Bruno will append element types selected here to an external navigation document (NCC or NCX).</dd>
+
+<dt>mixed-content-handler</dt>
+<dd>
+Element types selected here will be subject to Brunos mixed content normalization process.
+</dd>
+</dl>
+
+<h3 id="selector_syntax">Selector syntax</h3>
+
+<p>Each of the elements mentioned above contain zero, one or several <code>&lt;item/&gt;</code> children. Each <code>&lt;item/&gt;</code> child contains an attribute <code>xpath</code> that contains the element selection statement.</p>
+
+<p>The element selector syntax is <a href="http://www.w3.org/TR/xpath">W3C Xpath 1.0</a>.
+For rules on Xpath usage in this context, see <a href="#itemElem">item element</a> below.
+</p>
+
+<!--
+<h2 id="driver_grammar_detail">Driver Grammar in detail</h2>
+<p>This section describes the grammar of bruno-driver.dtd version 1.0</p>
+
+<dl id="grammarDl">
+<dt><code>&lt;bruno-driver&gt;</code></dt>
+<dd>
+<dl>
+<dt>description</dt>
+<dd>Root element of driver.</dd>
+<dt>elements</dt>
+<dd>Must contain the following child elements, in order:
+<code>&lt;name&gt;</code>, <code>&lt;desc&gt;</code>, <code>&lt;settings&gt;</code>
+</dd>
+<dt>attributes</dt>
+<dd>
+<dl>
+ <dt>version</dt>
+ <dd>version number for driver</dd>
+ <dt>outfileset</dt>
+ <dd>Desired outfile set type. In current version of Bruno, must be one of values <code>d202</code> or <code>z3986.2005</code></dd> 
+ <dt>xmlns</dt>
+ <dd>Namespace of Bruno grammar. Must be <code>http://www.daisy.org/2004/bruno</code></dd>
+ <dt>target-namespace</dt>
+ <dd>Top namespace of source document grammar. In current version of Bruno, must be one of values <code>xmlns:xhtml='http://www.w3.org/1999/xhtml'</code> or <code>xmlns:dtbook='http://www.loc.gov/nls/z3986/2004/dtbook'</code></dd>
+ <dt>local-dtd</dt>
+ <dd>Path to local (non-online) DTD. Can be a full path, or a singular dtd file name. If a singular DTD filename is set, Bruno will look for that file in the <code>/externals/dtds/</code> subfolder of the Bruno application folder.</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+
+<dt><code>&lt;name&gt;</code></dt>
+<dd>
+<dl>
+<dt>description</dt>
+<dd>Nicename of driver.</dd>
+</dl>
+</dd>
+
+<dt><code>&lt;desc&gt;</code></dt>
+<dd>
+<dl>
+<dt>description</dt>
+<dd>Descriptory comments on driver.</dd>
+</dl>
+</dd>
+
+<dt><code>&lt;settings&gt;</code></dt>
+<dd>
+<dl>
+<dt>description</dt>
+<dd>Wrapper for the configuration area</dd>
+<dt>elements</dt>
+<dd>Must contain the following child elements, in order:<br/>
+<code>&lt;start&gt;,&lt;remove&gt;,&lt;sync-omit&gt;,&lt;sync-force&gt;,&lt;linkback-omit&gt;,&lt;smil-sequence&gt;,&lt;smil-split&gt;,&lt;nav-include&gt;,&lt;mixed-content-handler&gt;
+</code></dd>
+</dl>
+</dd>
+
+<dt><code>&lt;start&gt;</code></dt>
+<dd>
+<dl>
+<dt>description</dt>
+<dd>Selects starting element of document textual content (typically "body").</dd>
+<dt>elements</dt>
+<dd>Must contain exactly one <code><a href="#itemElem">item</a></code> element.</dd>
+</dl>
+</dd>
+
+<dt><code>&lt;remove&gt;</code></dt>
+<dd>
+<dl>
+<dt>description</dt>
+<dd>Selects elements and/or attributes to be removed completely from output document before processing.</dd>
+<dt>elements</dt>
+<dd>Can contain zero, one or several <code><a href="#itemElem">item</a></code> elements.</dd>
+</dl>
+</dd>
+
+<dt><code>&lt;sync-omit&gt;</code></dt>
+<dd>
+<dl>
+<dt>description</dt>
+<dd>Selects elements that shall not become a sync point (aka an element in smil).</dd>
+<dt>elements</dt>
+<dd>Can contain zero, one or several <code><a href="#itemElem">item</a></code> elements. When <code>&lt;sync-omit&gt;</code> contains zero <code><a href="#itemElem">item</a></code> elements, Brunos conditioned behavior alone will determine which elements are omitted from synchronization.</dd>
+</dl>
+</dd>
+
+<dt><code>&lt;sync-force&gt;</code></dt>
+<dd>
+<dl>
+<dt>description</dt>
+<dd>Selects elements that shall become a sync point (aka an element in smil).</dd>
+<dt>elements</dt>
+<dd>Can contain zero, one or several <code><a href="#itemElem">item</a></code> elements. When <code>&lt;sync-force&gt;</code> contains zero <code><a href="#itemElem">item</a></code> elements, Brunos conditioned behavior alone will determine which elements are included in synchronization.</dd>
+</dl>
+</dd>
+
+<dt><code>&lt;linkback-omit&gt;</code></dt>
+<dd>
+<dl>
+<dt>description</dt>
+<dd>Selects elements that should be a sync point (aka an element in smil) but should not have a linkback element/attribute in content document.</dd>
+<dt>elements</dt>
+<dd>Can contain zero, one or several <code><a href="#itemElem">item</a></code> elements.</dd>
+</dl>
+</dd>
+
+<dt><code>&lt;smil-sequence&gt;</code></dt>
+<dd>
+<dl>
+<dt>description</dt>
+<dd>
+Selects elements that shall become a wrapping smil time container around their children. Typically used for <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code> and other structures that benefit from grouping.
+</dd>
+<dt>elements</dt>
+<dd>Can contain zero, one or several <code><a href="#itemElem">item</a></code> elements.</dd>
+</dl>
+</dd>
+
+<dt><code>&lt;smil-split&gt;</code></dt>
+<dd>
+<dl>
+<dt>description</dt>
+<dd>Selects elements that should force a new smil file in output. When <code>&lt;smil-split&gt;</code> contains zero <code><a href="#itemElem">item</a></code> elements, only one smil file will be output, containing the whole presentation.</dd>
+<dt>elements</dt>
+<dd>Can contain zero, one or several <code><a href="#itemElem">item</a></code> elements. These elements identify SMIL elements, whereas everywhere else they identify content document elements.</dd>
+</dl>
+
+</dd>
+
+<dt><code>&lt;nav-include&gt;</code></dt>
+<dd>
+<dl>
+<dt>description</dt>
+<dd>Selects elements to bring into navigation control file. 
+<div class="notice">
+ If an element is in sync-omit it cannot be here. If it is anyway, sync-omit will win. That is, the element type will not be included in navigation file.
+</div>
+<div class="notice">
+ If an element is in nav-include but contains only ignorable whitespace text children (the &lt;table&gt; element for example), it will be forced to sync. That is, Brunos default behavior to ignore whitespace-only elements will be overridden, and the element will be included in SMIL, and in the navigation file.
+</div>
+</dd>
+<dt>elements</dt>
+<dd>Can contain zero, one or several <code><a href="#itemElem">item</a></code> elements.</dd>
+<dt>attributes</dt>
+<dd>
+<dl>
+<dt>deep</dt>
+<dd>Set to value false to avoid bringing children of selected elements into the navigation file. The absence of the deep attribute is the same as setting "deep" to true.</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+
+<dt><code>&lt;mixed-content-handler&gt;</code></dt>
+<dd>
+<dl>
+<dt>description</dt>
+<dd>Configures Brunos way of handling mixed content models.</dd>
+<dt>elements</dt>
+<dd>Can contain zero, one or several <code><a href="#itemElem">item</a></code> elements.</dd>
+<dt>attributes</dt>
+<dd>
+<dl>
+  <dt>active</dt>
+  <dd>The allowed values <code>true</code> and <code>false</code> toggle mixed content handling on and off.</dd>
+  <dt>elemName </dt>
+  <dd>If mixed content handling is on, the value of <code>elemName</code> will be the name of inserted elements.</dd>
+  <dt>attName </dt>
+  <dd>If mixed content handling is on, the value of <code>attName</code> will be the name of an attribute on the inserted element.</dd>
+  <dt>attValue </dt>
+  <dd>If mixed content handling is on, the value of <code>attValue</code> will be the value the of attribute on inserted the element.</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+
+<dt id="itemElem"><code>&lt;item&gt;</code></dt>
+<dd>
+<dl>
+<dt>description</dt>
+<dd>Empty. Contains a W3C Xpath 1.0 statement that selects element nodes in a hypothetical content document. The selectors need not have an actual match, which means that the same driver can be reused for documents with different structures/content (as long as they are valid to the same DTD). If the selectors do match, Bruno will apply the behavior rules of the <code>&lt;item&gt;</code> parent to the selected element(s).</dd>
+<dt>attributes</dt>
+<dd>
+<dl>
+<dt>xpath</dt>
+<dd>Carrier of the actual Xpath statement. The statement must select element nodetypes (attribute type is also allowed under <code>&lt;remove&gt;</code>), and must use qualified names that by default map to the namespace declared in the <code>target-namespace</code> attribute of the driver. Predicates can include attribute tests.</dd>
+
+<dt>user-escape</dt>
+<dd>(true|false) Used only in <code>smil-sequence</code>. Determines whether Bruno will add explicit escapability to this sequence, as defined in the zed2004 specification.</dd>
+
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+-->
+
+<h2 id="d202driver">Understanding the Default Daisy 2.02 XHTML Driver</h2>
+
+<h2 id="d30driver">Understanding the Default Daisy 3 DTBOOK Driver</h2>
+
+<h2 id="misc">Miscellaneous notes</h2>
+<p>This section contains miscellaneous notes on Brunos behavior. Each section is prefixed with [d202] and/or [d3] to tell whether it applies to Daisy 2.02 and/or Daisy 3 output.</p>
+
+<h3 id="metaimport">[d3][d202]Metadata preservation</h3>
+<p>Bruno will preserve the following metadata items if incorporated in source document:</p>
+<ul>
+<li>[d3][d202] <code>dublin core</code> elements defined in the respective DTB specification</li>
+<li>[d3] <code>docTitle</code>, <code>docAuthor</code>, and <code>uid</code>.</li>
+</ul>
+
+
+
+
+
+</body>
+</html>
+

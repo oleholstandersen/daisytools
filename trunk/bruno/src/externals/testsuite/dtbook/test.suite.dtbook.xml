@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE dtbook PUBLIC 
+  "-//NISO//DTD dtbook 2005-1//EN" 
+  "http://www.daisy.org/z3986/2005/dtbook-2005-1.dtd">
+<dtbook xmlns="http://www.daisy.org/z3986/2005/dtbook/" version="2005-1" xml:lang="en">
+<head>    
+  <meta name="dtb:uid" content="sourcedoc uid"/>     
+  <meta name="dc:Creator" content="sourcedoc dc:Creator"/>
+  <meta name="dc:Title" content="sourcedoc dc:Title"/>
+  <meta name="dc:Date" content="2004-09-01"/>
+  <meta name="dc:Language" content="en-GB"/>
+  <meta name="dc:Publisher" content="sourcedoc dc:Publisher"/>
+</head>
+<book>
+<frontmatter>
+<docauthor>sourcedoc docauthor</docauthor>
+<doctitle>sourcedoc doctitle</doctitle>
+</frontmatter>
+
+<bodymatter>
+<level1>
+<h1>1. Sequencing tests</h1>
+
+<level2>
+<h2>Simple table.</h2>
+<p>Table and tr active in driver smil-sequence, user-escape active as well.</p>
+<table>
+<tbody>
+<tr>
+<th>Column 1</th>
+<th>Column 2</th>
+</tr>
+<tr>
+<td>row1 cell 1, text only</td>
+<td>row1 cell 2, text only</td>
+</tr>				
+<tr>
+<td>row2 cell 1, text only</td>
+<td>row2 cell 2, text only</td>
+</tr>
+</tbody>
+</table>
+
+				
+</level2>
+
+<level2>
+<h2>Table with nested list</h2>
+<p>Table, table and tr active in driver smil-sequence, user-escape active as well. List active in smil-sequence, smil-customTest, and nav-include. NCX label set to dtbook:hd|dtbook:li/dtbook:lic[position()=1]</p>
+
+<table>
+<tbody>
+<tr>
+<th>Column 1</th>
+<th>Column 2</th>
+</tr>
+<tr>
+<td>row1 cell 1, text only</td>
+<td>row1 cell 2, text only</td>
+</tr>			
+<tr>	
+<td>row2 cell 2, text only</td>
+<td>
+<p>the nested list:</p>
+<list type="pl">
+<hd>hd of list within td</hd>
+<li>first list item</li>
+<li>second list item</li>
+<li>third list item</li>
+</list>
+</td>
+</tr>				
+</tbody>
+</table>
+</level2>
+
+
+
+</level1>
+
+
+
+<level1>
+<h1>2. Mixed content tests (MCH active)</h1>
+  
+  <level2>  
+  <h2>2.1 Mixed content Sidebar</h2>
+  <p>A mixed content sidebar.</p>
+  <sidebar render="optional">
+    <sent>Text inside sent inside sidebar.</sent>
+    <br />
+    Text inside sidebar. 
+  </sidebar> 
+  </level2>
+  
+  <level2>
+  <h2>2.2 Text only Sidebar</h2>
+  <p>A text only sidebar.</p>
+  <sidebar render="optional">
+    Text inside text only sidebar. 
+  </sidebar> 
+  </level2>
+  
+  <level2>
+  <h2>2.3 Text + syncomit element Sidebar</h2>
+  <p>A sidebar with text child and syncomit element child.</p>
+  <sidebar render="optional">
+    <strong>Text inside strong inside sidebar.</strong>
+    <br />
+    Text inside sidebar. 
+  </sidebar> 
+  </level2>
+  
+  
+  <level2>
+  <h2>Two sidebars, first with nested list, second with nested imggroup</h2>
+
+<sidebar render="optional">
+<list type="pl">
+<hd>TERMS &amp; NAMES</hd>
+<li>history</li>
+<li>geography</li>
+<li>government</li>
+<li>citizen</li>
+<li>economics</li>
+<li>scarcity</li>
+<li>culture</li>
+<li>culture traits</li>
+</list>
+</sidebar>
+
+<sidebar render="optional">
+<hd>DATELINE</hd>
+<imggroup>
+<img id="wcag-p17-001" src="wcag-p17-001.png" alt="United Nations headquarters in New York City"/>
+<caption imgref="wcag-p17-001"><strong>Region</strong>.Flags of member countries fly in front of the United Nations headquarters in New York City.</caption>
+<img id="wcag-p17-002" src="wcag-p17-002.png" alt="The United Nations flag"/>
+</imggroup>
+<hd>San Francisco, USA, June 26, 1945</hd>
+<p>Fifty nations signed a charter today to establish a new organization called the United Nations. The organization will go into effect October 24.</p>
+<p>The United Nations is a successor to the old League of Nations, founded after World War I to prevent another world war, which it failed to do. The purpose of the new organizationis to maintain peace and develop friendly relations among nations.</p>
+<p>The member nations hope to cooperate to solve economic, social, cultural, and humanitarian problems and to promte respect for human rights and freedom.</p>
+</sidebar>
+
+<p>
+<sent>A para with an imggroup</sent>
+<imggroup>
+<img id="wcag-p17-003" src="wcag-p17-001.png" alt="United Nations headquarters in New York City"/>
+<caption imgref="wcag-p17-003"><strong>Region</strong>.Flags of member countries fly in front of the United Nations headquarters in New York City.</caption>
+<img id="wcag-p17-004" src="wcag-p17-002.png" alt="The United Nations flag"/>
+</imggroup>
+</p>
+
+</level2>
+</level1>
+
+  
+  
+ 
+</bodymatter>
+</book>
+</dtbook>

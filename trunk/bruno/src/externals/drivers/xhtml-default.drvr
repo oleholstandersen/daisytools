@@ -1,0 +1,120 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE bruno-driver SYSTEM "bruno-driver.dtd" >
+<bruno-driver 
+	version="0.9" 
+	outfileset="d202" 
+	xmlns="http://www.daisy.org/2004/bruno"
+	target-namespace="xmlns:xhtml='http://www.w3.org/1999/xhtml'"
+	local-dtd="xhtml1-transitional.dtd"
+>
+ <name>2.02 xhtml</name>
+ <desc>Default driver to generate a Daisy 2.02 Text-Only Fileset from one or more XHTML 1.0 Strict or Transitional Input files</desc>
+ <settings>
+   <start>
+     <!-- all xpath statements below are set relative to the return node of this statement: -->
+     <item xpath="//xhtml:body" />
+   </start>
+ 
+   <remove>
+     <!-- dont remove this item (removes existing linkback): -->    
+     <item xpath="//xhtml:a[contains(@href,'.smil#')]" />       
+   </remove>
+   
+   <sync-omit>
+     <!-- omit sync on what is typically inline elements -->
+     <!-- Use the '[../text()]' predicate to only select inlines when they have text siblings -->
+     <!-- Use the '[not(.//xhtml:*)]' predicate to only select inlines when they do not have element descendants -->
+	 <!-- use the '[count(../xhtml:*)&lt;2]' predicate to only select inlines that have no element siblings -->
+	 
+	 <!-- Note! Any element added to the sync-omit section needs to be reflected in the syncforce section count() function call (second item element -->
+	 
+     <item xpath="//xhtml:em[../text()][not(.//xhtml:*)]" /> 
+     <item xpath="//xhtml:strong[../text()][not(.//xhtml:*)]" />
+	 	 
+     <item xpath="//xhtml:b[../text()][not(.//xhtml:*)]" /> 
+     <item xpath="//xhtml:i[../text()][not(.//xhtml:*)]" />
+     <item xpath="//xhtml:sub[../text()][not(.//xhtml:*)]" />
+     <item xpath="//xhtml:sup[../text()][not(.//xhtml:*)]" />
+     
+     <!-- these are inlines where separate sync may be preferred: -->
+     <item xpath="//xhtml:code[../text()][not(.//xhtml:*)]" />
+     <!-- <item xpath="//xhtml:abbr[../text()][not(.//xhtml:*)]" /> -->
+     <!-- <item xpath="//xhtml:acronym[../text()][not(.//xhtml:*)]" />  -->    
+     <!-- <item xpath="//xhtml:kbd[../text()][not(.//xhtml:*)]" /> -->
+          
+     <!-- omit any elem child of first elem (h1) not to break 202spec rules: -->     
+     <item xpath="//xhtml:h1[position()=1]/xhtml:*" />
+     
+     <!-- generic class attribute value to force omit: -->
+     <item xpath="//xhtml:*[@class='sync-omit']" />      
+     
+     <!-- omit sync on empty elements -->
+     <!-- dont remove this item: -->
+     <item xpath="//xhtml:*[not(text()[normalize-space(.)]|*)]"/>
+   </sync-omit>
+   
+   <sync-force>
+     <!-- generic class attribute value to force include: -->
+     <item xpath="//xhtml:*[@class='sync-force']" />      	 
+	 <!-- force sync on parents with only sync-omit children (no text children) 	 
+	 <item xpath="//xhtml:*
+		[not(./text()[normalize-space(.)])]
+		[count(./xhtml:*)&gt;0]									
+		[count(./xhtml:*)=
+			count(./xhtml:em)+count(./xhtml:strong)
+			+count(./xhtml:b)+count(./xhtml:i)+count(./xhtml:sub)
+			+count(./xhtml:sup)+count(./xhtml:code)]" />
+	 -->		
+   </sync-force>
+   
+   <smilref-omit>
+     <item xpath="//xhtml:a[@href]" />
+   </smilref-omit>
+
+   <smil-split>
+     <item xpath="//xhtml:h1" />
+     <item xpath="//xhtml:h2" />
+     <item xpath="//xhtml:h3" />
+     <item xpath="//xhtml:h4" />
+     <item xpath="//xhtml:h5" />
+     <item xpath="//xhtml:h6" />
+   </smil-split>
+   
+   <nav-include>
+     <item xpath="//xhtml:h1" />
+     <item xpath="//xhtml:h2" />
+     <item xpath="//xhtml:h3" />
+     <item xpath="//xhtml:h4" />
+     <item xpath="//xhtml:h5" />
+     <item xpath="//xhtml:h6" />     
+     <item xpath="//xhtml:span[@class='page-normal']" />
+     <item xpath="//xhtml:span[@class='page-special']" />
+     <item xpath="//xhtml:span[@class='page-front']" />
+     <item xpath="//xhtml:span[@class='noteref']" />     
+     <!-- 
+         Set an xpath statement in navLabel attribute to use 
+         a specified node relational to contextnode for NCX navLabel. 
+         This Xpath statement can point to text() or element, 
+         and can include or statements. 
+         If navLabel statement doesnt resolve, 
+         a fallback to contextnode text is made. 
+         If no contextnode text, fallback to elementname.
+     -->
+     <item xpath="//xhtml:span[@class='sidebar']" navLabel="./*[position()=1]|./text()[position()=1]" />
+     <item xpath="//xhtml:div[@class='sidebar']" navLabel="./*[position()=1]|./text()[position()=1]" />
+     <item xpath="//xhtml:span[@class='optional-prodnote']" navLabel="./*[position()=1]|./text()[position()=1]" />
+     <item xpath="//xhtml:div[@class='optional-prodnote']" navLabel="./*[position()=1]|./text()[position()=1]" />
+   </nav-include>
+   
+   <mixed-content-handler active="true" elemName="span" attName="class" attValue="bybruno">
+     
+     <!-- To activate mixed content handling for all elements: -->
+     <item xpath="//xhtml:*" />
+     
+     <!-- To activate mixed content handling for all elements but the first element (which is h1 in 202): -->     
+     <!-- <item xpath="//xhtml:*[not(position()=1)]"/> -->
+     
+   </mixed-content-handler>
+              
+ </settings>
+</bruno-driver>
