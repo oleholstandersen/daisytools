@@ -1,0 +1,70 @@
+<!-- 
+Bruno driver DTD [bruno-driver.dtd]
+version: 0.9
+last edit 2004-08-15 by mgylling
+-->
+
+<!ENTITY % Xpath "CDATA"> <!-- an Xpath 1.0 statement -->
+<!ELEMENT bruno-driver (name, desc, settings)>
+<!ATTLIST bruno-driver 
+  version CDATA #REQUIRED 
+  outfileset (d202|z3986.2005|raw) #REQUIRED
+  xmlns CDATA #REQUIRED
+  target-namespace CDATA #REQUIRED
+  local-dtd CDATA #REQUIRED
+>  
+<!-- 
+  local-dtd attribute 
+    is either a full URI pathspec ("file:///...") or just a local name, referring to a file in the externals/dtds directory
+  xmlns attribute
+    is the bruno namespace; http://www.daisy.org/2004/bruno
+  target-namespace attribute
+    the prefix defined here for a namespace must be reused in qnames in xpath statements within the settings element of the driver
+-->
+
+<!ELEMENT name (#PCDATA)> 
+<!ELEMENT desc (#PCDATA)> 
+<!ELEMENT settings (start,remove,sync-omit,sync-force,smilref-omit,smil-sequence?,smil-customTest?,smil-split,nav-include,mixed-content-handler)> 
+<!ELEMENT start (item)> 
+<!-- <start> selects the starting element of document content (such as "body", or "book"). All following xpath statements are made relative to this element  -->
+<!ELEMENT remove (item*)> 
+<!-- <remove> selects elements to be removed completely from output document before processing. -->
+<!ELEMENT sync-omit (item*)> 
+<!-- <sync-omit> selects elements that shall not become a sync point (aka an element in smil). Note: elements containing ignorable whitespace only are not synced by default, so they need to be mentioned here. -->
+<!ELEMENT sync-force (item*)> 
+<!-- <sync-force> selects elements that shall become a sync point (aka an element in smil) although brunos default behavior has indicated they should not be. Note: elements containing ignorable whitespace only are not synced by default. -->   
+<!ELEMENT smilref-omit (item*)> 
+<!-- <smilref-omit> selects elements that should be a sync point (aka an element in smil) but should not have a linkback element/attribute in content document. -->
+<!ELEMENT smil-sequence (item*)> 
+<!-- <smil-sequence> selecting that should become a wrapping smil time container around a group of children. Typically used for table, tr and other structures that benefit from grouping. The attribute user-escape (true|false) determines whether the sequence should have explicit escapability as per z2004. The content of <smil-sequence> is ignored if output is Daisy 2.02. -->
+<!ELEMENT smil-customTest (item*)> 
+<!-- <smil-customTest> selected elements that should be skippable, ie have SMIL 2.0 customTests assigned to them. The content of <smil-customTest> is ignored if output is Daisy 2.02 -->
+<!ELEMENT smil-split (item*)> 
+<!-- <smil-split> selects elements that should force a new physical smil file in output. If there is no item element here, only one smil file will be output, containing the whole presentation. -->
+<!ELEMENT nav-include (item*)> 
+<!-- <nav-include> selects elements to bring into navigation control document. The attribute "navLabel" contains an xpath statement that points to a relative node (element or text) which will be used for NCX/NCC navlabels. Absence of the navLabel attribute is equal to "./text()", that is, the text of the container itself. -->
+<!ELEMENT mixed-content-handler (item*)> 
+<!-- <mixed-content-handler> configures Brunos way of handling mixed content models.  -->
+<!-- <mixed-content-handler> attlist:
+ active: sets mixed content handling globally on or off
+ elemName: name of appended element, if append is done during normalization
+ elemName: name of attribute on appended element
+ elemName: value of attribute on appended element
+-->
+<!ATTLIST mixed-content-handler
+  active (true|false) "true"
+  elemName CDATA #REQUIRED
+  attName CDATA #REQUIRED
+  attValue CDATA #REQUIRED>
+<!ELEMENT item EMPTY>
+<!--
+The <item> element contains an Xpath 1.0 statement, using qnames, selecting
+The <item> element attlist has the following restrictions:
+- user-escape: only used on items within <smil-sequence>
+- navLabel: only used on items within <nav-include>
+-->
+<!ATTLIST item 
+  xpath %Xpath; #REQUIRED
+  navLabel %Xpath; #IMPLIED  
+  user-escape (true|false) #IMPLIED
+  >

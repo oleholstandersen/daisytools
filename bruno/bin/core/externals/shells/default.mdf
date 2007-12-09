@@ -1,0 +1,117 @@
+[Tags]
+1=h1.title
+2=h1
+3=h2
+4=h3
+5=h4
+6=h5
+7=h6
+8=span.page-normal
+9=span.page-front
+10=span.page-special
+
+[h1.title]
+Desc=Daisy 2.02 title
+Name=h1
+class=title
+NCC=Yes
+LinkBack=Yes
+Level=1
+Nested=No
+ID=Yes
+
+[h1]
+Desc=xhtml heading level 1
+Name=h1
+class=
+NCC=Yes
+LinkBack=Yes
+Level=1
+Nested=No
+ID=Yes
+
+[h2]
+Desc=xhtml heading level 2
+Name=h2
+class=
+NCC=Yes
+LinkBack=Yes
+Level=2
+Nested=No
+ID=Yes
+
+[h3]
+Desc=xhtml heading level 3
+Name=h3
+class=
+NCC=Yes
+LinkBack=Yes
+Level=3
+Nested=No
+ID=Yes
+
+[h4]
+Desc=xhtml heading level 4
+Name=h4
+class=
+NCC=Yes
+LinkBack=Yes
+Level=4
+Nested=No
+ID=Yes
+
+[h5]
+Desc=xhtml heading level 5
+Name=h5
+class=
+NCC=Yes
+LinkBack=Yes
+Level=5
+Nested=No
+ID=Yes
+
+[h6]
+Desc=xhtml heading level 6
+Name=h6
+class=
+NCC=Yes
+LinkBack=Yes
+Level=6
+Nested=No
+ID=Yes
+
+[span.page-normal]
+Desc=Daisy 2.02 normal page
+Name=span
+class=page-normal
+NCC=Yes
+LinkBack=Yes
+Level=0
+Nested=Yes
+ID=Yes
+
+[span.page-front]
+Desc=Daisy 2.02 front page
+Name=span
+class=page-front
+NCC=Yes
+LinkBack=Yes
+Level=0
+Nested=Yes
+ID=Yes
+
+[span.page-special]
+Desc=Daisy 2.02 special page
+Name=span
+class=page-special
+NCC=Yes
+LinkBack=Yes
+Level=0
+Nested=Yes
+ID=Yes
+
+[definition]
+number=-1
+name=
+source=
+desc=

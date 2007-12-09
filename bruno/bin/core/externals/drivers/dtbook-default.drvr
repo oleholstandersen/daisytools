@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE bruno-driver SYSTEM "bruno-driver.dtd" >
+<bruno-driver 
+	version="0.9" 
+	outfileset="z3986.2005" 
+	xmlns="http://www.daisy.org/2004/bruno"
+	target-namespace="xmlns:dtbook='http://www.daisy.org/z3986/2005/dtbook/'"
+	local-dtd="dtbook-2005-1.dtd|dtbook-2005-2.dtd"
+>
+
+ <name>Z39-86.2005 default</name>
+ <desc>Default driver for Z39.86-2005 with DTBOOK input</desc>
+ <settings>
+   
+   <start>
+     <!-- all xpath statements below are set relative to the return node of this statement: -->
+     <item xpath="//dtbook:book" />
+   </start>
+ 
+   <remove>    
+     <!-- dont remove this item (removes existing linkback): -->
+     <item xpath="//@smilref" />       
+   </remove>
+   
+   <sync-omit>
+     <!-- omit sync on what is typically inline elements -->
+     <!-- Use the '[../text()]' predicate to only select inlines when they have text siblings. -->
+     <!-- Use the '[not(.//dtbook:*)]' predicate to only select inlines when they do not have element descendants. -->    
+     <!-- use the '[count(../xhtml:*)&lt;2]' predicate to only select inlines that have no element siblings -->	 
+     
+     <item xpath="//dtbook:em[../text()][not(.//dtbook:*)][count(../xhtml:*)&lt;2]" /> 
+     <item xpath="//dtbook:strong[../text()][not(.//dtbook:*)][count(../xhtml:*)&lt;2]" />     
+ 
+     <!-- generic class attribute value to force omit -->
+     <item xpath="//dtbook:*[@class='sync-omit']" /> 
+
+     <!-- omit sync on empty elements -->
+     <!-- dont remove this item: -->
+     <item xpath="//dtbook:*[not(text()[normalize-space(.)]|*)]"/>
+       
+   </sync-omit>
+   
+   <sync-force>
+      <!-- generic class attribute value to force include -->
+      <item xpath="//dtbook:*[@class='sync-force']" /> 
+   </sync-force>
+   
+   <smilref-omit>
+
+   </smilref-omit>
+
+   <smil-sequence>   
+     <!--
+          Use the '[.//dtbook:*]' predicate to only select 
+          elems when they have element descendants 
+          (if only text descendants let them be pars)
+      -->
+     <item xpath="//dtbook:note[.//dtbook:*]" user-escape="true" />    
+     <item xpath="//dtbook:table[.//dtbook:*]" user-escape="true" />
+     <item xpath="//dtbook:tr[.//dtbook:*]" user-escape="true" />     
+     <item xpath="//dtbook:list[.//dtbook:*]" user-escape="true" />
+     <item xpath="//dtbook:poem[.//dtbook:*]" user-escape="true" /> 
+     
+     <!-- the default customTest elems -->     
+     <item xpath="//dtbook:prodnote[.//dtbook:*]" />   
+     <item xpath="//dtbook:annotation[.//dtbook:*]" />
+     <item xpath="//dtbook:sidebar[.//dtbook:*]" />          
+     <item xpath="//dtbook:list[.//dtbook:*]" />
+     <item xpath="//dtbook:note[.//dtbook:*]" />
+   </smil-sequence>
+     
+   <smil-customTest>
+     <item xpath="//dtbook:pagenum" />
+     <item xpath="//dtbook:noteref" />
+     <item xpath="//dtbook:linenum" />     
+     <item xpath="//dtbook:note" />
+     <item xpath="//dtbook:prodnote" />   
+     <item xpath="//dtbook:annotation" />
+     <item xpath="//dtbook:sidebar" />               
+     <item xpath="//dtbook:list" />
+   </smil-customTest>
+          
+   <smil-split>     
+     <item xpath="//dtbook:h1" />
+     <item xpath="//dtbook:h2" />     
+   </smil-split>
+   
+   <nav-include>
+     <item xpath="//dtbook:h1" />
+     <item xpath="//dtbook:h2" />
+     <item xpath="//dtbook:h3" />
+     <item xpath="//dtbook:h4" />
+     <item xpath="//dtbook:h5" />
+     <item xpath="//dtbook:h6" />     
+     <item xpath="//dtbook:pagenum"/>
+     
+     <!-- 
+         Set an xpath statement in navLabel attribute to use 
+         a specified node relational to contextnode for NCX navLabel. 
+         This Xpath statement can point to text() or element, 
+         and can include or statements. 
+         If navLabel statement doesnt resolve, 
+         a fallback to contextnode text is made. 
+         If no contextnode text, fallback to elementname.
+     -->
+     <item xpath="//dtbook:note" />
+     <item xpath="//dtbook:list" navLabel="dtbook:hd|dtbook:li/dtbook:lic[position()=1]" />
+     <item xpath="//dtbook:sidebar" navLabel="dtbook:hd" />
+     <item xpath="//dtbook:poem" navLabel="dtbook:title|dtbook:hd|dtbook:line[position()=1]"/>
+   </nav-include>
+   
+   <mixed-content-handler active="true" elemName="span" attName="class" attValue="bybruno">
+     <item xpath="//dtbook:*" />        
+   </mixed-content-handler>
+              
+ </settings>
+</bruno-driver>

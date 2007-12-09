@@ -1,0 +1,387 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' lang='en' xml:lang='en'>
+<head>
+<meta http-equiv='Content-type' content='text/html; charset=windows-1252' />
+<title>Bruno Test Suite - xhtml - MCH on</title>
+<meta name="dc:identifier" content="bruno0001" />
+<meta name="dc:title" content="Bruno XHTML test suite" />
+<meta name="dc:creator" content="mgylling" />
+<meta name="dc:publisher" content="daisy consortium" />
+<meta name="dc:language" content="en-GB" />
+<meta name="dc:date" content="2004-08-29" />
+<style type="text/css">
+  body {margin: 4em 2em 2em 4em; font-family: arial, verdana, sans-serif;}
+  div.testCode{border: 2px solid red; padding: 1em;}
+  div.test {margin-top: 3em;}
+  td {border: 1px solid black;}
+</style>
+
+</head>
+<body>
+
+<h1 class="title">Bruno Test Suite - <span>xhtml</span> - MCH on</h1>
+
+<p>Tests below to be run with</p>
+
+<ol>
+<li>factory state default driver <code>xhtml-default.drvr</code></li>
+<li>mixed content handler <code>on</code> (which is driver default)</li>
+</ol>
+
+
+<span class="page-normal">1</span>
+<h2>Tests 1-5 </h2>
+
+  <div class="test" id="test1">
+    <h3>Test 1: mixed content with sync-omit</h3>
+    <div class="testDesc">
+      <p>A paragraph with text and driver-sync-omit element children.</p>
+      <pre><code>&lt;p&gt;text1&lt;em&gt;text2&lt;/em&gt;text3&lt;/p&gt;</code></pre>
+      <p>Expected result: only paragraph becomes syncpoint.</p>
+    </div>
+    <div class="testCode">
+      <p>text<em>text2</em>text3</p>
+    </div>
+  </div>
+
+  <div class="test" id="test2">
+    <h3>Test 2: mixed content without sync-omit</h3>
+    <div class="testDesc">
+      <p>A paragraph with text and non-driver-sync- element children.</p>
+      <pre>
+      <code>
+      &lt;p&gt;
+        text1
+        &lt;span&gt;text2&lt;/span&gt;
+        text3
+      &lt;/p&gt;
+      </code>
+      </pre>
+      <p>Expected result: all three childnodes becomes separate syncpoints, text nodes with appended parent elems. The paragraph parent does not become a syncpoint.</p>
+    </div>
+    <div class="testCode">
+      <p>text1<span>text2</span>text3</p>
+    </div>
+  </div>
+
+   <div class="test" id="test3">
+    <h3>Test 3: non-mixed content with sync-omit children</h3>
+    <div class="testDesc">
+      <p>A paragraph has only sync-omit element children, no text. Mixed content handler on/off irrelevant.</p>
+      <pre>
+      <code>
+      &lt;p&gt;
+        &lt;em&gt;text1&lt;/em&gt;
+        &lt;em&gt;text2&lt;/em&gt;
+        &lt;/p&gt;
+      </code>
+      </pre>
+      <p>Expected result: Children become separate syncpoints. Paragraph does not become a syncpoint. Because of the way sync-omit is declared in filter ([../text()]), these elements are treated as syncinclude.</p>
+    </div>
+    <div class="testCode">
+      <p><em>text1</em><em>text2</em></p>
+    </div>
+  </div>
+  
+  <div class="test" id="test4">
+    <h3>Test 4: Mixed content: sync-omit child with sync-force class attribute</h3>
+    <div class="testDesc">
+      <p>A paragraph has a child that is sync-omit, but has a sync-force attribute.</p>
+      <pre>
+      <code>
+      &lt;p&gt;
+        text1
+        &lt;em class=&quot;sync-force&quot;&gt;
+          text2
+        &lt;/em&gt;text3
+      &lt;/p&gt;
+      </code>
+      </pre>
+      <p>Expected result: Child becomes a syncpoint. Paragraph becomes a syncpoint.</p>
+    </div>
+    <div class="testCode">
+      <p>text1<em class="sync-force">text2</em>text3</p>
+    </div>
+  </div>
+  
+  
+  <div class="test" id="test5">
+    <h3>Test 5: Mixed content: sync-include child with sync-omit class attribute</h3>
+    <div class="testDesc">
+      <p>A paragraph has a child that is sync-include, but has a sync-omit attribute. Mixed-content-handler active.</p>
+      <pre>
+      <code>
+      &lt;p&gt;
+        text1
+        &lt;span class=&quot;sync-omit&quot;&gt;
+        text2
+        &lt;/span&gt;
+        text3
+      &lt;/p&gt;
+      </code>
+      </pre>
+      <p>Expected result: Only paragraph becomes syncpoint.</p>
+    </div>
+    <div class="testCode">
+      <p>text1<span class="sync-omit">text2</span>text3</p>
+    </div>
+  </div>
+
+<span class="page-normal">2</span>
+<h2>Tests 6-10 </h2>
+  
+  <div class="test" id="test6">
+    <h3>Test 6: Multinested mixed content</h3>
+    <div class="testDesc">
+      <p>Nested mixed content, omit, include and text siblings. </p>
+      <pre><code>
+      	  &lt;div&gt;
+	    text1
+	    &lt;p&gt;
+	     text2
+	     &lt;em&gt;text2b&lt;/em&gt;
+	     &lt;span&gt;text3&lt;/span&gt;
+	    &lt;/p&gt;
+	    text4  
+	  &lt;/div&gt;      
+      </code></pre>
+      <p>Expected result: text nodes direct children of div are wrapped. em child of p is included in the wrapper of "text2". </p>
+    </div>
+
+    <div class="testCode">
+	  <div>
+	    text1
+	    <p>
+	     text2
+	     <em>text2b</em>
+	     <span>text3</span>
+	    </p>
+	    text4  
+	  </div>      
+    </div>    
+  </div>
+  
+    <div class="test" id="test7">
+    <h3>Test 7: nested lists </h3>
+    <div class="testDesc">
+      <p>A list with a nested list. One list item ("text_5") has both text and the nested ul.</p>
+      <pre><code>
+  &lt;ul&gt;
+  &lt;li&gt;text_4&lt;/li&gt;
+  &lt;li&gt;text_5
+  &lt;ul&gt;
+    &lt;li&gt;text_6&lt;/li&gt;
+    &lt;li&gt;text_7&lt;/li&gt;
+  &lt;/ul&gt;  
+  &lt;/li&gt;
+  &lt;li&gt;text_8&lt;/li&gt;
+  &lt;/ul&gt;
+
+      </code></pre>
+      <p>Expected result: All li become syncpoints. "text_5" becomes wrapped.</p>
+    </div>
+    <div class="testCode">
+  <ul>
+  <li>text_4</li>
+  <li>text_5
+  <ul>
+    <li>text_6</li>
+    <li>text_7</li>
+  </ul>  
+  </li>
+  <li>text_8</li>
+  </ul>
+
+    </div>
+  </div>
+
+  <div class="test" id="test8">
+    <h3>Test 8: table with mixed content cells</h3>
+    <div class="testDesc">
+      <p>cell 2 has text and syncomit children. cell 4 has text, a span with a nested em.</p>
+      <pre><code>
+  &lt;table&gt;
+    &lt;tr&gt;
+     &lt;td&gt;cell_1&lt;/td&gt;
+     &lt;td&gt;
+       cell_2a
+       &lt;em&gt;
+         cell_2b
+       &lt;/em&gt;cell_2c
+     &lt;/td&gt;
+   &lt;/tr&gt;
+   &lt;tr&gt;
+     &lt;td&gt;
+       cell_3
+     &lt;/td&gt;
+     &lt;td&gt;
+       cell_4a
+       &lt;span&gt;
+         cell4b
+       &lt;em&gt;
+         cell_4c
+       &lt;/em&gt;cell_4d
+       &lt;/span&gt;
+         cell4e 
+     &lt;/td&gt;
+   &lt;/tr&gt;
+  &lt;/table&gt;
+      </code></pre>
+      <p>Expected result: cell 2 should become one syncpoint. cell 4 should become synced at three points: 4a, 4bcd, 4e. </p>
+    </div>
+    <div class="testCode">
+      <table border="1">
+  <tr><td>cell_1</td><td>cell_2a<em>cell_2b</em>cell_2c</td></tr>
+  <tr><td>cell_3</td><td>cell_4a<span>cell4b<em>cell_4c</em>cell_4d</span>cell4e</td></tr>
+  </table>
+
+    </div>
+  </div>
+
+  <div class="test" id="test9">
+    <h3>Test 9: multiple nesting tests </h3>
+    <div class="testDesc">
+      <p>These paragraphs contain multiple sets of nested syncomits/syncincludes. Mixed-content-handler active.</p>
+      <pre><code>
+&lt;p&gt;text7&lt;em&gt;text8&lt;strong&gt;text9
+  &lt;/strong&gt;text10&lt;/em&gt;text11&lt;/p&gt;
+&lt;p&gt;text12&lt;span&gt;text13&lt;strong&gt;text14
+  &lt;/strong&gt;text15&lt;/span&gt;text16&lt;/p&gt;
+&lt;p&gt;text17&lt;em&gt;text18&lt;span&gt;text19
+  &lt;/span&gt;text20&lt;/em&gt;text21&lt;/p&gt;
+&lt;p&gt;text22&lt;em&gt;text23&lt;/em&gt;text24&lt;/p&gt;
+&lt;p&gt;text25&lt;em&gt;text26&lt;/em&gt;text27
+  &lt;strong&gt;text28&lt;/strong&gt;text29&lt;/p&gt;
+&lt;p&gt;text30&lt;em&gt;text31&lt;/em&gt;text32
+  &lt;strong&gt;text33&lt;em&gt;text34&lt;/em&gt;text35
+  &lt;/strong&gt;text36&lt;/p&gt;
+      </code></pre>
+      <p>Expected result: In none of the cases should syncpoints occur on parents that have synced children. Sync series should be:</p>
+      <pre>
+      7, 8+9+10,11
+      12,13+14+15,16
+      17,18,19,20,21
+      22+23+24
+      25+26+27+28+29
+      30+31+32,33+34+35,36
+      </pre>
+      
+    </div>
+    <div class="testCode">
+<p>text7<em>text8<strong>text9</strong>text10</em>text11</p>
+<p>text12<span>text13<strong>text14</strong>text15</span>text16</p>
+<p>text17<em>text18<span>text19</span>text20</em>text21</p>
+<p>text22<em>text23</em>text24</p>
+<p>text25<em>text26</em>text27<strong>text28</strong>text29</p>
+<p>text30<em>text31</em>text32<strong>text33<em>text34</em>text35</strong>text36</p>    
+    </div>
+  </div>
+
+  <div class="test" id="test10">
+    <h3>Test 10: wrapper including sibling </h3>
+    <div class="testDesc">
+      <pre><code>
+&lt;p&gt;
+  text1&lt;em&gt;text2
+  &lt;/em&gt;&lt;span&gt;text3&lt;/span&gt;text4
+&lt;/p&gt;    
+      </code></pre>
+      <p>Expected result: three syncpoints, first one being 1+2, both inside span.splitted.</p>
+    </div>
+    <div class="testCode">
+    <p>text1<em>text2</em><span>text3</span>text4</p>    
+    </div>
+  </div>
+
+<span class="page-normal">3</span>
+<h2>Tests 11-12</h2>
+
+  <div class="test" id="test11">
+    <h3>Test 11: wrapper including siblings </h3>
+    <div class="testDesc">
+      <pre><code>
+&lt;p&gt;text1&lt;em&gt;text2&lt;/em&gt;text3
+&lt;strong&gt;text4&lt;/strong&gt;
+&lt;span&gt;text5&lt;/span&gt;text6&lt;/p&gt;
+      </code></pre>
+      <p>Expected result: three syncpoints, first one being 1+2+3+4, all four inside span.splitted.</p>
+    </div>
+    <div class="testCode">
+    <p>text1<em>text2</em>text3<strong>text4</strong><span>text5</span>text6</p>    
+    </div>
+  </div>
+
+  <div class="test" id="test12">
+    <h3>Test 12: list inside table cell</h3>
+    <div class="testDesc">
+    <p>Second cell in first row has a nested list where the second li has mixed content. Second row has rowspan=2</p>
+      <pre><code>
+    &lt;table&gt;
+    &lt;tr&gt;&lt;th&gt;Header Column 1&lt;/th&gt;
+    &lt;th&gt;Header column 2&lt;/th&gt;&lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Table cell 1; plain text&lt;/td&gt;
+      &lt;td&gt;
+        &lt;ul&gt;
+        &lt;li&gt;Outermost list item one text
+        &lt;ul&gt;
+          &lt;li&gt;innermost listitem one
+            &lt;dl&gt;
+            &lt;dt&gt;innermost listitem one 
+              definition term&lt;/dt&gt;
+            &lt;dd&gt;innermost listitem one 
+              definition data&lt;/dd&gt;
+            &lt;/dl&gt;          
+          &lt;/li&gt;
+          &lt;li&gt;innermost listitem two&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;/li&gt;
+        &lt;li&gt;Outermost list item one text with an inline 
+          &lt;span&gt;span element&lt;/span&gt; and an inline 
+          &lt;em&gt;emphasis element&lt;/em&gt; as well.
+        &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+     &lt;td colspan=&quot;2&quot;&gt;
+       second row with rowspan=2
+     &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/table&gt;
+      </code></pre>
+      <p>Expected result: Outermost list item one text gets wrapped, Outermost list item two gets three syncpoints, the last one being "and an inline <em>emphasis element</em> as well."</p>
+    </div>
+    <div class="testCode">
+    <table>
+    <tr><th>Header Column 1</th><th>Header column 2</th></tr>
+    <tr>
+      <td>Table cell 1; plain text</td>
+      <td>
+        <ul>
+        <li>Outermost list item one text
+        <ul>
+          <li>innermost listitem one
+            <dl>
+            <dt>innermost listitem one definition term</dt>
+            <dd>innermost listitem one definition data</dd>
+            </dl>          
+          </li>
+          <li>innermost listitem two; plain text</li>
+        </ul>
+        </li>
+        <li>Outermost list item two text with an inline <span>span element</span> and an inline <em>emphasis element</em> as well.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+     <td colspan="2">second row with rowspan=2</td>
+    </tr>
+    </table>
+    
+    </div>
+  </div>
+
+</body>
+</html>
