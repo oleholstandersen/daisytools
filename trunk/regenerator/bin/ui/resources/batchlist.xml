@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE joblist [
+<!ELEMENT joblist (default?,(job+))>
+<!ELEMENT default (metafile? | outputpath? | dtbtype? | charset? | subcharset? |prefix? | seqrename? | usenumeric?)*>
+<!ELEMENT job (nccfile,(metafile? | outputpath? | dtbtype? | charset? | subcharset? | prefix? | seqrename? |usenumeric?)*)>
+<!ELEMENT nccfile (#PCDATA)>
+<!ELEMENT metafile (#PCDATA)>
+<!ELEMENT outputpath (#PCDATA)>
+<!ELEMENT dtbtype (#PCDATA)>
+<!ELEMENT charset (#PCDATA)>
+<!ELEMENT subcharset (#PCDATA)>
+<!ELEMENT prefix (#PCDATA)>
+<!ELEMENT seqrename (#PCDATA)>
+<!ELEMENT usenumeric (#PCDATA)>
+]>
+
+<!--
+	Daisy 2.02 Regenerator batch list
+
+	Define each job with a <job> element. Various properties can be set by
+	adding subelements to the <job> element;
+
+	nccfile		  Sets the book nccpath, REQUIRED (string value)
+	metafile	  Sets the book metadata import location and file (string value): if omitted or left empty "<metafile></metafile>" then existing DTB metadata will be preserved
+	outputpath	Sets the books rendering path (string value)
+	dtbtype		  Sets the books dtbtype, can have the following values (integer values):
+				      0 (audioOnly)
+				      1 (audioNcc)
+				      2 (audioPartialText)
+				      3 (audioFullText)
+				      4 (textPartialAudio)
+				      5 (textNcc)
+	charset		  Sets the books input charset, can have the following values (integer values):
+				      0 (western)
+				      1 (shift-jis)
+				      2 (big5)
+				      3 (utf-8)
+				      4 (other, see subcharset)
+	subcharset	Sets the books charset if 4 (other) was selected using the charset tag.
+	            The values here (integer value) are selected on a 0 basis from the
+	            charactersets found in the 'charsets.xml' file.
+	prefix		  Sets the books file renaming prefix (string value).
+	            This value will be ignored if 'usenumeric' is set to 'true'.
+	seqrename	  Sets wheter the book files should be rendered with a sequence number.
+	            This is a boolean value ('true' or 'false')
+	usenumeric	Sets wheter the book files should be rendered with a prefix
+			        that corresponds to the books 'dc:identifier' or 'ncc:identifier'.
+			        This is a boolean value ('true' or 'false')
+
+	If a property is not set the regenerator will insert it using the default value
+	for the specific property. By declaring a <default> element, you can set which
+	values to default to, this element is used exactly like the <job> element.
+
+-->
+
+<joblist>
+  <default>
+    <dtbtype>1</dtbtype>
+    <charset>0</charset>
+    <usenumeric>false</usenumeric>
+    <metafile></metafile>
+  </default>
+
+  <job>
+    <nccfile>d:\dtbs\cook2\ncc.html</nccfile>
+    <dtbtype>3</dtbtype>
+    <charset>1</charset>
+  </job>
+  <job>
+    <nccfile>d:\dtbs\EaseReader\ncc.html</nccfile>
+    <dtbtype>3</dtbtype>
+    <charset>3</charset>
+  </job>
+  <job>
+    <nccfile>d:\dtbs\Markus krash-och-bang\ncc.html</nccfile>
+  </job>
+  <job>
+    <nccfile>d:\dtbs\mspc\ncc.html</nccfile>
+    <charset>3</charset>
+  </job>
+<!--  <job>
+    <nccfile>d:\dtbs\nielstest\ncc.html</nccfile>
+  </job>
+  <job>
+    <nccfile>d:\dtbs\Psykoser\ncc.html</nccfile>
+  </job>
+  <job>
+    <nccfile>d:\dtbs\t1\ncc.html</nccfile>
+  </job>
+-->
+  <job>
+    <nccfile>d:\dtbs\test\ncc.html</nccfile>
+  </job>
+<!--
+  <job>
+    <nccfile>d:\dtbs\vh202err\ncc.html</nccfile>
+  </job>
+  <job>
+    <nccfile>d:\dtbs\vh202fterr\ncc.html</nccfile>
+    <dtbtype>3</dtbtype>
+    <charset>3</charset>
+    <metafile>*fulldtbpath*\dummy.xml</metafile>
+  </job>
+-->
+</joblist>

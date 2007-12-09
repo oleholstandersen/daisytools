@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!DOCTYPE smil PUBLIC "-//W3C//DTD SMIL 1.0//EN" "http://www.w3.org/TR/REC-smil/SMIL10.dtd">
+<smil>
+<head>
+<meta name="ncc:generator" content="LpStudioPlus 3.0.1" />
+<meta name="dc:format" content="Daisy 2.02" />
+
+<meta name="dc:title" content="Palle på cirkus" />
+<meta name="ncc:timeInThisSmil" content="0:00:16" />
+<layout>
+<region id="txtView" />
+</layout>
+</head>
+<body>
+<seq dur="15.569s">
+<par endsync="last">
+<text src="ncc.html#text_002a" id="text_002a" />
+<seq>
+<audio src="10_Avannons.mp3" clip-begin="npt=0.000s" clip-end="npt=4.754s" id="qwrt_0001" />
+<audio src="10_Avannons.mp3" clip-begin="npt=4.754s" clip-end="npt=8.777s" id="qwrt_0002" />
+<audio src="10_Avannons.mp3" clip-begin="npt=8.777s" clip-end="npt=10.684s" id="qwrt_0003" />
+<audio src="10_Avannons.mp3" clip-begin="npt=10.684s" clip-end="npt=15.569s" id="qwrt_0004" />
+</seq>
+</par>
+</seq>
+</body>
+</smil>

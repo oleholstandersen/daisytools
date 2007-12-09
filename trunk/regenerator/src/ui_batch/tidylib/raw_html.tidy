@@ -1,0 +1,64 @@
+char-encoding: raw
+input-encoding: raw
+output-encoding: raw
+numeric-entities: no
+ncr: no
+
+fix-uri: no
+
+show-warnings: yes
+show-errors:1
+
+drop-empty-paras: yes
+enclose-text: no
+enclose-block-text:no
+
+wrap:0
+
+tidy-mark:no
+markup: yes
+quiet: yes
+input-xml: no
+output-xml: yes
+output-xhtml: yes
+add-xml-decl: no
+assume-xml-procins: no
+clean: yes
+quote-marks: yes
+quote-nbsp: yes
+quote-ampersand: no
+doctype: transitional
+tab-size: 1
+indent:yes
+indent-cdata:no
+write-back: no
+uppercase-tags: no
+uppercase-attributes: no
+bare: no
+logical-emphasis: yes
+word-2000: no
+drop-font-tags: yes
+alt-text:
+add-xml-space: no
+fix-bad-comments: yes
+split: no
+break-before-br: no
+keep-time: no
+error-file: tidyerrs.txt
+show-body-only:no
+new-inline-tags:
+new-blocklevel-tags:
+new-empty-tags:
+new-pre-tags:
+fix-backslash:yes
+gnu-emacs:no
+lower-literals:no
+hide-comments: no
+force-output:yes
+ascii-chars:no
+join-classes:no
+join-styles:no
+escape-cdata:yes
+repeated-attributes:keep-first
+output-bom:no
+replace-color:yes
