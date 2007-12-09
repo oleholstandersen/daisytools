@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' lang='en' xml:lang='en'>
+<head>
+<meta http-equiv='Content-type' content='text/html; charset=windows-1252' />
+<title>Bruno Test Suite - xhtml - mch off</title>
+<meta name="dc:identifier" content="bruno0001" />
+<meta name="dc:title" content="Bruno XHTML test suite" />
+<meta name="dc:creator" content="mgylling" />
+<meta name="dc:publisher" content="daisy consortium" />
+<meta name="dc:language" content="en-GB" />
+<meta name="dc:date" content="2004-08-29" />
+<style type="text/css">
+  div.testCode{border: 2px solid red; padding: 1em;}
+</style>
+
+</head>
+<body>
+<h1 class="title">Bruno Test Suite - xhtml</h1>
+<p>Tests below to be run with</p>
+<ol>
+<li>factory state default driver <code>xhtml-default.drvr</code></li>
+<li>mixed content handler <code>off</code> (which is not driver default)</li>
+</ol>
+
+  <div class="test" id="test1">
+    <h2>Test 1: mixed content without sync-omit</h2>
+    <div class="testDesc">
+      <p>A paragraph has text nodes and non-sync-omit element children.</p>
+      <pre><code>&lt;p&gt;text1&lt;span&gt;text2&lt;/span&gt;text3&lt;/p&gt;</code></pre>
+      <p>Expected result: paragraph becomes syncpoint, element child becomes syncpoint.</p>
+    </div>
+    <div class="testCode">
+      <p>text<span>text2</span>text3</p>
+    </div>
+  </div>
+
+   <div class="test" id="test2">
+    <h2>Test 2: non-mixed content with sync-omit children</h2>
+    <div class="testDesc">
+      <p>A paragraph has only sync-omit element children, no text. Mixed content handler on/off irrelevant.</p>
+      <pre><code>&lt;p&gt;&lt;em&gt;text1&lt;/em&gt;&lt;em&gt;text2&lt;/em&gt;&lt;/p&gt;</code></pre>
+      <p>Expected result: Children become separate syncpoints. Paragraph does not become a syncpoint. Because of the way sync-omit is declared in filter ([../text()]), these elements are treated as syncinclude.</p>
+    </div>
+    <div class="testCode">
+      <p><em>text1</em><em>text2</em></p>
+    </div>
+  </div>
+
+
+</body>
+</html>

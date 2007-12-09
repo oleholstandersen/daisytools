@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE package PUBLIC "+//ISBN 0-9673008-1-9//DTD OEB 1.2 Package//EN"
+	"http://openebook.org/dtds/oeb-1.2/oebpkg12.dtd">
+<package unique-identifier="uid" xmlns="http://openebook.org/namespaces/oeb-package/1.0/">
+         <metadata>
+	        <dc-metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oebpackage="http://openebook.org/namespaces/oeb-package/1.0/">
+        		<dc:Title>DcTitle</dc:Title>
+        		<dc:Creator>DcCreator</dc:Creator>
+        		<dc:Publisher>DcPublisher</dc:Publisher>
+        		<dc:Date>2004-01-01</dc:Date>
+        		<dc:Format>ANSI/NISO Z39.86-2005</dc:Format>
+        		<dc:Identifier id="uid">uid</dc:Identifier>
+        		<dc:Language>en</dc:Language>
+        	</dc-metadata>
+		<x-metadata>
+			<meta name="dtb:totalTime" content="00:00:00"/>
+			<meta name="dtb:multimediaType" content="textNCX"/>
+			<meta name="dtb:multimediaContent" content="text,image"/>
+			<meta name="prod:generator" content="bruno"/>			
+		</x-metadata>
+         </metadata>
+         <manifest></manifest>
+         <spine></spine>
+</package>

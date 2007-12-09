@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE dtbook PUBLIC 
+  "-//NISO//DTD dtbook 2005-1//EN" 
+  "http://www.daisy.org/z3986/2005/dtbook-2005-1.dtd">
+<dtbook xmlns="http://www.daisy.org/z3986/2005/dtbook/" version="2005-1" xml:lang="en">
+<head>    
+  <meta name="dc:Creator" content="input-dtbook-dc-creator"/>  
+  <meta name="dc:Title" content="input-dtbook-dc-title"/>  
+  <meta name="dtb:uid" content="input-dtbook-uid"/>  
+</head>
+<book>
+<bodymatter>
+<level1>
+<h1>heading 1</h1>
+<pagenum id='a1' page='normal'>1</pagenum>
+<pagenum id='a2' page='normal'>2</pagenum>
+<pagenum id='a3' page='normal'>3</pagenum>
+<level2>
+<h2>heading 2</h2>
+<pagenum id='b1' page='normal'>4</pagenum>
+<pagenum id='b2' page='normal'>5</pagenum>
+<pagenum id='b3' page='normal'>6</pagenum>
+<level3>
+<h3>heading 3</h3>
+<pagenum id='c1' page='normal'>7</pagenum>
+<pagenum id='c2' page='normal'>8</pagenum>
+<pagenum id='c3' page='normal'>9</pagenum>
+<level4>
+<h4>heading 4</h4>
+<pagenum id='d1' page='normal'>10</pagenum>
+<pagenum id='d2' page='normal'>11</pagenum>
+<pagenum id='d3' page='normal'>12</pagenum>
+</level4>
+</level3>
+</level2>
+</level1>
+</bodymatter>
+</book>
+</dtbook>
