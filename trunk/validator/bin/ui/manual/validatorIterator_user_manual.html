@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+ <title>Daisy 2.02 Validator Iterator User Manual</title>
+ <meta http-equiv='Content-type' content='text/html; charset=windows-1252'/>
+ <link type="text/css" rel="stylesheet" href="daisy_manual.css"/>
+</head>
+
+<body>
+<h1 class='title'>Daisy 2.02 Validator Iterator User Manual</h1>
+<div class="comment">Last revised: m gylling, 2004-08-04</div>
+<div class='toc'>
+<h2 id='ctoc'>Table of Contents</h2>
+<ul class="linklist">
+<li class="main"><a href='#intro'>1. Introduction</a></li>
+<li class="main"><a href='#use'>2. Using the Iterator</a></li>
+</ul>
+
+
+<h2 id="intro">1. Introduction</h2>
+<p>The Validator Iterator is a <em>batch processing interface</em> for the Daisy 2.02 Validator.</p>
+<p>For general information on the Daisy 2.02 Validator, see the <a href="validator_user_manual.html">Daisy 2.02 Validator User Manual</a>. This manual only describes features specific to the batch processing interface.</p> 
+
+<h2 id="use">2. Using the Iterator</h2>
+<ol>
+<li>
+<p>Point to a "mother folder" (<kbd>CTRL+O</kbd>).</p> 
+<p>A mother folder is typically a harddrive root or any other directory beneath which one or several DTBs reside. The Iterator will analyze every folder under the specified folder, and
+add all found DTBs to the batch process list.</p>
+</li>
+
+<li>
+  <p>Set a destination folder for output reports (<kbd>CTRL+P</kbd>).</p>
+  <p>The output reports will be sorted in automatically created subfolders named "fail" and "pass" beneath the folder you specify.</p>
+  <p>The report filenames have the syntax <code>dc:identifier_YYYYMMDDHHMMSS</code>. If you validate a DTB at 12 o´clock on the first of March 2004, and its identifier is s1234, then the correpsnding report filename will be <code>s1234_20040301120000</code>. The naming convention is this messy and long to make sure no conflicts (duplicate filenames) occur.</p>
+
+<div class="notice"><p>IMPORTANT! You can use the Iterator in a networked setting.
+For the Iterator to work as intended however, you need to map the network drive that you wish to work with. This is typically done using the "Tools/Map Network Drive" option in Windows Explorer.</p>
+
+<p>A successfully mapped networked drive is signified by that it appear with a "drive letter" (such as <code>G:\</code> et cetera) on your local machine. Once this appears, you simply select the local drive name as mother folder or output report path.</p> 
+
+<p><strong>If you dont follow the instructions above, and instead specify folders by neighbourhood browsing, the iterator will likely not work.</strong></p>
+</div>
+
+</li>
+
+
+<li>
+<p>Locate all available DTBs (<kbd>CTRL+L</kbd>).</p> 
+<p>Once the directory tree has been fully searched, the "dtb list" area of the user interface will be populated. Optionally, you can <em>deselect</em> certain of the DTBs in the batch process list by unchecking the checkbox adjacent to each DTB in the DTB List.</p>
+
+<li>
+ <p>Configure desired settings in the settings area.</p> 
+ <p>The Iterator supports modifying the <em>light mode</em>, <em>disable audio tests</em> and <em>time flucuation</em> settings. For more information on what these settings do, see the <a href="validator_user_manual.html">Daisy 2.02 Validator User Manual</a>.</p>
+ </li>
+
+<li>
+<p>Start the batch validation process (<kbd>CTRL+R</kbd>).</p>
+</li>
+
+<li>
+<p>Wait.</p>
+</li>
+
+<li>
+<p>Once the wait is over (the status log will say "done", and a system ping will (perhaps) be heard), go to the folder you specified and have a look at the results.</p>
+</li>
+
+</ol>
+
+
+
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+    <p>
+      <a href="http://validator.w3.org/check/referer"><img
+          src="http://www.w3.org/Icons/valid-xhtml10"
+          alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+    </p>
+
+</body>
+</html>
+

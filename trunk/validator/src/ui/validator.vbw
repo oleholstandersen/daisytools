@@ -1,0 +1,13 @@
+frmMain = 88, 88, 590, 536, , 44, 44, 545, 492, C
+mdlGlobal = 132, 132, 664, 577, Z
+frmErrorLog = -10, 109, 661, 458, , 154, 154, 645, 602, C
+frmCandidateList = 33, 187, 565, 632, , 0, 0, 532, 445, C
+frmDocuPaths = 110, 110, 600, 558, , 22, 22, 512, 470, C
+frmAbout = 198, 198, 689, 646, , 176, 176, 707, 621, C
+mdlFileHandler = 154, 154, 686, 599, 
+mRegistryControl = 198, 198, 688, 646, 
+mReportIO = 0, 0, 490, 448, 
+dlgSearchReplace = 110, 110, 755, 429, C, 44, 44, 534, 492, C
+frmRepItemProperties = 110, 110, 600, 558, C, 88, 88, 578, 536, C
+mdlMultiLanguage = 110, 110, 600, 558, 
+frmGeneralSettings = 154, 154, 646, 602, , 132, 132, 624, 580, C

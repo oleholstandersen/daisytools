@@ -1,0 +1,1221 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+ <title>Daisy 2.02 Validator User Manual</title>
+ <meta http-equiv='Content-type' content='text/html; charset=windows-1252'/>
+ <link type="text/css" rel="stylesheet" href="daisy_manual.css"/>
+</head>
+
+<body>
+<h1 class='title'>Daisy 2.02 Validator User Manual</h1>
+<div class="comment">Last revised: m gylling, 2003-10-10</div>
+<div class='toc'>
+<h2 id='ctoc'>Collapsed Table of Contents</h2>
+<ul class="linklist">
+<li class="main"><a href='#intro'>1. Introduction</a></li>
+<li class="main"><a href='#install'>2. Installation and Requirements</a></li>
+<li class="main"><a href='#quick'>3. Using the Validator - quick version</a></li>
+<li class="main"><a href='#detailed'>4. Using the Validator - detailed version</a></li>
+<li class="main"><a href='#uiref'>5. User Interface Reference</a></li>
+</ul>
+
+<h2 id='toc'>Expanded Table of Contents</h2>
+<ul class="linklist">
+<li class="main"><a href='#intro'>1. Introduction</a>
+  <ul>
+    <li><a href='#intro_do'>What does the Validator do?</a></li>
+    <li><a href='#intro_why'>Why use the Validator?</a></li>
+    <li><a href='#intro_who'>Who should use the Validator?</a></li>
+    <li><a href='#intro_license'>Use and Licensing</a></li>
+    <li><a href='#intro_related'>Related Tools</a></li>
+  </ul>
+ </li>
+<li class="main"><a href='#install'>2. Installation and Requirements</a></li>
+<li class="main"><a href='#quick'>3. Using the Validator - quick version</a></li>
+<li class="main"><a href='#detailed'>4. Using the Validator - detailed version</a>
+  <ul>
+  <li><a href='#inpTypes'>4.1 Candidate Types </a></li>
+  <li><a href='#valModes'>4.2 Validation Modes </a></li>
+  <li><a href='#batchmode'>4.3 Batch Mode</a></li>
+  <li><a href='#exec'>4.4 Executing the validation</a></li>
+  <li><a href='#outInterp'>4.5 Interpreting the Result</a>
+    <ul>
+      <li><a href="#rslt_warning">The Warning</a></li>
+      <li><a href="#rslt_error">The Error</a></li>
+      <li><a href="#rslt_categ">Result Categories</a></li>
+      <li><a href="#rslt_desc">Description of the failure</a></li>
+      <li><a href="#rslt_hiding">Errors hiding errors</a></li>
+      <li><a href="#rslt_pecu">Common questions regarding result interpretation</a></li>
+    </ul>
+  </li>
+  <li><a href='#report'>4.6 The Report Document</a></li>
+  <li><a href='#limit'>4.7 Accuracy, Scope, Functionality</a></li>
+  </ul>
+</li>
+
+<li class="main"><a href='#uiref'>5. User Interface Reference</a>
+  <ul>
+    <li><a href='#ui_mainWin'>5.1 The Main Window</a></li>
+    <li><a href='#ui_candList'>5.2 The Candidate List</a></li>
+    <li><a href='#ui_docPaths'>5.3 The Document Paths Dialog</a></li>
+    <li><a href='#ui_settings'>5.4 The Settings Dialog</a></li>
+    <li><a href='#ui_hotkeys'>5.5 Hotkey reference</a></li>
+    <li><a href='#ui_menu'>5.6 Menu reference</a></li>
+    <li><a href='#ui_scrnrdr'>5.7 Screen Reader Use</a></li>
+  </ul>
+</li>
+</ul>
+</div>
+
+<h2 id="intro">1. Introduction</h2>
+<h3 id="intro_do">What does the Validator do?</h3>
+<p>The Daisy 2.02 Validator is a tool for <em>conformance testing of Daisy 2.02 DTBs</em>. The Validator analyzes a Daisy 2.02 DTB, and a generates a report containing a list of <em>error and warning states</em> found in the DTB.</p>
+
+<div class="notice">The difference between <code>error</code> and <code>warning</code> is significant, and will be explained further in the section <a href='#outInterp'>Interpreting the Result</a> below.</div>
+
+<p>When performing the <em>conformance test</em>, the Validator applies a series of tests to the DTB. It compares data found in the DTB to data that is <em>expected</em> to be present. For example, the Validator will calculate the total playback time of the DTB and check whether this expected value correlates with the existing value. If the expectation is not met, the test has failed.</p>
+
+<p>The tests performed have a wide and varying scope. Some tests will if they fail indicate that the DTB may not even be readable in a reading device. For example, one or several files may be missing, or damaged.</p>
+
+<p>But not all tests that the Validator performs are aimed only at determining whether the DTB is readable. <em>Conformance testing means that possible violations to specifications are checked, regardless of their impact on readability</em>. In many cases, you will find that although the Validator reports that the DTB is not fully conformant, it will read fine in your reading device. For example, if information such as <em>publishing date</em> or <em>file count</em> is missing or erroneous, it will not have negative impact on readability. But the Validator will still report this as an error, since <em>a normative statement in a specification has been violated</em>.
+</p>
+
+<p>For a full list and explanation of the tests that the Validator performs, see <a href='validator_developer_manual.html#app_tests'>Appendix 1 in the Validator Developer Manual</a>.</p>
+
+<p>For a list of tests that the Validator does <em>not</em> perform, see <a href='#limit'>Validator Scope</a> below.</p>
+
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h3 id="intro_why">Why use the Validator?</h3>
+<p>You may use the Validator to:</p>
+<ul>
+<li>Check if the DTB is <em>readable</em>. This is a "good shape" measure that is required to assure that the end user will be able to read the DTB without experiencing problems stemming from the DTB itself.</li>
+<li>Check if the DTB is <em>conformant</em>. Many libraries and other information providers take great care to see to that the information they archive and distribute is fully conformant to the specifications. As with all kinds of information, DTBs are also subject to the principles of longevity. Only if the DTB is conformant can its longevity be guaranteed.</li>
+</ul>
+
+<p>As explained further below, the Validator tool also contains a <a href='#ui_mainWin_docEditor'>Document Editor</a>, that may be used to correct existing errors. This is an <em>additional feature</em> - not an integrated part of the Validators core functionality - and
+requires extensive technical knowledge.</p>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h3 id="intro_who">Who should use the Validator?</h3>
+
+<ul>
+<li>Content producers. Organizations creating DTBs need a tool for quality control purposes.</li>
+<li>Distribution environments. Organizations that distribute DTBs need a tool to certify that the product to be delivered is fully functional, and to effectively diagnose DTBs that are identified by users as defective.</li>
+<li>Production tool developers. Companies developing systems whose output are DTBs need a validation tool in order to verify that their systems function properly.</li>
+<li>Playback system developers. Companies developing playback systems for DTBs need a validation tool in order to verify the validity of content used during debugging and testing.</li>
+<li>Conformance testing. Conformance testing agencies such as the DAISY OK team need a validation tool in order to complete the work of conformance testing for production tools, as well as to validate test content used in conformance testing of playback systems.</li>
+</ul>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h3 id="intro_license">Use and Licensing</h3>
+<p>The binary distribution of the Daisy 2.02 Validator is made available by the Daisy Consortium at no cost. The use of the application is entirely at your own risk.</p>
+
+<p>The library version of the Daisy 2.02 Validator is available under LGPL license. Read more at <a href='http://www.gnu.org/licenses/licenses.html#LGPL'>http://www.gnu.org/licenses/licenses.html#LGPL</a>.</p>
+
+<p>Visit <a href="http://dsidtb.sourceforge.net">dsidtb.sourceforge.net</a> for further information on the Daisy Software initiative (DSI).</p>
+
+
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h3 id="intro_related">Related Tools</h3>
+<p>In addition to the Daisy 2.02 Validator, the Daisy Consortium are providing the following tools related to readability and conformance:</p>
+<dl>
+<dt>The Regenerator</dt>
+<dd>The Regenerator is a software tool designed to enable organisations to repair and upgrade existing Daisy 2.0 and 2.02 DTBs. The tool takes a Daisy 2.0 or 2.02 DTB as input, and performs a series of operations on it in order to output a conformant Daisy 2.02 DTB. <br />
+For more information, visit <a href="http://www.daisy.org/tools/conversion.asp">www.daisy.org/tools/conversion.asp</a>
+</dd>
+
+<dt>The Daisy 3 (ANSI/NISO Z39.86-2002) Validator</dt>
+<dd>
+DTBs made according to the Daisy 3 (ANSI/NISO Z39.86-2002) standard cannot be validated with the Daisy 2.02 Validator. For these purposes the Daisy 3 Validator should be used. <br />
+For more information, visit <a href="http://www.daisy.org/tools/validation.asp">www.daisy.org/tools/validation.asp</a>.
+</dd>
+</dl>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h2 id='install'>Installation and Requirements</h2>
+<p>The Daisy 2.02 Validator will run under Windows&trade; 98, ME, 2000 and XP.</p>
+<p>Before installing the Validator you need to make sure to have  Microsoft XML Core Services(MSXML) 4.0 SP1 or higher, and Direct X 7 or higher installed. If you do not have these components installed, go to the following web adresses for download:</p>
+
+<div><a href='http://msdn.microsoft.com/downloads/list/xmlgeneral.asp'>MSXML Download</a></div>
+
+<div><a href='http://www.microsoft.com/windows/directx/downloads/default.asp'>Dirext X Download</a>
+</div>
+
+
+<p>The Daisy 2.02 Validator uses a large amount of computer memory when performing the conformance testing. If you have a choice, we recommend that you use a computer with a <em>minimum</em> of 128 Mb RAM. Using a computer with even more RAM will increase performance further.</p>
+
+<p>If you are running the validator in a networked environment, you should begin with checking that all directory paths that will be used are set up correctly. To do this, open the document paths dialog by selecting <kbd>settings</kbd> in the main menu and and then clicking on <kbd>document paths</kbd>. Instructions on the how to modify these settings are given in the <a href='#ui_docpaths'>document paths dialog user interface reference</a> below.</p>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h2 id='quick'>3. Using the Validator - quick version</h2>
+
+<p>To validate a DTB, select <kbd>Candidates</kbd> from the main menu and select <kbd>Add single DTB</kbd>. A file browser dialog will open.</p>
+
+<p><img class="inline" alt="image of an added candidate" src="gfx/candidate.jpg" />Locate the directory where the DTB to be validated is located, select the NCC file and click <kbd>OK</kbd>. A branch with an icon looking like a book <img src="gfx/book_disabled.gif" alt="image of the book icon" /> will now be added to the <a href='#ui_mainWin_reportView'>Validation Report View</a>, located at the left part of the main window. Select <kbd>Run</kbd> from the main menu and click on <kbd>Run all</kbd>.</p>
+
+<p>At this point, the Validator will start performing the conformance tests on the DTB. At the bottom of the screen, in the <a href='#ui_mainWin_StatusBar'>Status Bar</a>, progress information will be displayed. Depending on the size of the book, the validation process will take from 30 seconds up to several minutes.</p>
+
+<p>When the validation job has been completed, the icon of DTB candidate item in the <a href='#ui_mainWin_reportView'>Validation Report View</a> <img src="gfx/book.gif" alt="image of the book icon" /> has turned red. The system will also generate a "ping" sound upon completion.</p>
+
+<p>When expanding the DTB candidate item branch, you will be able to read the results of the validation. (During the validation process, this branch reads "not validated".)</p>
+
+<p><img class="inline" alt="image of error branches" src="gfx/branches.jpg" />
+If a candidate passes all tests without any errors or warnings, the text "no errors" will be displayed in the DTB candidate branch. If one or more tests failed, for each failed test an item will be added to the branch.</p>
+
+<p>There are two subcategories of failed tests: <em>error</em>, and <em>warning</em>. The errors are further described as <em>critical</em> and <em>non-critical</em>. Generally, a critical error means that there is a serious error in the DTB that may affect readability negatively. A non-critical error is a specification requirement violation, but without risks for lowered readability.</p><p>A warning constitutes neither of the above, but rather that a specification <em>recommendation</em> has not been met, or that otherwise defined common practice/common sense has not been used.</p>
+
+<p>Selecting one of the failed test items will fill the <a href='#ui_mainWin_errorView'>Error View</a> in the lower part of the main screen with information about the error. For some errors, this will include a suggestion for correction.</p>
+
+<p>Double-clicking or executing <kbd>ENTER</kbd> on one of the tests will - if related to a specific file - display that file in the <a href='#ui_mainWin_docEditor'>Document Editor</a> window at the right part of the screen. Here it is possible to review (and sometimes correct) the error.</p>
+
+<p>You may save the report - all test results - for a single candidate to an external xhtml file. The report is structured so that it can easily be printed, viewed in an HTML browser or even loaded back into the validator at a later time. To save the report for a candidate, select that candidate in the <a href='#ui_mainWin_reportView'>Validation Report View</a>, choose <kbd>File</kbd> from the main menu and click on <kbd>Save report</kbd>.</p>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+
+<h2 id='detailed'>4. Using the Validator - detailed version</h2>
+
+<h3 id='inpTypes'>4.1 Candidate Types </h3>
+<p>It is possible to perform validation on different candidate types. You may select to validate a <em>single volume DTB</em>, a <em>Multi Volume DTB</em>, or a <em>single file</em> of any type from a Daisy 2.02 DTB fileset.</p>
+
+<table>
+<tr>
+<th>Candidate type</th>
+<th>Comment</th>
+</tr>
+
+<tr>
+<td>Single DTB <img alt="graphic used for single DTB" src="gfx/book.gif" /></td>
+<td>Validates the full DTB. Requires the NCC document as input</td>
+</tr>
+
+<tr>
+<td>Multi Volume DTB <img alt="graphic used for multi volume DTB" src="gfx/multivolume.gif" /></td>
+<td>Validates the full DTB. Requires all NCC documents of the multi volume as input. When the last NCC has been added, select <kbd>cancel</kbd> in the file open dialog.</td>
+</tr>
+
+<tr>
+<td>Single File - NCC <img alt="graphic used for single NCC" src="gfx/file_ncc.gif" /></td>
+<td>Validates the NCC document <em>internally</em>, does not check any inter-document relations.</td>
+</tr>
+
+<tr>
+<td>Single File - SMIL <img alt="graphic used for single SMIL" src="gfx/file_smil.gif" /></td>
+<td>Validates the SMIL document <em>internally</em>, does not check any inter-document relations.</td>
+</tr>
+
+<tr>
+<td>Single File - Master SMIL <img alt="graphic used for single Master SMIL" src="gfx/file_msmil.gif" /></td>
+<td>Validates the Master SMIL document <em>internally</em>, does not check any inter-document relations.</td>
+</tr>
+
+<tr>
+<td>Single File - Content Document <img alt="graphic used for single Master SMIL" src="gfx/file_content.gif" /></td>
+<td>Validates the XHTML content document <em>internally</em>, does not check any inter-document relations.</td>
+</tr>
+
+<tr>
+<td>Single File - Discinfo <img alt="graphic used for single discinfo" src="gfx/file_discinfo.gif" /></td>
+<td>Validates the Discinfo document <em>internally</em>, does not check any inter-document relations.</td>
+</tr>
+
+</table>
+
+<p>As indicated above, the single file validation alternatives will not result in a reliable measure of the conformance state of the DTB, since inter-document relations (such as links between files) are only checked when the Single DTB or Multi Volume DTB alternatives are selected.</p>
+
+<div class='notice'>
+To obtain a reliable measure of the conformance state of the DTB, select the <em>Single DTB</em> or <em>Multi Volume DTB</em> candidate alternatives. Never rely on the <em>Single File</em> alternatives for full validity checking - use these only during repair or pre-process stages.
+</div>
+
+<div class='notice'>
+Note that the <em>Single File - Content Document</em> alternative may be used to validate source documents prior to DTB production.
+</div>
+
+<p><img class="inline" alt="image of the add candidates menu" src="gfx/addsinglefile.jpg" />Candidates are added by selecting the <kbd>Candidates</kbd> menu, and then clicking on the wanted alternative. In all cases, a file browser dialog will open, prompting you to point to the locus of the candidate.</p>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+<br /><br /><br />
+
+<h3 id='valModes'>4.2 Validation Modes</h3>
+<p>The Validator allows three different <em>modes of validation</em>. The default mode is <em>full conformance validation</em>. This is the most demanding in terms of time consumption and DTB validitity. It will complete all tests as defined in the <a href="validator_developer_manual.html#dev_vtm">Validator Test Map</a>.</p>
+
+<p>The other two modes are:</p>
+<img class="inline" src="gfx/lightmode.jpg" alt="image of light mode enabled in the candidate menu"/>
+<dl>
+<dt>Light Mode</dt>
+<dd>This mode performs only those tests that are critical for DTB functionality. The mode includes file existance, file readability, file DTD validity and inter-file link integrity tests. The mode excludes metadata tests, timing data tests, etc.</dd>
+<dt>Disable Audio Tests Mode</dt>
+<dd>When this mode is enabled, all tests that are related to audio files will be omitted. This is typically used when you only have access to DTB data excluding audio.</dd>
+</dl>
+
+<p>The enabling and disabling of these modes is done in the <a href="#ui_menu">candidate menu</a>.</p>
+
+<h3 id='batchmode'>4.3 Batch Mode</h3>
+<p>It is possible to add several candidates at once and validate them in one session. When a large number of DTBs need to be validated, it may be useful to set up such a <em>batch queue</em> and let the Validator process the queue for example during the night.</p>
+
+<p>To run the Validator in Batch Mode, simply repeat the add candidate command until all wanted DTBs or single files have been added. Then make sure to select the <kbd>run all</kbd> (<kbd>CTRL+R</kbd>) alternative from the <kbd>Run</kbd> menu. <kbd>Run selected</kbd> (<kbd>CTRL+E</kbd>) will only validate the selected candidate in the queue.</p>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h3 id='exec'>4.4 Executing the validation</h3>
+<p><img class="inline" alt="image of the run menu" src="gfx/runsel.jpg" />Validation is executed using either <kbd>Run Selected</kbd> (<kbd>CTRL+E</kbd>) or <kbd>Run All</kbd> (<kbd>CTRL+R</kbd>) from the <kbd>Run</kbd> menu. <kbd>Run Selected</kbd> will only validate the selected (highlighted) candidate in the candidate list. <kbd>Run All</kbd> will validate all added candidates.</p>
+
+<p>You can also use the single arrow green button <img alt="image of the run selected button" src="gfx/validate.gif" /> to run selected, or the double arrow green button <img alt="image of the run selected button" src="gfx/validateall.gif" /> to run all.</p>
+
+<p>Depending on the size of the DTB and other circumstances (number of files, number of audio phrases) the validation process will take from 30 seconds to several minutes. During validation, the current progress and status is displayed in the <a href='#ui_mainWin_StatusBar'>Status Bar</a> at the bottom of the screen.</p>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h3 id='outInterp'>4.5 Interpreting the Result</h3>
+<p>When the validation of a candidate has completed, the system will generate a "ping" sound, and the previously grey book icon <img src="gfx/book_disabled.gif" alt="image of the gray book icon" /> icon will turn red <img src="gfx/book.gif" alt="image of the gray book icon" />.</p>
+
+<p><img class="inline" alt="image of error branches" src="gfx/branches.jpg" />
+The result is obtained by selecting the candidate in the <a href='#ui_mainWin_reportView'>Validation Report View</a>, and expanding its branch.
+If a candidate passes all tests without any errors or warnings, the text "no errors" will be displayed in the DTB candidate branch. If one or more tests failed, for each failed test an item will be added to the branch.</p>
+
+<p>The failed tests are sorted into two fundamental categories: <em>errors</em> and <em>warnings</em>.</p>
+
+<h4 id="rslt_warning">The Warning</h4>
+<p> While an error is an occurance in the DTB that should be adressed, a warning is a much lighter phenomenon. A warning normally constitutes neither a specification requirement violation, nor a threat to the readability of the book. A warning is typically issued when the validator cannot find data that is <em>recommended</em> by a specification to be present. In other words, it points out that <em>optional</em> data is missing.</p>
+<p>However, at the very least we recommend that you <em>review</em> the items in the warning category. There might be information there that is vital to you, even if it is not required by a specification. For example, many organisations regard narrator information as very important. The meta data element <code>ncc:narrator</code> is not required to be present by the Daisy 2.02 specification, and thus if it is missing it will be reported as a warning.
+</p>
+
+<div class="notice">It is possible to customize the categorization of errors and warnings by modifying files within the Validator application. For example, a certain meta data element (that must occur in a specific way within an organisation) can be set to occur in the error category if it is missing or does not follow specific rules. See the sections on <a href='validator_developer_manual.html#dev_vtm'>VTM</a> and <a href='validator_developer_manual.html#dev_adtd'>ADTD</a> in the <a href='validator_developer_manual.html'>validator developer manual</a>. This is a highly technical endeavour, embarked upon entirely at your own risk.</div>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h4 id="rslt_error">The Error</h4>
+<p>If the Validator issues a failed test to be an <em>error</em>, this means that a violation of a requirement within one of the specifications that determines the grammar or structural rules of this file has occured. The specification may be the <a href='http://www.daisy.org/publications/specifications'>Daisy 2.02 specification</a>, or one of the <a href='http://www.w3.org'>W3C</a> specifications that the Daisy 2.02 specification relies upon. (Normally, as explained in the <a href='#ui_mainWin_errorView'>Error View section</a> of the <a href='#uiref'>User Interface Reference</a> below, the error information contains a pointer to specification that has been violated.)</p>
+
+<p>The error category has been divided further into two classes; <em>critical</em> and <em>non-critical</em>. These categories have been created to aid users who take primary interest in <em>the readability aspect</em> of validation. The Validator attempts to identify those errors who may impact readability negatively into the critical category, to make it easier to quickly get an overview of the status of the DTB.</p>
+
+
+<div class="notice">However, note that the readability aspect of the DTB is optimally tested by executing <a href="#val_modes">light mode validation</a> and making sure there are no error reports whatsoever.
+</div>
+
+<p>From a conformance testing perspective, the critical and non-critical categories are equally critical. A specification requirement violation is always a serious error, regardless of whether the error has an impact on the readability of the book.</p>
+<div class="notice">
+Keep in mind that an error that seems harmless to reading devices of today, may be fatal to the reading devices of tomorrow. Only through full conformance can the longevity of a DTB be guaranteed.
+</div>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h4 id="rslt_categ">Result Categories</h4>
+
+<table id="failureType">
+<tbody>
+<tr>
+<th width="20%">Icon and name</th>
+<th width="8%">Failure type</th>
+<th width="12%">Failure class</th>
+<th>Note</th>
+</tr>
+
+<tr>
+<td><img src="gfx/pass.gif" alt="image of the pass icon"/> No errors</td>
+<td>-</td>
+<td>-</td>
+<td>All tests passed. The Validator could not find any conformance problems in the candidate.</td>
+</tr>
+
+<tr>
+<td><img src="gfx/warning.gif" alt="image of the warning icon"/> Warning</td>
+<td>Warning</td>
+
+<td>-</td>
+<td>A specification <em>recommendation</em> has not been met.</td>
+</tr>
+
+<tr>
+<td><img src="gfx/fail.gif" alt="image of the error icon" /> Error</td>
+<td>Error</td>
+<td>critical or non-critical</td>
+<td>In case of non-critical: a specification <em>requirement</em> has been violated. The error will probably not affect the readability of the DTB. In case of critical: a specification <em>requirement</em> has been violated. The error may affect the readability of the DTB.</td>
+</tr>
+<!--
+<tr>
+<td><img src="gfx/fail.gif" alt="image of the error icon" /> Error (critical)</td>
+<td>Error</td>
+<td>critical</td>
+<td>A specification <em>requirement</em> has been violated. The error may affect the readability of the DTB.</td>
+</tr>
+-->
+</tbody>
+</table>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h4 id="rslt_desc">Description of the failure</h4>
+<p>As you select an error or warning item in the <a href='#ui_mainWin_reportView'>Validation Report View</a>, the <a href='#ui_mainWin_errorView'>Error View</a> at the bottom of the screen will be filled with information about the error. If you hit <kbd>ENTER</kbd> or doubleclick on the item, the corresponding document (SMIL, XHTML) will be opened in the <a href='#ui_mainWin_docEditor'>Document Editor</a> at the right part of the screen. If line and column information has been possible to provide, the cursor will positioned at the exact position within that document where the error occurs.</p>
+
+<p>Using the information in the <a href='#ui_mainWin_errorView'>Error View</a>, and the document in the <a href='#ui_mainWin_docEditor'>Document Editor</a>, you now have the possibility to track down the problem.</p>
+
+<p>In the <a href='#ui_mainWin_errorView'>Error View</a>, the failed test is described as accurately as possible. Note that sometimes the failure description is quite technical. Individuals that are less familiar with Daisy technology and XML may even find the information provided overly technical.</p>
+
+<p>One of the basic ways to reach understanding of an error that initially seems unclear, is to review the specification requirement that has been violated. If your computer is online, you can do this by following the link associated with the error, which will take you to the specification, and sometimes even to the concerned paragraph within the specification. This is done either by copy and paste of the web adress given in the <a href='#ui_mainWin_errorView'>Error View</a>, or by right-clicking on the error in the <a href='#ui_mainWin_reportView'>Validation Report View</a> and selecting <kbd>Goto specification</kbd>.</p>
+
+<p>For further support and assistance, you can turn to the Knowledge Base at the <a href='http://www.daisy.org'>Daisy Website</a>, and to the Daisy Consortium <a href='mailto:support@mail.daisy.org'>support emailing list</a>.
+</p>
+
+<p>See the <a href='#ui_mainWin_errorView'>Error View section</a> of the <a href='#uiref'>User Interface Reference</a> for further information on the content of the failure description.</p>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h4 id="rslt_hiding">Errors hiding errors</h4>
+<p>Note that some errors hide other errors. If for example the NCC document is "malformed" or invalid to the DTD, this may mean that the validator has not been able to execute any further testing (testing the links between the NCC and SMIL files for example). In other words, validation was prematurely aborted due to a critical error in a document, and there may be additional errors in the DTB that simply cannot been discovered at this point.</p>
+
+<div class="notice">For this reason, when attempting to fix a book, it is very important to <em>re-execute</em> validation after each manual fix, until no further error is reported.</div>
+
+
+<h4 id="rslt_pecu">Common questions regarding result interpretation</h4>
+<dl>
+<dt><strong>Q:</strong> Why are DTD invalidity reports duplicated?</dt>
+<dd><strong>A:</strong> This is because each document except the content document is validated against two DTDs. The first one is the "canonical" DTD (the XHTML 1.0 or SMIL 1.0 DTDs published by the W3C). The second one is the "custom" or "subset" DTD created by the developers of the Validator. The "custom" or "subset" DTDs are more finely grained (they find invalidity errors that related specifically to the Daisy 2.02 specification). A document that is valid to the "canonical" DTD may be invalid to the "custom" DTD. A document that is valid to the "custom" DTD must be valid also to the "canonical" DTD. If not, this is an error that should be reported to the developers.</dd>
+<dt><strong>Q:</strong> What does "attribute pair error" mean?</dt>
+<dd><strong>A:</strong> Reports including the text "attribute pair error" almost always relate to missing or erroneous meta data. The validator looks at <code>&lt;meta/&gt;</code> elements, and compares the values in the <code>name</code> and <code>content</code> attributes of these elements. The the <code>name</code> and <code>content</code> attributes is the "attribute pair" referred to.</dd>
+
+</dl>
+
+
+<h3 id='report'>4.6 The Report Document</h3>
+<p>You may save the Validator Report as an XHTML formatted document. This contains a list of all found errors and warnings in the book. Each item in the list contains the same information as the information in the <a href='#ui_mainWin_errorView'>Error View</a>.</p>
+
+<p><img class="inline" alt="image of the save report menu command" src="gfx/save.jpg" /> The Report Document can also be opened into the Validator. By doing this, you can <em>reinstate the session</em> even if the Validator (or the whole computer) has been shut down and restarted. To be able to view documents in the <a href='#ui_mainWin_docEditor'>Document Editor</a> however, this requires that the DTB is placed in the same folder as it was when the validation was run.</p>
+
+<p>Note that the Validator does not automatically save the Report Document. You have to do this manually by selecting <kbd>Save report</kbd> in the <kbd>File</kbd> menu.</p>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h3 id='limit'>4.7 Accuracy, Scope, Functionality</h3>
+<h4>Accuracy</h4>
+<p>The report from the Validator is not guaranteed to be 100% accurate. This is due to two reasons.</p>
+<ul>
+<li>The Validator may have failed to detect an existing error</li>
+<li>The Validator may have made a miscalculation and therefore reports an error for an occurance that is actually valid.</li>
+</ul>
+
+<p>The report from the Validator should be regarded as an indication on the state of the DTB. As the computational algorithms in the Validator improves over time, the indication will become more and more accurate, but the report can never be taken as a <em>final and true statement.</em></p>
+<h4>Scope</h4>
+<p>The following items are not a part of the Validator testing scope.</p>
+<dl>
+<dt>Audio - Text Synchronization accuracy</dt>
+<dd>The Validator does not check the <em>accuracy</em> of links, only the <em>technical validity</em> of them. In other words, if the NCC item that textually represents page 5 actually points to the audio representing page 6, this will go unnoticed through the Validator.</dd>
+<dt>Audio quality</dt>
+<dd>Inferior sonic quality makes an inaccessible DTB. The Validator makes no such analysis of audio (noise and signal levels, etc).</dd>
+<dt>Real World References</dt>
+<dd>Errors such as <em>misspellings</em>, <em>mispronunciations</em> and other erroneous references to the real world are not taken into consideration by the Validator.</dd>
+</dl>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h4>Functionality</h4>
+<p>The following items are currently not a part of the Validator testing functionality.</p>
+<dl>
+<dt>PDTB</dt>
+<dd>The Validator does currently not validate protected DTBs (PDTBs).</dd>
+<dt>Given and Actual Encoding</dt>
+<dd>The Validator currently does not validate given versus actual encodings. Nor does it verify consistency between different encoding information values in the same document.</dd>
+<dt>Non-local resources</dt>
+<dd>The Validator does not attempt to check the accuracy of pointers to non-local resources, for example on the web (http, ftp). It will check the validity of the URI syntax, but not whether the URI actually resolves.</dd>
+<dt>ADPCM2</dt>
+<dd>If the audio files of the DTB are encoded in the proprietary ADPCM2 format, all testing of audio file integrity except existance is disabled.</dd>
+<dt>Skippability</dt>
+<dd>DTBs that include skippable structures (see <a href="http://www.daisy.org/publications/specifications/d202skiprec/d202_skippability_rec.html">Daisy 2.02 Skippable Structures Recommendation</a>) are tested regarding general DTD validity and link integrity, but it is not tested whether the semantics of the skippable structures are correct (for example: is this skippable part of a SMIL file really referencing a producer note in the text document?).</dd>
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id='uiref'>5. User Interface reference</h2>
+
+<h3 id='ui_mainWin'>5.1 The Main Window</h3>
+
+<p>The main window of the Validator consists of four parts: the <a href='#ui_mainWin_reportView'>Validation Report View</a>, the <a href='#ui_mainWin_docEditor'>Document Editor</a>, the <a href='#ui_mainWin_errorView'>Error View</a> and the <a href='#ui_mainWin_StatusBar'>Status Bar</a>.</p>
+
+<img alt="image of the main window" src="gfx/mainUI.jpg" />
+
+<h4 id='ui_mainWin_reportView'>The Validation Report View</h4>
+
+<p>The Validation Report View is a treeview that contains the DTBs selected for validation (referred to as 'candidates'). As a sub-branch of each candidate item the result of validation is displayed.</p>
+
+<p>Selecting or left-clicking on an error item will show it's properties in the <a href='#ui_mainWin_errorView'>Error View</a>.</p>
+
+<p><img class="inline" alt="image of the properties popup dialog" src="gfx/properties.jpg" />Right-clicking will show a pop up menu. This pop up menu has two options; 'Properties' and 'Goto specification'. 'Properties' will show a dialog with all information available on the test. 'Goto specification' will open an internet browser and go to the specification specified. This last feature is only available if the error is associated with a specification.</p>
+
+<p>Double clicking or hitting <kbd>ENTER</kbd> on an error will - if the error is related to a file - show the file related to the error in the <a href='#ui_mainWin_docEditor'>Document Editor</a> and - if possible - position the cursor on the line and column where the error occurred.</p>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h4 id='ui_mainWin_errorView'>The Error View</h4>
+
+<p>The Error View shows information for the error selected in the <a href='#ui_mainWin_reportView'>Validation Report View</a>. This information includes failure type (error (critical or non-critical) or warning) , the directory path and filename of the concerned file, line and column in the file (if existing), a longer error description than that in the <a href='#ui_mainWin_reportView'>Validation Report View</a>, a comment/suggestion, and sometimes also a link to the associated specification. For technical information on this topic, see the <a href="validator_developer_manual.html#dev_vtm">VTM</a> section below.</p>
+
+<p>The comment field is often used to give a suggestion of change for the error. In the example picture below, the comment is used to provide a suggested value for the ncc:kByteSize meta item.</p>
+
+<img alt="image of the Error View - text says 'error (non-critical) in d:\_dtbs\hauy2\ncc.html [36:47]: meta element ncc:kByteSize does not match the calculated file size of the files found in the DTB file set, suggested value: 122129 For further information see http://www.daisy.org/publications/specifications/daisy_202.html#tnkbs'" src="gfx/errorview.jpg" />
+
+<p>Note that the information in this window will vary depending on the currently selected test.</p>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h4 id='ui_mainWin_docEditor'>The Document Editor</h4>
+
+<p><img class="inline" alt="image of the Document Editor" src="gfx/doceditor.jpg" />The Document Editor shows the <em>currently active document</em>. As you doubleclick or hit <kbd>ENTER</kbd> on a certain error item, if a certain document (XHTML or SMIL) is associated with the error, it will be displayed here.</p>
+
+<p>Also, if the error occurs on a certain line and/or column within the document, the cursor will be positioned on that particular position.</p>
+
+<p>If no line and column information is provided with the error item, the line and column information for this error item will read <code>[-1:-1]</code>. This will happen for example when the Validator reports that a certain information chunk is <em>missing</em>. Of course, something that does not exist can not be associated with a certain position within a document.</p>
+
+<p>Apart from only viewing the erroneous document, the Document Editor also allows you to modify the content of document as in a common text editor. The <a  href="#mainwin_buttons">On Screen Buttons</a> section below contains a list of related functions.</p>
+
+<div class='notice'>Manually editing the content of the XML Document requires extensive technical knowledge. You should always take precaution when doing this - and <strong>always</strong> revalidate a DTB or single file that has been manually edited. Even skilled humans are errorprone applications.</div>
+
+<p>As you save a document, the Validator will automatically make an incremental backup of the file previous to the save command. If the file you edited and saved was called 'ncc.html', then the backup version will be called 'ncc_.html'; that is, an underscore sign is added before the file extension. For each new save of the document, a new backup is made. Thus you can review or revert through your edit history. In this file list example:</p>
+<pre><code>
+ncc_.html
+ncc__.html
+ncc___.html
+</code></pre>
+<p>... the file with the most underscores is the one most recently saved.
+</p>
+
+<p>The backup files will placed in the directory "val_bkp" appearing as a subdirectory in the directory where the DTB resides.</p>
+
+<div class="notice" id="readonly">If the document opened is encoded in Unicode, the Document Editor will not allow editing of the document. The text "READ ONLY" will appear in the <a href="ui_mainWin_StatusBar">Status Bar</a>. This is because the Windows&trade; text control used in the user interface of the Validator does not support Unicode. If your DTB is encoded using Unicode and you need to edit a document, choose an external editor that supports Unicode.</div>
+
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h4 id='ui_mainWin_StatusBar'>The Status Bar</h4>
+<p>The Status Bar at the bottom of the main screen has eight cells. The first cell shows the current status of the Validator; this could be 'idle' or 'validating'. The second and third cells show total tests passed and total tests failed.</p>
+
+<p>The fourth and fifth cells will display the text "LIGHT MODE ON" and "AUDIO TESTS OFF" if any of these <a href="#valModes">modes</a> are activated.</p>
+<p>The sixth and seventh cells show current line and column numbers in the currently open document in the <a href='#ui_mainWin_docEditor'>Document Editor</a>.</p>
+
+<p>The eighth cell will display the text "READ ONLY" if the opened document is encoded in Unicode (see the <a href="#readonly">notice on unicode editing restrictions</a> above).</p>
+
+<img alt="image of the Status Bar" src="gfx/StatusBar.jpg" />
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h4 id="mainwin_buttons">On-screen buttons of the Main Window</h4>
+
+<table class="overview">
+<tbody>
+<tr>
+<th>Button</th>
+<th>Hotkey</th>
+<th>Explanation</th>
+</tr>
+
+<tr>
+<td><img alt="Validate all icon" src="gfx/validateall.gif" /> Validate all</td>
+<td><kbd>CTRL+R</kbd></td>
+<td>Validates all candidates in the validation candidates list</td>
+</tr>
+
+<tr>
+<td><img alt="Validate selected icon" src="gfx/validate.gif" /> Validate selected</td>
+<td><kbd>CTRL+E</kbd></td>
+<td>Validates the selected candidate in the validation candidates list</td>
+</tr>
+
+<tr>
+<td><img alt="Abort validation icon" src="gfx/stopvalidate.gif" /> Abort</td>
+<td><kbd>CTRL+A</kbd></td>
+<td>Aborts all queued validation jobs</td>
+</tr>
+
+<tr>
+<td><img alt="Save file icon" src="gfx/singlefile.gif" /> Save file</td>
+<td><kbd>CTRL+S</kbd></td>
+<td>Saves changes in the currently open document in the
+<a href='#ui_mainWin_docEditor'>Document Editor</a></td>
+</tr>
+
+<tr>
+<td><img alt="Search/Replace icon" src="gfx/search.gif" /> Search/Replace</td>
+<td><kbd>CTRL+F</kbd></td>
+<td>Performs search/replace operations within the currently open document in the <a href='#ui_mainWin_docEditor'>Document Editor</a></td>
+</tr>
+
+<tr>
+<td><img alt="Go back icon" src="gfx/goback.gif" /> Go back</td>
+<td><kbd>CTRL+B</kbd></td>
+<td>Returns to the previous document (only works if a document has previously been opened with follow link)</td>
+</tr>
+
+<tr>
+<td><img alt="follow link icon" src="gfx/followlink.gif" /> Follow link</td>
+<td><kbd>CTRL+K</kbd></td>
+<td>Follows the link of the first found &lt;a&gt; or &lt;text&gt; element after the cursor position in the open document</td>
+</tr>
+</tbody>
+</table>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+
+<h3 id='ui_candList'>5.2 The candidate list</h3>
+<p><img class="inline" alt="image of the candidate list" src="gfx/candidatelist.jpg" /> The candidate list offers a way of managing the validation candidates that is somewhat more flexible than the main window, especially when handling large batch queues of validation candidates. The following table explains the functionality of this screen.</p>
+
+<table>
+<tbody>
+<tr>
+<th>Menu name</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Add</p>
+</td>
+<td>
+<p class="desc">Add candidates</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Add single DTB</p>
+</td>
+<td>
+<p class="desc">Add single DTB to candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Add multivolume DTB</p>
+</td>
+<td>
+<p class="desc">Add multivolume DTB to candidates
+list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-Add single file(s)</p>
+</td>
+<td>
+<p class="desc">Add single file(s) to candidates
+list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Ncc</p>
+</td>
+<td>
+<p class="desc">Adds a single NCC file to the validation
+candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Smil</p>
+</td>
+<td>
+<p class="desc">Adds a single SMIL file to the
+validation candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Master smil</p>
+</td>
+<td>
+<p class="desc">Adds a single master SMIL file to the
+validation candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Content doc</p>
+</td>
+<td>
+<p class="desc">Adds a single content document file to
+the validation candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Discinfo</p>
+</td>
+<td>
+<p class="desc">Adds a single Discinfo file to the
+validation candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Run</p>
+</td>
+<td>
+<p class="desc">Run validation</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Run checked</p>
+</td>
+<td>
+<p class="desc">Run validation on checked candidates</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Run all</p>
+</td>
+<td>
+<p class="desc">Run validation on all candidates</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Remove</p>
+</td>
+<td>
+<p class="desc">Remove candidates</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Remove checked</p>
+</td>
+<td>
+<p class="desc">Remove checked candidates</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Remove unchecked</p>
+</td>
+<td>
+<p class="desc">Remove unchecked candidates</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Remove all</p>
+</td>
+<td>
+<p class="desc">Remove all candidates</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+
+<h3 id="ui_docPaths">5.3 The document paths dialog</h3>
+
+<p class="text"><img class="inline" alt="image of the paths dialog" src="gfx/pathsdialog.jpg" /> The document paths dialog contains text-input fields for setting up the locations of the files needed by the validator. Under normal circumstances you do not need to edit these, but if you do so, make sure to enter directories as <em>absolute paths</em>, for example <code>D:\myFiles\myDirectory\</code>.</p>
+
+<table id="docpathstable">
+<tbody>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>DTD/ADTD</td>
+<td>The location of the document type definition (DTD) and attribute document type definition (ADTD) files. This path defaults to the 'externals' directory found in the validator install directory.
+</td>
+</tr>
+<tr>
+<td>Default report save path</td>
+<td>The default directory where validation reports are saved.</td>
+</tr>
+<tr>
+<td>Temporary path</td>
+<td>An non writeprotected location where the validator can save temporary files</td>
+</tr>
+</tbody>
+</table>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h3 id="ui_settings">5.4 The settings dialog</h3>
+
+<p class="text"><img class="inline"  alt="image of the settings dialog" src="gfx/gsettings.jpg" /> The General Settings dialog contains the following two options.</p>
+<dl>
+<dt>Allowed time fluctuation</dt>
+<dd>This slider determines how much deviation is allowed during time value validation. If the value is set to 500, all discrepancies in time values below 500 milliseconds will be disregarded (not reported) by the Validator. This setting defaults to zero. For full conformance checking, it should remain set to zero.</dd>
+<dt>Show advanced ADTD information</dt>
+<dd>This setting determines whether the report shall include 'advanced' information about the error. Turning this option off means that the report will include somewhat less information for those tests performed by the <a href='validator_developer_manual.html#dev_adtd'>ADTD</a> engine, but on the other hand it will be more compact and more easily read.</dd>
+</dl>
+
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h3 id="ui_hotkeys">5.5 Hotkey Reference</h3>
+
+<table class="overview" id="muihotkeys">
+<tbody>
+<tr>
+<th>key</th>
+<th>function</th>
+</tr>
+
+<tr>
+<td><kbd>CTRL + I</kbd></td>
+<td>Save report</td>
+</tr>
+
+<tr>
+<td><kbd>CTRL + J</kbd></td>
+<td>Load report</td>
+</tr>
+
+<tr>
+<td><kbd>CTRL + Q</kbd></td>
+<td>Exit program</td>
+</tr>
+
+<tr>
+<td><kbd>CTRL + D</kbd></td>
+<td>Add single DTB to candidates list</td>
+</tr>
+
+<tr>
+<td><kbd>CTRL + M</kbd></td>
+<td>Add multi volume DTB to candidates list</td>
+</tr>
+
+<tr>
+<td><kbd>CTRL + L</kbd></td>
+<td>View candidate list</td>
+</tr>
+
+<tr>
+<td><kbd>CTRL + E</kbd></td>
+<td>Validate selected candidate</td>
+</tr>
+
+<tr>
+<td><kbd>CTRL + R</kbd></td>
+<td>Validate all candidates</td>
+</tr>
+
+<tr>
+<td><kbd>CTRL + A</kbd></td>
+<td>Aborts all qued validations</td>
+</tr>
+
+<tr>
+<td><kbd>CTRL + S</kbd></td>
+<td>Save document (<a href='#ui_mainWin_docEditor'>Document Editor</a>)</td>
+</tr>
+
+<tr>
+<td><kbd>CTRL + F</kbd></td>
+<td>Search / Replace (<a href='#ui_mainWin_docEditor'>Document Editor</a>)</td>
+</tr>
+
+<tr>
+<td><kbd>CTRL + K</kbd></td>
+<td>Follow link (<a href='#ui_mainWin_docEditor'>Document Editor</a>)</td>
+</tr>
+
+<tr>
+<td><kbd>CTRL + B</kbd></td>
+<td>Go back (<a href='#ui_mainWin_docEditor'>Document Editor</a>)</td>
+</tr>
+
+<tr>
+<td><kbd>CTRL + P</kbd></td>
+<td>Open document paths dialog</td>
+</tr>
+
+<tr>
+<td><kbd>F1</kbd></td>
+<td>Open help</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="ui_menu">5.6 Menu Reference</h3>
+<table id="muimenusystem">
+<tbody>
+<tr>
+<th>menu item</th>
+<th>function</th>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-File</p>
+</td>
+<td>
+<p class="desc">File menu</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Save report</p>
+</td>
+<td>
+<p class="desc">Saves the report for the selected
+validation candidate in the <a href='#ui_mainWin_reportView'>Validation Report View</a></p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Load report</p>
+</td>
+<td>
+<p class="desc">Loads a previously saved report</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Exit</p>
+</td>
+<td>
+<p class="desc">Exits the program</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Candidates</p>
+</td>
+<td>
+<p class="desc">Candidates menu</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Add single DTB</p>
+</td>
+<td>
+<p class="desc">Adds a DTB to the validation candidates
+list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Add multivolume DTB</p>
+</td>
+<td>
+<p class="desc">Adds a multi volume DTB to the
+validation candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">-Add single file(s)</p>
+</td>
+<td>
+<p class="desc">Adds a single file to the validation
+candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Ncc</p>
+</td>
+<td>
+<p class="desc">Adds a single NCC file to the validation
+candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Smil</p>
+</td>
+<td>
+<p class="desc">Adds a single SMIL file to the
+validation candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Master smil</p>
+</td>
+<td>
+<p class="desc">Adds a single master SMIL file to the
+validation candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Content doc</p>
+</td>
+<td>
+<p class="desc">Adds a single content document file to
+the validation candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test2">Discinfo</p>
+</td>
+<td>
+<p class="desc">Adds a single Discinfo file to the
+validation candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Light Mode</p>
+</td>
+<td>
+<p class="desc">Enables/Disables <em>Light Mode</em></p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Disable Audio tests</p>
+</td>
+<td>
+<p class="desc">Enables/Disables <em>Disable Audio Tests Mode</em></p>
+</td>
+</tr>
+
+
+<tr>
+<td>
+<p class="test1">View candidates list</p>
+</td>
+<td>
+<p class="desc">Opens the candidates list dialog</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Clear all added</p>
+</td>
+<td>
+<p class="desc">Removes all candidates from the
+validation candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Run</p>
+</td>
+<td>
+<p class="desc">Run menu</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Run selected</p>
+</td>
+<td>
+<p class="desc">Validates the selected validation
+candidate in the validate report view</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Run all</p>
+</td>
+<td>
+<p class="desc">Validates all validation candidates in
+the validation candidates list</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Abort validation</p>
+</td>
+<td>
+<p class="desc">Aborts all qued validations</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Editor</p>
+</td>
+<td>
+<p class="desc">Editor menu</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Save document</p>
+</td>
+<td>
+<p class="desc">Saves changes in the currently open
+document in the Document Editor</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Search / Replace</p>
+</td>
+<td>
+<p class="desc">Searches or replaces words or sentences
+within the currently open document in the Document Editor</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Follow link</p>
+</td>
+<td>
+<p class="desc">Follows the link of the first found &lt;a&gt; or &lt;text&gt; element after the cursor position in the open document</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Go back</p>
+</td>
+<td>
+<p class="desc">Returns to the previous document (only
+works if you have opened a document with follow link)</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Settings</p>
+</td>
+<td>
+<p class="desc">Settings menu</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Document paths</p>
+</td>
+<td>
+<p class="desc">Opens the document paths dialog</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">General settings</p>
+</td>
+<td>
+<p class="desc">Opens the general settings dialog</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test0">-Help</p>
+</td>
+<td>
+<p class="desc">Help menu</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Open User Manual</p>
+</td>
+<td>
+<p class="desc">Opens the User Manual in the mime
+connected html browser</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">Open Developer Manual</p>
+</td>
+<td>
+<p class="desc">Opens the Developer Manual in the mime
+connected html browser</p>
+</td>
+</tr>
+
+
+<tr>
+<td>
+<p class="test1">Error log</p>
+</td>
+<td>
+<p class="desc">Opens the error log dialog</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p class="test1">About</p>
+</td>
+<td>
+<p class="desc">Opens the about dialog</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+
+<h3 id='ui_scrnrdr'>5.7 Screen Reader Use</h3>
+<p>All graphical items on the screen has hotkeys and menu equivalents.</p>
+
+<p>The <a href='#ui_mainWin_reportView'>Validation Report View</a> is a TreeView Control. To expand and collapse the branches use the <kbd>arrow</kbd> keys. While here, to open a document associated with an error in the <a href='#ui_mainWin_docEditor'>Document Editor</a>, use <kbd>ENTER</kbd>. Cursor position is if possible set to the exact locus of the error. To go from the <a href='#ui_mainWin_reportView'>Validation Report View</a> to the <a href='#ui_mainWin_errorView'>Error View</a>, use <kbd>TAB</kbd>.</p>
+
+<p>While moving around in a document in the <a href='#ui_mainWin_docEditor'>Document Editor</a>, the <a href='#ui_mainWin_statusBar'>Status Bar</a> contains current line and column information.</p>
+
+<p>See the <a href='#ui_menu'>menu reference</a> and the <a href='#ui_hotkeys'>hotkey reference</a> for further information.</p>
+<div class="tocLnk">go to <a href="#toc">table of contents</a></div>
+    <p>
+      <a href="http://validator.w3.org/check/referer"><img
+          src="http://www.w3.org/Icons/valid-xhtml10"
+          alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+    </p>
+
+</body>
+</html>
+

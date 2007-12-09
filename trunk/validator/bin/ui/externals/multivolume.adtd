@@ -1,0 +1,55 @@
+<!-- multivolume.adtd version 2002-12-22
+	THIS IS NOT A DTD
+
+	This is a Attribute DTD that is based upon the W3C DTD specification.
+	It overrides and extends the DTD specification in several ways;
+	
+	Entities:
+		All entities are parsed immediatley, disregarding any parse rules whatsoever.
+
+	Attribute lists:
+		The second field in an attribute declaration (the data-type field) is used
+		as in-file datatype (not in-parser datatype). I.E. #PCDATA could not be used
+		within this adtd if you do not declare the #PCDATA and use it as a entity;
+		
+		<ENTITY %PCDATA "[a-zA-Z0-9_.]">
+		<!ATTLIST audio id %PCDATA; #IMPLIED>
+
+	Attribute correlation list:
+		The attribute correlation list is a new type of dtd declaration. The ATTCORLIST
+		has one 'master' attribute that controls the contents of one or several other
+		attributes. The ATTCORLIST can also decide if the particular element/attribute
+		correlation is demanded within the document, if the required
+		element/attribute combination is missing, the document is not regarded as 
+		valid.
+		
+		The following example declares that if a 'meta' element occurs that has a 
+		'name' attribute with the contents 'capitolofsweden' then the element MUST 
+		have a second attribute called 'content' that has the content 'stockholm'.
+		
+		<!ATTCORLIST meta name ('capitolofsweden') content ('stockholm') #>
+
+		At the end of the ATTCORLIST there is a flag for the number of allowed 
+		instances. Valid values are '#' (for one), '#+' (for one or more), '#?'
+		(for zero or one) and '#*' (for zero or more). The sample above MUST occur only
+		one time, if any more elements with the name 'meta' and a 'name' attribute
+		with the value 'captiolofsweden' are found, the test will fail.
+		
+		Further there are two more types for 'optional-recommended' that will give
+		warnings if there is zero occurances of the ATTCORLIST specified. These types
+		are '#?r' (for zero or one) and	'#*r' (for zero or more).
+		
+	Limitations:
+		This ADTD does NOT handle 'not' statements either whitin charactes ([^abc])
+		or DTD rules ('a' | 'b' | 'c')- .
+		
+		Non-mandatory rules must be written last in series, i.e. if you want to be
+		able to write out both HH:MM:SS and H:M:S you must write
+		(H, H?, ':', M, M?, ':', S, S?) instead of (H?, H, ':', M?, M, ':', S?, S)
+-->
+
+
+<!ENTITY %DIGIT "[0-9]">
+<!ENTITY %setinfo "((%DIGIT;)+, ' of ', (%DIGIT;)+)">
+
+<!ATTCORLIST meta name ('ncc:setInfo') CS content (%setinfo;) CI #>

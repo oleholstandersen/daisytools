@@ -1,0 +1,143 @@
+<!-- msmil.adtd version 2002-12-22
+	THIS IS NOT A DTD
+
+	This is a Attribute DTD that is based upon the W3C DTD specification.
+	It overrides and extends the DTD specification in several ways;
+	
+	Entities:
+		All entities are parsed immediatley, disregarding any dtd parse rules whatsoever.
+
+	Attribute lists:
+		An !ATTLIST defines valid attributes and their contents, each !ATTLIST belongs to
+		a certain element, which is the first field in the !ATTLIST declaration. One
+		!ATTLIST can contain one or several attribute defintions, each one separated with
+		a xml whitespace. Each !ATTLIST attribute declaration contains:
+		
+		1) Attribute Name
+		2) Attribute contents
+		3) Attribute contents case dependency
+		4) DTD legacy (unused)
+		
+		Attribute contents can be written with standard xml rules like "('on' | 'off)?".
+		All attribute contents are adtd-specific, definitions like #PCDATA or ID does not
+		exist unless defined as an entity:
+		
+		<ENTITY %PCDATA "[a-zA-Z0-9_.]">
+		<!ATTLIST audio id %PCDATA; CI #IMPLIED>
+
+		Attribute contents case dependency defines wheter the contents of the attribute is
+		case sensetive or insensetive. This field should contain 'CS' (for case sensetive)
+		or 'CI' (for case insensetive).
+		
+		The fourth field in the !ATTLIST attribute declaration is unused for the moment.
+
+	Attribute correlation list:
+		The attribute correlation list is a new type of dtd declaration. The ATTCORLIST
+		has one 'master' attribute that controls the contents of one or several other
+		attributes. The ATTCORLIST can also decide if the particular element/attribute
+		correlation is demanded within the document, if the required
+		element/attribute combination is missing, the document is not regarded as 
+		valid.
+		
+		The following example declares that if a 'meta' element occurs that has a 
+		'name' attribute with the contents 'capitolofsweden' (case sensetive) then the 
+		element MUST have a second attribute called 'content' that has the content 
+		'stockholm' (case insensetive).
+		
+		<!ATTCORLIST meta name ('capitolofsweden') CS content ('stockholm') CI #>
+
+		At the end of the ATTCORLIST there is a flag for the number of allowed 
+		instances. Valid values are '#' (for one), '#+' (for one or more), '#?'
+		(for zero or one) and '#*' (for zero or more). The sample above MUST occur only
+		one time, if any more elements with the name 'meta' and a 'name' attribute
+		with the value 'captiolofsweden' are found, the test will fail.
+		
+		Further there are two more types for 'optional-recommended' that will give
+		warnings if there is zero occurances of the ATTCORLIST specified. These types
+		are '#?r' (for zero or one) and	'#*r' (for zero or more).
+		
+	Limitations:
+		This ADTD does NOT handle 'not' statements whitin DTD rules ('a' | 'b' | 'c')- .
+		
+		Non-mandatory rules must be written last in series, i.e. if you want to be
+		able to write out both HH:MM:SS and H:M:S you must write
+		(H, H?, ':', M, M?, ':', S, S?) instead of (H?, H, ':', M?, M, ':', S?, S)
+		
+		Entities are parsed from beginning to top, no recursive parsing is being done
+		so if enteties are used before they are defined, the loading process of the 
+		ADTD will fail;
+		
+		<!ENTITY % ilike "'i like', %water;">
+		<!ENTITY % water "'w','a','t','e','r'">
+		
+		* This will not work within a ADTD
+-->
+
+<!ENTITY %S "('&#32;' | '&#9;' | '&#13;' | '&#10;')">
+<!ENTITY %PCDATA "([#x9;#xA;#xD;#x20;-#xD7FF;#xE000;-#xFFFD;#x10000;-#x10FFFF;])+">
+
+<!ENTITY %DIGIT "[0-9]">
+<!ENTITY %2DIGITS "(%DIGIT;, %DIGIT;)">
+<!ENTITY %TIMEDIGITS "((([0-5])?, [0-9]) | ([0-9]))">
+<!ENTITY %Timecount "(%DIGIT;)+">
+<!ENTITY %Fraction "(%DIGIT;)+">
+<!ENTITY %Seconds "%TIMEDIGITS;">
+<!ENTITY %Minutes "%TIMEDIGITS;">
+<!ENTITY %Hours "(%DIGIT;, (%DIGIT;)?)">
+<!ENTITY %Timecount-val "(%Timecount;, ('.', (%Fraction;))?, ('h' | 'min' | 's' | 'ms')?)">
+<!ENTITY %Partial-clock-val "(%Minutes;, ':', %Seconds;, ('.', %Fraction;)?)">
+<!ENTITY %Full-clock-val "(%Hours;, ':', %Minutes;, ':', %Seconds;, ('.', %Fraction;)?)">
+<!ENTITY %Clock-val "(%Full-clock-val; | %Partial-clock-val; | %Timecount-val;)">
+
+<!-- ***********************************************************************************
+     * Excerpt from RFC 2396                                                           *
+     ***********************************************************************************
+-->
+
+<!ENTITY % digit "([0-9])">
+<!ENTITY % upalpha "([A-Z])">
+<!ENTITY % lowalpha "([a-z])">
+<!ENTITY % alpha "(%lowalpha; | %upalpha;)">
+<!ENTITY % alphanum "(%alpha; | %digit;)">
+<!ENTITY % hex "(%digit; | ([A-F]) | ([a-f]))">
+<!ENTITY % escaped "('%', %hex;, %hex;)">
+<!ENTITY % mark "('-' | '_' | '.' | '!' | '~' | '*' | [#x27;] | '(' | ')')">
+<!ENTITY % unreserved "(%alphanum; | %mark;)">
+<!ENTITY % reserved "(';' | '/' | '?' | ':' | '@' | '&' | '=' | '+' | '$' | ',')"
+<!ENTITY % uric "(%reserved; | %unreserved; | %escaped;)">
+
+<!ENTITY % fragment "(%uric;*)">
+
+<!ENTITY % pchar "(%unreserved; | %escaped; | ';' | '@' | '&' | '=' | '+' | '$' | ',')">
+<!ENTITY % param "(%pchar;*)">
+<!ENTITY % segment "(%pchar;*, (';', %param;)*)">
+<!ENTITY % path_segments "(%segment;, ('/', %segment;)*)">
+
+<!ENTITY % rel_segment "((%unreserved; | %escaped; | ';' | '@' | '&' | '=' | '+' | '$' | 
+  ',')+)">
+
+<!ENTITY % abs_path "('/', %path_segments;)">
+<!ENTITY % rel_path "(%rel_segment;, (%abs_path;)?)">
+
+<!ENTITY % relativeURIExcerpt "(%rel_path;)">
+<!ENTITY % URI-referenceExcerpt "(%relativeURIExcerpt;, ('#', %fragment;)?)">
+
+<!-- ***********************************************************************************
+     * Custom                                                                          *
+     ***********************************************************************************
+-->
+
+<!-- 	Single attribute declarations -->
+<!ENTITY %src "src %URI-referenceExcerpt; CI #IMPLIED">
+
+<!--	Force element to have certain attributes with certain contents -->
+<!ATTLIST ref %src;>
+
+<!--	Force element with certain attribute to have other attribute with certain contents -->
+<!ATTCORLIST meta name ('dc:format') CS content ('Daisy 2.02') CI #>
+<!ATTCORLIST meta name ('dc:identifier') CS content (%PCDATA;) CS #>
+<!ATTCORLIST meta name ('dc:title') CS content (%PCDATA;) CI #>
+
+<!ATTCORLIST meta name ('ncc:timeInThisSmil') CS content (%Clock-val;) CS #?r>
+
+<!ATTCORLIST meta name ('ncc:generator') CS content (%PCDATA;) CI #?>
