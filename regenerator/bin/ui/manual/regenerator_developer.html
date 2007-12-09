@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv='Content-type' content='text/html; charset=windows-1252'/>
+    <title>Daisy 2.02 Regenerator Developer Manual - The Regenerator Engine DLL</title>
+    <link type="text/css" rel="stylesheet" href="daisy_manual.css"/>
+  </head>
+  <body>
+    <h1 class='title'>Daisy 2.02 Regenerator Developer Manual - The Regenerator Engine DLL</h1>
+    <div class="comment">Last revised: KE 2003-10-21</div>
+
+    <div class='toc'>
+      <h2 id='ctoc'>Collapsed Table of Contents</h2>
+      <ul class="linklist">
+        <li><a href='#intro'>1. Introduction</a></li>
+        <li><a href='#start'>2. Getting started using the Regenerator Engine DLL</a></li>
+        <li class="main"><a href='#objgfunc'>3. Regenerator Engine DLL Objects reference</a>
+          <ul>
+            <li><a href="#ogf_createableobj">3.1 Createable objects</a></li>
+            <!-- <li><a href="#ogf_noncreateableobj">3.2 Noncreateable objects</a></li> -->
+          </ul>
+        </li>
+      </ul>
+
+      <h2 id='toc'>Expanded Table of Contents</h2>
+      <ul class="linklist">
+        <li><a href='#intro'>1. Introduction</a>
+          <ul>
+            <li><a href='#intro_is'>1.1 What is the Regenerator Engine DLL?</a></li>
+            <li><a href='#intro_def'>1.2 Definitions</a></li>
+            <li><a href='#intro_needed'>1.3 What is needed to use the Regenerator Engine DLL?</a>
+              <ul>
+                <li><a href='#intro_needed_resource'>1.3.1 Resource files</a></li>
+                <li><a href='#intro_needed_audtemp'>1.3.2 Audio templates</a></li>
+                <li><a href='#intro_needed_tidydoc'>1.3.3 HTML Tidy documents</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        
+        <li class="main"><a href='#start'>2. Getting started using the Regenerator Engine DLL</a>
+          <ul>
+            <li><a href='#start_prep'>2.1 Preparing the Regenerator Engine DLL for use</a></li>
+            <li><a href='#start_reg'>2.2 Regenerating a book</a></li>
+            <li><a href='#start_pseudo'>2.3 Pseudocode for the above steps</a></li>
+          </ul>
+        </li>
+        
+        <li class="main"><a href='#objgfunc'>3. Regenerator Engine DLL Objects reference</a>
+          <ul>
+            <li><a href="#ogf_createableobj">3.1 Createable objects</a>
+              <ul>
+                <li><a href="#ogf_createableobj_regen">3.1.1 the oRegenerator object</a>
+                  <ul>
+                    <li><a href='#ogf_createableobj_regen_rt'>3.1.1.1 fncRunTransform function</a></li>
+                    <li><a href='#ogf_createableobj_regen_rf'>3.1.1.2 fncRenderFiles function</a></li>
+       <!--
+                    <li><a href='#ogf_createableobj_regen_rlogit'>3.1.1.3 fncRetrieveLogItem function</a></li>
+                    <li><a href='#ogf_createableobj_regen_getdcid'>3.1.1.4 fncGetDcIdentifier function</a></li>
+                    <li><a href='#ogf_createableobj_regen_termobj'>3.1.1.5 fncTerminateObject function</a></li>
+                    <li><a href='#ogf_createableobj_regen_logitem'>3.1.1.6 evLogItem event</a></li>
+                    <li><a href='#ogf_createableobj_regen_logitmcnt'>3.1.1.7 lLogItemCount long property</a></li>
+                    <li><a href='#ogf_createableobj_regen_ofsh'>3.1.1.8 objFileSetHandler pointer property</a></li>
+                    <li><a href='#ogf_createableobj_regen_oown'>3.1.1.9 objOwner pointer property</a></li>
+                    <li><a href='#ogf_createableobj_regen_vbfev'>3.1.1.10 subVBFriendlyEvent callback function</a></li>
+       -->                    
+                  </ul>
+                </li>
+                <li>
+                  <a href="#ogf_createableobj_user">3.1.2 the oUserControl object</a>
+                  <ul>
+                    <li><a href="#ogf_globalfunc_gtdllver">3.1.2.1 fncGetDllVersion function</a></li>
+                    <li><a href="#ogf_globalfunc_sttdylibpth">3.1.2.2 fncSetTidyLibPath function</a></li>
+                    <li><a href="#ogf_globalfunc_gttdylibpth">3.1.2.3 fncGetTidyLibPath function</a></li>
+                    <li><a href="#ogf_globalfunc_strcpth">3.1.2.4 fncSetResourcePath function</a></li>
+                    <li><a href="#ogf_globalfunc_gtrcpth">3.1.2.5 fncGetResourcePath function</a></li>
+                    <li><a href="#ogf_globalfunc_staudtmppth">3.1.2.6 fncSetAudioTemplatesPath function</a></li>
+                    <li><a href="#ogf_globalfunc_gtaudtmppth">3.1.2.7 fncGetAudioTemplatesPath function</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+<!--
+            <li><a href="#ogf_noncreateableobj">3.2 Noncreateable objects</a>
+              <ul>
+                <li><a href ="#ogf_noncreateableobj_flstcol">3.2.1 the oFileSetCollection object</a>
+                  <ul>
+                    <li><a href='#ogf_noncreateableobj_flstcol_type'>3.2.1.1 eType long property</a></li>
+                    <li><a href='#ogf_noncreateableobj_flstcol_owntype'>3.2.1.2 lOwnerType long property</a></li>
+                    <li><a href='#ogf_noncreateableobj_flstcol_abspth'>3.2.1.3 sAbsPath string property</a></li>
+                    <li><a href='#ogf_noncreateableobj_flstcol_domdata'>3.2.1.4 sDomData string property</a></li>
+                    <li><a href='#ogf_noncreateableobj_flstcol_filname'>3.2.1.5 sFileName string property</a></li>
+                    <li><a href='#ogf_noncreateableobj_flstcol_smiltit'>3.2.1.6 sSmilTitle string property</a></li>
+                  </ul>
+                </li>
+                <li><a href ="#ogf_noncreateableobj_flsthand">3.2.2 the oFileSetHandler object</a>
+                  <ul>
+                    <li><a href='#ogf_noncreateableobj_flsthand_addobjin'>3.2.2.1 fncAddObjectToInputArray function</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_addobjout'>3.2.2.2 fncAddObjectToOutputArray function</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_unique'>3.2.2.3 fncAllFileNamesAreUnique function</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_arrcons'>3.2.2.4 fncCheckArrayConsistency function</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_cfsa'>3.2.2.5 fncCreateFileSetArrays function</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_gtarrifn'>3.2.2.6 fncGetArrayItemFromName function</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_gtpioft'>3.2.2.7 fncGetPreviousItemOfType function</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_isobjinoa'>3.2.2.8 fncIsObjectInOutputArray function</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_itexinoa'>3.2.2.9 fncItemExistsInOutArray function</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_pfs'>3.2.2.10 fncPrintFileSet function</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_resarrs'>3.2.2.11 fncResetArrays function</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_term'>3.2.2.12 fncTerminateObject function</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_infsmem'>3.2.2.13 aInFileSet oFileSetCollection property</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_outfsmem'>3.2.2.14 aOutFileSet oFileSetCollection property</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_infsmems'>3.2.2.15 aInFileSetMembers long property</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_outfsmems'>3.2.2.16 aOutFileSetMembers long property</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_ofilstcdocs'>3.2.2.17 aOutFileSetContentDocs long property</a></li>
+                    <li><a href='#ogf_noncreateableobj_flsthand_ofilstcdocmems'>3.2.2.17 aOutFileSetContentDocMembers long property</a></li>
+                    <li><a href='#ogf_createableobj_regen_oown'>3.2.2.18 objOwner oRegenerator property</a></li>
+                  </ul>
+                </li>
+                <li><a href ="#ogf_noncreateableobj_idget">3.2.3 the oIdGetter object</a>
+                  <ul>
+                    <li><a href='#ogf_createableobj_regen_oown'>3.2.3.1 Getid function</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          -->
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+<!-- Introduction -->
+
+    <h2 id="intro">1. Introduction</h2>
+
+    <h3 id="intro_is">1.1 What is the Regenerator Engine DLL?</h3>
+    <p>
+      The Regenerator Engine DLL is the core of the 
+      <a href="www.daisy.org">Daisy 2.02 Regenerator tool</a>, it contains all the 
+      functionality (except validation) featured in the complete software tool.
+      <!--
+      <br/><br/>The Regenerator DLL takes a Daisy DTB of formats Daisy 2.0 or 2.02 as input, and 
+      attempts to refresh, fix and update the content of the DTB files so that they 
+      comply to the 2.02 specification. -->
+    </p>
+    
+    <h3 id='intro_def'>1.2 Definitions</h3>
+    <p>
+      Throughout this document a few definitions will be used:</p>
+      <dl>
+      <dt>The 'path' definition:</dt>
+      <dd>A 'path' is defined to be an absolute path (not relative) ending with a backslash
+      '\'.</dd></dl>
+    
+    <h3 id="intro_needed">1.3 What is needed to use the Regenerator Engine DLL?</h3>
+    <p>
+      The Regenerator DLL is a Windows dynamic link library written in Visual Basic. 
+      All programming languages that support Windows 95 or later should be able to 
+      incorporate the DLL.<br/>
+      <br/>
+      Due to the fact that it is written in Visual Basic it needs the standard 
+      <a href="http://?">Visual Basic 6 runtimes</a> to run.<br/>
+      <br/>
+      The Regenerator Engine DLL also makes use of the
+      <a href="http://tidy.sourceforge.net">HTML Tidy</a> DLL.<br/>
+      <br/>
+      Besides the binary dependencies, the DLL needs
+      <a href='#intro_needed_tidydoc'>HTML Tidy</a> documents, 
+      <a href='#intro_needed_resource'>resource files</a> and 
+      <a href='#intro_needed_audtemp'>audio templates</a>.
+    </p>
+
+    <h4 id='intro_needed_resource'>1.3.1 Resource files</h4>
+    <h5 id='intro_needed_resource_charset'>1.3.1.1 charset.xml</h5>
+    <p>
+      The charset.xml file contains all valid charset inputs for the Regenerator Engine 
+      DLL.
+    </p>
+    
+    <h5 id='intro_needed_resource_forbmeta'>1.3.1.2 forbiddenMeta.xml</h5>
+    <p>
+      The forbiddenMeta.xml file contains all meta data that are forbidden for import
+      while building new books in the Regenerator Engine DLL.
+    </p>
+    
+    <h5 id='intro_needed_resource_iso639'>1.3.1.3 iso639.xml</h5>
+    <p>
+      The iso639.xml file contains all language codes that are being used in the
+      Regenerator Engine DLL. These are - as implied by the name of the file - defined
+      by the ISO 639 specification and should not be edited unless the specification
+      changes.
+    </p>
+    
+    <h5 id='intro_needed_resource_xhtml_entities'>1.3.1.4 xhtml_entities.xml</h5>
+    <p>
+      The xhtml_entities.xml file contains conversion info inbetween predefined entities
+      and numeric character references.
+    </p>
+    
+    <h4 id='intro_needed_audtemp'>1.3.2 Audio templates</h4>
+    <p>
+      The audio files in the Audio templates folder are used when the Regenerator 
+      inserts short silent audioclips into SMIL files. This may be done when the Adjust 
+      invalid SMIL pars option is enabled.
+    </p>
+    
+    <h4 id='intro_needed_tidydoc'>1.3.3 HTML Tidy documents</h4>
+    <p>
+      This folder contains configuration files used by the Tidy Component.
+    </p>
+
+<!-- Introduction -->
+
+    <h2 id='start'>2. Getting started using the Regenerator Engine DLL</h2>
+    
+    <h3 id='start_prep'>2.1 Preparing the Regenerator Engine DLL for use</h3>
+    <p>
+      First of all you will of course have to somehow refer to the DLL and depending
+      on which language you are using you might have to instantiate the 
+      <a href='#ogf_createableobj_user'>oUserControl</a> object (For Visual Basic users
+      all functions in oUserControl are global and can be used without instantiating
+      the object if there is a hard reference to the DLL).<br/>
+      <br/>
+      Second you'll have to set the paths of the external files needed,
+      this is done by using the 
+      <a href='#ogf_globalfunc_sttdylibpth'>fncSetTidyLibPath</a>, 
+      <a href='#ogf_globalfunc_strcpth'>fncSetResourcePath</a> and
+      <a href='#ogf_globalfunc_staudtmppth'>fncSetAudioTemplatesPath</a>
+      functions in the oUserControl object.<br/>
+    </p>
+
+    <h3 id='start_reg'>2.2 Regenerating a book</h3>    
+    <p>
+      Instantiate a copy of the <a href='#ogf_createableobj_regen'>oRegenerator</a>
+      object and call the <a href='#ogf_createableobj_regen_rntrans'>fncRunTransform</a>
+      function. The book is now regenerated and is contained in the 
+      <a href='#ogf_noncreateableobj_flstcol'>oFileSetCollection</a> object offered
+      by the DLL. Call the <a href='#ogf_createableobj_regen_rf'>fncRenderFiles</a> 
+      function to  save the regenerated book to disk.<br/>
+      <br/>
+      All done!
+    </p>
+    
+    <h3 id='start_pseudo'>2.3 Pseudocode for the above steps</h3>
+    <pre><code>
+    <!-- <p class="pseudocode"> -->
+ /* 
+ small program that with pseudocode illustrates the above steps 
+ 
+ The regeneration process has the following properties:
+ Input folder: "c:\oldbook\"
+ Input charset: WESTERN
+ Wanted encoding: N/A
+ DTB Type: Full text and full audio
+ Multivolume: NO
+ Preserve meta data:YES
+ Metadata import location: N/A
+ Sequencial rename: YES
+ Use 'dc:Identifier': NO
+ Prefix: 'book'
+ Rebuild link structure: YES
+ Fix multiple &lt;text&gt; events within a single par: YES
+ Merge short phrases: YES
+ Clip span: 100ms
+ Clip less than: 400ms
+ First clip less than: 1000ms
+ Next clip less than: 5000ms
+ Disable broken XHTML links: NO
+ Estimate broken XHTML links: NO
+ Playback 2000 layout fix: YES
+ Do verbose log: YES
+ Add CSS: NO
+ Make true ncc only: NO
+ Smil target: SMILTARGET_PAR
+ */
+ 
+ oUserControl objUC = new oUserControl()
+ 
+ objUC.fncSetTidyLibPath("c:\myprog\tidylibs\")
+ objUC.fncSetResourcePath("c:\myprog\resources\")
+ objUC.fncSetAudioTemplatesPath("c:\myprog\audiotemplates\")
+ 
+ oRegenerator objReg = new oRegenerator()
+ 
+ if (objReg.fncRunTransform("c:\oldbook\ncc.html", WESTERN, "", 
+     AUDIOFULLTEXT, False, True, "", True, False, "book", True, 
+     True, True, 100, 400, 1000, 5000, False, False, True, True, 
+     False, False, SMILTARGET_PAR)) 
+   then  
+   /*regeneration succeeded, render the new files to disk*/  
+   if (objReg.fncRenderFiles(RENDER_NEWFOLDER, "c:\newbook\")) then
+     /* rendering to disk succeeded. all done. */
+   else
+     /* rendering to disk failed */
+   end if
+ else
+   /*regeneration failed*/ 
+ end if 
+
+          
+  
+    <!-- </p> -->
+    </code></pre>
+<!-- Reference -->    
+    
+    <h2 id='objgfunc'>3. Regenerator Engine DLL Objects reference</h2>
+
+    <h3 id='ogf_createableobj'>3.1 Createable objects</h3>
+    <p>
+      The creatable objects are instantiable directly by the user.
+    </p>
+
+<!-- oRegenerator -->
+
+    <h4 id='ogf_createableobj_regen'>3.1.1 the oRegenerator object</h4>
+    <p>
+      The oRegenerator object is the actual 'engine' of the DLL. This object offers
+      functions that carries out work on files.
+    </p>
+    
+    <h5 id='ogf_createableobj_regen_rt'>3.1.1.1 fncRunTransform function</h5>
+    <p>
+      Regenerates the book and saves the regenerated data in the 
+      <a href='#ogf_createableobj_regen_ofsh'>oFileSetHandler</a> object exposed by the
+      oRegenerator object. This function returns 'true' if successful.
+    </p>
+    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>bool fncRunTransform (</th><th></th><th></th></tr>
+      <tr class='attr'><td>string</td><td>origNccPath</td>
+        <td>/* Path of the NCC file of the book to regenerate */</td></tr>
+      <tr class='attr'><td>long</td><td>inputEncoding</td>
+        <td>/* Sets the encoding of the input book. Can be one of the following: 
+          WESTERN (0), SHIFTJIS (1), BIG5 (2), UTF8 (3) or SPECIAL (4) */</td></tr>
+      <tr class='attr'><td>string</td><td>wantsThisEncoding</td>
+        <td>/* If 'inputEncoding' was set to SPECIAL (4), the 'wantsThisEncoding' is
+          used to by-name set a different encoding from the four types avaliable
+          in 'inputEncoding'. */</td></tr>
+      <tr class='attr'><td>long</td><td>dtbType</td>
+        <td>/* Sets which kind of DTB the input book is. Can be one of the following:
+          AUDIOONLY (0), AUDIONCC (1), AUDIOPARTTEXT (2), AUDIOFULLTEXT (3),
+          TEXTPARTAUDIO (4) or TEXTNCC (5) */</td></tr>
+      <tr class='attr'><td>bool</td><td>isMultiVolume</td>
+        <td>/* Should be set to 'true' if the input book is a multivolume book. (Note - this is currently a nonsupported function. Only regenerate single volume DTBs.) */</td>
+      </tr>
+      <tr class='attr'><td>bool</td><td>preserveBiblioMeta</td>
+        <td>/* Should be set to 'false' if you want to import meta data */</td></tr>
+      <tr class='attr'><td>string</td><td>metaPath</td>
+        <td>/* Sets the path and filename of the XML file to import meta data from */
+        </td></tr>
+      <tr class='attr'><td>bool</td><td>seqRename</td>
+        <td>/* With this set to 'true', all files will be renamed with a 
+        numeric ordering equal to the actual play order */
+        </td></tr>
+      <tr class='attr'><td>bool</td><td>useDcIdNum</td>
+        <td>/* If set to true, the numeric content of dc:identifier convered to hex is used for filename prefix. Has no effect if seqRename is set to false. */</td></tr>
+      <tr class='attr'><td>string</td><td>wantedPrefix</td>
+        <td>/* Sets prefix on all renamed files, if left blank, default prefix 'dtb' will be 
+          used. Example: dtb_0000.smil */
+        </td></tr>
+      <tr class='attr'><td>bool</td><td>rebuildLinkStructure</td>
+        <td>/* Rebuilds all pointers within the DTB fileset. */</td></tr>
+      <tr class='attr'><td>bool</td><td>fixMultiTextInPar</td>
+        <td>/* If set to 'true', multiple &lt;text&gt; elements within a single par 
+          will be removed */</tr>
+      <tr class='attr'><td>bool</td><td>mergeShortPhrases</td>
+        <td>/* If set to 'true', short audioclips will be merged with the next clip 
+          in the same timecontainer */</tr>      
+      <tr class='attr'><td>long</td><td>clipLessThan</td>
+        <td>/* Maximum clip span in milliseconds for phrase merge to occur. Has no effect if mergeShortPhrases is set to false. */</td></tr>
+      <tr class='attr'><td>long</td><td>firstClipLessThan</td>
+        <td>/* Used in combination with nextClipLessThan. See <a href="#advFix_mergePhrases">advFix_mergePhrases</a>. Has no effect if mergeShortPhrases is set to false. */</td></tr>
+      <tr class='attr'><td>long</td><td>nextClipLessThan</td>
+        <td>/* Used in combination with firstClipLessThan. See <a href="#advFix_mergePhrases">advFix_mergePhrases</a>. Has no effect if mergeShortPhrases is set to false. */</td></tr>
+      <tr class='attr'><td>long</td><td>clipSpan</td>
+        <td>/* If there is a time difference between two phrases that is larger than this value, the merging process will be cancelled. See <a href="#advFix_mergePhrases">advFix_mergePhrases</a>.  Has no effect if mergeShortPhrases is set to false. */</td></tr>
+      <tr class='attr'><td>bool</td><td>disableBrokenXhtmlLinks</td>
+        <td>/* If set to 'true', &lt;a&gt; elements in NCC and content documents referring to nonexisting destinations 
+          will be turned into an XML comment. */</td></tr>
+      <tr class='attr'><td>bool</td><td>estimateBrokenXhtmlLinks</td>
+        <td>/* Used in combination with disableBrokenXhtmlLinks. An estimation attempt made first - if it fails, link will be turned into an XML comment.*/</td></tr>
+      <tr class='attr'><td>bool</td><td>pb2kLayoutFix</td>
+        <td>/* Sets the pretty prtin routine to a mode compatible with the playback devices plextor TK and Playback 2000. */</td></tr>
+      <tr class='attr'><td>bool</td><td>doVerboseLog</td>
+        <td>/* If true, log will be verbose. If false, only warnings and errors are included in log. */</td></tr>
+      <tr class='attr'><td>bool</td><td>addCss</td>
+        <td>/* Adds a default css (any css found in the "resources" folder) to documents without preexisting CSS references. */</td></tr>
+      <tr class='attr'><td>bool</td><td>makeTrueNccOnly</td>
+        <td>/* If true, turns an untrue NCC only DTB into a true NCC Only DTB. See <a href="##advFix_trueNccOnly">#advFix_trueNccOnly</a>*/</td></tr>
+      <tr class='attr'><td>long</td><td>smilTarget</td>
+        <td>/* Decides which object in SMIL files to point at from NCC and content
+          documents. Can be one of the following: SMILTARGET_NOCHANGE (0), 
+          SMILTARGET_PAR (1), SMILTARGET_TEXT (2). */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_createableobj_regen_rf'>3.1.1.2 fncRenderFiles function</h5>
+    <p>
+      Renders the regenerated book to a new set of files. Returns 'true' if successful.
+    </p>
+    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>bool fncRenderFiles(</th><th></th><th></th></tr>
+      <tr class='attr'><td>long</td><td>renderType</td>
+        <td>/* Sets the writemode of the new book rendering. Can be one of the 
+        following: RENDER_REPLACE (0), RENDER_NEWFOLDER (1) */</td></tr>
+      <tr class='attr'><td>string</td><td>renderPath</td>
+        <td>/* Sets the path of where to render the new book */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+    <!--
+    <h5 id='ogf_createableobj_regen_rlogit'>3.1.1.3 fncRetrieveLogItem function</h5>
+    <p>
+      Returns a string containing the logitem with the number set in 'item'.
+    </p>    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>string fncRetrieveLogItem(</th><th></th><th></th></tr>
+      <tr class='attr'><td>long</td><td>item</td>
+        <td>/* Number of the item to retrieve */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_createableobj_regen_getdcid'>3.1.1.4 fncGetDcIdentifier function</h5>
+    <p>
+      Returns a string containing the 'dc:identifier' meta data from the regenerated
+      book.
+    </p>    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>string fncGetDcIdentifier()</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_createableobj_regen_termobj'>3.1.1.5 fncTerminateObject function</h5>
+    <p>
+      Destroys all internal references, is to be called before deallocation of the
+      oRegenerator object. Returns 'true' if successful.
+    </p>    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>bool fncTerminateObject()</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_createableobj_regen_logitem'>3.1.1.6 evLogItem event</h5>
+    <p>
+      Fired whenever a new logitem is avaliable.
+    </p>    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>event evLogItem(</th><th></th><th></th></tr>
+      <tr class='attr'><td>string</td><td>logItem</td>
+        <td>/* Contains the new logitem text */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_createableobj_regen_logitmcnt'>3.1.1.7 lLogItemCount long property</h5>
+    <p>Contains the number of logitems.</p>    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>long lLogItem</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_createableobj_regen_ofsh'>3.1.1.8 objFileSetHandler pointer property</h5>
+    <p>
+      Points to the <a href='#ogf_noncreateableobj_flsthand'>oFileSetHandler</a> of
+      the regenerated book.
+    </p>    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>oFileSetHandler objFileSetHandler</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_createableobj_regen_oown'>3.1.1.9 objOwner pointer property</h5>
+    <p>
+      May be set to point at the object holding the oRegenerator object pointer, see
+      <a href='#ogf_createableobj_regen_vbfev'>subVBFriendlyEvent</a> for more 
+      information.
+    </p>    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>void objOwner</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_createableobj_regen_vbfev'>3.1.1.10 subVBFriendlyEvent callback function</h5>
+    <p>
+      Must be implemented in the object holding the pointer of the oRegenerator object if
+      <a href='#ogf_createableobj_regen_oown'>objOwner</a> is set.
+    </p>    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>void subRaiseVBFriendlyEvent(</th><th></th><th></th></tr>
+      <tr class='attr'><td>string</td><td>event</td>
+        <td>/* Contains the name of the event */</td></tr>
+      <tr class='attr'><td>variant</td><td>param1</td>
+        <td>/* Contains parameter 1 of the event */</td></tr>
+      <tr class='attr'><td>variant</td><td>param2</td>
+        <td>/* Contains parameter 2 of the event */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+    -->
+<!-- oUserControl -->
+
+    <h4 id='ogf_createableobj_user'>3.1.2 the oUserControl object</h4>
+    <p>
+      The oUserControl object is used to set and get global settings and retrieving 
+      information  about the DLL.
+    </p>
+                  
+    <h5 id="ogf_globalfunc_gtdllver">3.1.2.1 fncGetDllVersion function</h5>
+    <p>
+      Returns a string containing the current versionnumber of the Regenerator Engine DLL
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>string fncGetDllVersion()</th></tr>
+    </table>
+    
+    <h5 id="ogf_globalfunc_sttdylibpth">3.1.2.2 fncSetTidyLibPath function</h5>
+    <p>
+      Sets the <a href='#intro_def'>path</a> of the 
+      <a href='#intro_needed_tidydoc'>HTML Tidy documents</a>. The function returns a 
+      boolean which is 'true' if the function was succesfull.<br/>
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>boolean fncSetTidyLibPath(</th><th></th><th></th></tr>
+      <tr class='attr'><td>string</td><td>tidyLibPath</td>
+        <td>/* Path to the directory containing the tidy documents */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+    
+    <h5 id="ogf_globalfunc_gttdylibpth">3.1.2.3 fncGetTidyLibPath function</h5>
+    <p>
+      Returns a string containing the current path for the
+      <a href='#intro_needed_tidydoc'>HTML Tidy documents</a>.
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>string fncGetTidyLibPath()</th></tr>
+    </table>
+    
+    <h5 id="ogf_globalfunc_strcpth">3.1.2.4 fncSetResourcePath function</h5>
+    <p>
+      Sets the <a href='#intro_def'>path</a> of the 
+      <a href='#intro_needed_resource'>resource files</a>. The function returns a 
+      boolean which is 'true' if the function was succesfull.
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>boolean fncSetResourcePath(</th><th></th><th></th></tr>
+      <tr class='attr'><td>string</td><td>resourcePath</td>
+        <td>/* Path to the directory containing the resource files */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+    
+    <h5 id="ogf_globalfunc_gtrcpth">3.1.2.5 fncGetResourcePath function</h5>
+    <p>
+      Returns a string containing the current path for the
+      <a href='#intro_needed_resource'>resource files</a>.
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>string fncGetResourcePath()</th></tr>
+    </table>
+    
+    <h5 id="ogf_globalfunc_staudtmppth">3.1.2.6 fncSetAudioTemplatesPath function</h5>
+    <p>
+      Sets the <a href='#intro_def'>path</a> of the 
+      <a href='#intro_needed_audtemp'>audio templates</a>. The function returns a 
+      boolean which is 'true' if the function was succesfull.
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>boolean fncSetAudioTemplatesPath(</th><th></th><th></th></tr>
+      <tr class='attr'><td>string</td><td>audioTemplatesPath</td>
+        <td>/* Path to the directory containing the audio templates */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+    
+    <h5 id="ogf_globalfunc_gtaudtmppth">3.1.2.7 fncGetAudioTemplatesPath function</h5>
+    <p>
+      Returns a string containing the current path for the
+      <a href='#intro_needed_audtemp'>audio templates</a>.
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>string fncGetAudioTemplatesPath()</th></tr>
+    </table>
+        
+    <a class='top' href="#toc">go to table of contents</a>
+
+<!-- Non createable objects -->
+<!--
+    <h4 id='ogf_noncreateableobj_flstcol'>3.2.1 the oFileSetCollection object</h4>
+    <p>Contains information about a specific file.</p>
+    
+    <h5 id='ogf_noncreateableobj_flstcol_type'>3.2.1.1 eType long property</h5>
+    <p>
+      Returns the filetype, can be one of the following: TYPE_NCC (0), TYPE_SMIL (1),
+      TYPE_SMIL_CONTENT (2), TYPE_SMIL_AUDIO (3), TYPE_SMIL_IMG (4), TYPE_SMIL_MASTER (5),
+      TYPE_OTHER (6), TYPE_SMIL_AUDIO_INSERTED (7), TYPE_CSS_INSERTED (8), 
+      TYPE_DELETED (9).
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>long eType</th></tr>
+    </table>
+
+    <h5 id='ogf_noncreateableobj_flstcol_owntype'>3.2.1.2 lOwnerType long property</h5>
+    <p>
+      Returns the filetype of the file owning the reference to this file (if applicable),
+      see  <a href='#ogf_noncreateableobj_flstcol_type'>eType</a> for possible values.
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>long lOwnerType</th></tr>
+    </table>
+
+    <h5 id='ogf_noncreateableobj_flstcol_abspth'>3.2.1.3 sAbsPath string property</h5>
+    <p>Returns the absolute path of the file.</p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>string sAbsPath</th></tr>
+    </table>
+
+    <h5 id='ogf_noncreateableobj_flstcol_domdata'>3.2.1.4 sDomData string property</h5>
+    <p>Returns the dom tree of the file.</p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>string sDomData</th></tr>
+    </table>
+
+    <h5 id='ogf_noncreateableobj_flstcol_filname'>3.2.1.5 sFileName string property</h5>
+    <p>Returns the filename of the file</p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>string sFileName</th></tr>
+    </table>
+
+    <h5 id='ogf_noncreateableobj_flstcol_smiltit'>3.2.1.6 sSmilTitle string property</h5>
+    <p>Only applicable if the file is of SMIL type. Returns the <span class='todo'>Need more info</span> TODO: ask markus  </p>
+
+    <table class='pseudocode'>
+      <tr class='fnc'><th>string sSmilTitle</th></tr>
+    </table>
+
+    <h4 id='ogf_noncreateableobj_flsthand'>3.2.2 the oFileSetHandler object</h4>
+    <p>
+      Contains pointers to all input and output files 
+      <a href='#ogf_noncreateableobj_flstcol'>oFileSetCollection</a> objects.
+    </p>
+    
+    <h5 id='ogf_noncreateableobj_flsthand_addobjin'>3.2.2.1 fncAddObjectToInputArray function</h5>
+    <p>
+      Adds a file to the input array, see 
+      <a href='#ogf_noncreateableobj_flsthand_ainfs'>aInFileSet</a> for more information.
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>bool fncAddObjectToInputArray(</th><th></th><th></th></tr>
+      <tr class='attr'><td>long</td><td>type</td>
+        <td>/* Type of file to add, see 
+          <a href='#ogf_noncreateableobj_flstcol_type'>eType</a> for possible 
+          values */</td></tr>
+      <tr class='attr'><td>string</td><td>asbPath</td>
+        <td>/* Absolute path and filename of the file to add */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_noncreateableobj_flsthand_addobjout'>3.2.2.2 fncAddObjectToOutputArray function</h5>
+    <p>
+      Adds a file to the output array, see 
+      <a href='#ogf_noncreateableobj_flsthand_ainfs'>aOutFileSet</a> for more information.
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>bool fncAddObjectToOutputArray(</th><th></th><th></th></tr>
+      <tr class='attr'><td>long</td><td>type</td>
+        <td>/* Type of file to add, see 
+          <a href='#ogf_noncreateableobj_flstcol_type'>eType</a> for possible 
+          values */</td></tr>
+      <tr class='attr'><td>string</td><td>asbPath</td>
+        <td>/* Absolute path and filename of the file to add */</td></tr>
+      <tr class='attr'><td>string</td><td>domData</td>
+        <td>/* Dom data of the file */</td></tr>
+      <tr class='attr'><td>[string</td><td>smilTitle]</td>
+        <td>/* Optional, <span class='todo'>Need more info</span> TODO: ask markus  */</td></tr>
+      <tr class='attr'><td>[long</td><td>ownerType]</td>
+        <td>/* Optional. Filetype of the file who owns the reference to this file, see 
+          <a href='#ogf_noncreateableobj_flstcol_type'>eType</a> for possible 
+          values */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+    
+    <h5 id='ogf_noncreateableobj_flsthand_unique'>3.2.2.3 fncAllFileNamesAreUnique function</h5>
+    <p>Returns 'true' if all <span class='todo'>Need more info</span>TODO: ask markus </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>bool fncAllFileNamesAreUnique</th></tr>
+    </table>
+            
+    <h5 id='ogf_noncreateableobj_flsthand_arrcons'>3.2.2.4 fncCheckArrayConsistency function</h5>
+    <p>Returns 'true' if <span class='todo'>Need more info</span>TODO: ask markus </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>bool fncCheckArrayConsistency</th></tr>
+    </table>
+
+    <h5 id='ogf_noncreateableobj_flsthand_cfsa'>3.2.2.5 fncCreateFileSetArrays function</h5>
+    <p>
+      Creates a input file set from the ncc dom given in 'nccDom'. <span class='todo'>Need more info</span>TODO: ask markus
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>bool fncCreateFileSetArrays(</th><th></th><th></th></tr>
+      <tr class='attr'><td>DOMDocument</td><td>nccDom</td>
+        <td>/* DOM data of the ncc file to derive the fileset from */</td></tr>
+      <tr class='attr'><td>long</td><td>inputEncoding</td>
+        <td>/* Character encoding of the ncc document */</td></tr>
+      <tr class='attr'><td>string</td><td>sOutCharsetName</td>
+        <td>/* ? */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+  
+    <h5 id='ogf_noncreateableobj_flsthand_gtarrifn'>3.2.2.6 fncGetArrayItemFromName function</h5>
+    <p>
+      Retrieves the index of a file existing in the <span class='todo'>Need more info</span>TODO: ask markus
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>long fncGetArrayItemFromName(</th><th></th><th></th></tr>
+      <tr class='attr'><td>string</td><td>fileName</td>
+        <td>/* Filename of the file to retrieve */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>          
+
+    <h5 id='ogf_noncreateableobj_flsthand_gtpioft'>3.2.2.7 fncGetPreviousItemOfType function</h5>
+    <p>
+      <span class='todo'>Need more info</span>TODO: ask markus
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>bool fncGetPreviousItemOfType(</th><th></th><th></th></tr>
+      <tr class='attr'><td>long</td><td>type</td>
+        <td>/* Filetype of the file to retrieve, see 
+          <a href='#ogf_noncreateableobj_flstcol_type'>eType</a> for possible 
+          values */</td></tr>
+      <tr class='attr'><td>long</td><td>previousArrayItem</td>
+        <td>/* ? */</td></tr>
+      <tr class='attr'><td>long</td><td>currentArrayItem</td>
+        <td>/* ? */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+    
+    <h5 id='ogf_noncreateableobj_flsthand_isobjinoa'>3.2.2.8 fncIsObjectInOutputArray function</h5>
+    <p>
+      Returns 'true' if a file with the filename given in 'fileName' exists in the
+      output array.
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>bool fncIsObjectInOutputArray(</th><th></th><th></th></tr>
+      <tr class='attr'><td>string</td><td>fileName</td>
+        <td>/* Filename of the file to look for */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_noncreateableobj_flsthand_itexinoa'>3.2.2.9 fncItemExistsInOutArray function</h5>
+    <p>
+      Returns 'true' if a <span class='todo'>Need more info</span>TODO: ask markus
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>bool fncItemExistsInOutArray(</th><th></th><th></th></tr>
+      <tr class='attr'><td>string</td><td>itemName</td>
+        <td>/* Name of the item to look for */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+    
+    <h5 id='ogf_noncreateableobj_flsthand_pfs'>3.2.2.10 fncPrintFileSet function</h5>
+    <p>
+      Outputs all new and old filenames to the log of given oRegenerator object.
+      Returns 'true' if successful.
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>bool fncPrintFileSet(</th><th></th><th></th></tr>
+      <tr class='attr'><td>oRegenerator</td><td>owner</td>
+        <td>/* Pointer to the object who owns the oFileSetHandler object */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_noncreateableobj_flsthand_resarrs'>3.2.2.11 fncResetArrays function</h5>
+    <p>
+      Resets the input and output arrays and clears the '-members' variables.
+      Returns 'true' if successful.
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>bool fncResetArrays()</th><th></th><th></th></tr>
+    </table>
+    
+    <h5 id='ogf_noncreateableobj_flsthand_term'>3.2.2.12 fncTerminateObject function</h5>
+    <p>
+      Destroys all internal references, is to be called before deallocation of the
+      oFileSetHandler object. Returns 'true' if successful.
+    </p>    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>bool fncTerminateObject()</th><th></th><th></th></tr>
+    </table>
+    
+    <h5 id='ogf_noncreateableobj_flsthand_infsmem'>3.2.2.13 aInFileSet oFileSetCollection property</h5>
+    <p>
+      Returns the <a href='#ogf_noncreateableobj_flstcol'>oFileSetCollection</a> object
+      with the index given in 'item' from the input array.
+    </p>    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>oFileSetCollection aInFileSet(</th><th></th><th></th></tr>
+      <tr class='attr'><td>long</td><td>item</td>
+        <td>/* Index of the oFileSetCollection item to retrieve */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_noncreateableobj_flsthand_outfsmem'>3.2.2.14 aOutFileSet oFileSetCollection property</h5>
+    <p>
+      Returns the <a href='#ogf_noncreateableobj_flstcol'>oFileSetCollection</a> object
+      with the index given in 'item' from the output array.
+    </p>    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>oFileSetCollection aOutFileSet(</th><th></th><th></th></tr>
+      <tr class='attr'><td>long</td><td>item</td>
+        <td>/* Index of the oFileSetCollection item to retrieve */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_noncreateableobj_flsthand_infsmems'>3.2.2.15 aInFileSetMembers long property</h5>
+    <p>
+      Returns the number of
+      <a href='#ogf_noncreateableobj_flstcol'>oFileSetCollection</a> objects in the 
+      input array.
+    </p>    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>long aInFileSetMembers()</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_noncreateableobj_flsthand_outfsmems'>3.2.2.16 aOutFileSetMembers long property</h5>
+    <p>
+      Returns the number of
+      <a href='#ogf_noncreateableobj_flstcol'>oFileSetCollection</a> objects in the 
+      output array.
+    </p>    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>long aOutFileSetMembers()</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_noncreateableobj_flsthand_ofilstcdocs'>3.2.2.17 aOutFileSetContentDocs long property</h5>
+    <p>
+      <span class='todo'>Need more info</span>TODO: ask markus
+    </p>    
+    <table class='pseudocode'>
+      <tr class='fnc'><th>long aOutFileSetContentDocs(</th><th></th><th></th></tr>
+      <tr class='attr'><td>long</td><td>item</td>
+        <td>/* ? */</td></tr>
+      <tr class='fnc'><th>)</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_noncreateableobj_flsthand_ofilstcdocmems'>3.2.2.17 aOutFileSetContentDocMembers long property</h5>
+    <p>
+      <span class='todo'>Need more info</span>TODO: ask markus
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>long aOutFileSetContentDocMembers()</th><th></th><th></th></tr>
+    </table>
+
+    <h5 id='ogf_createableobj_regen_oown'>3.2.2.18 objOwner oRegenerator property</h5>
+    <p>
+      Must be set to point at the oRegenerator object owning the oFileSetHandler.
+      The oFileSetHandler will add log items to the given objOwner document.
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>oRegenerator objOwner</th><th></th><th></th></tr>
+    </table>
+
+    <h4 id='ogf_noncreateableobj_idget'>3.2.3 the oIdGetter object</h4>
+
+    <h5 id='ogf_createableobj_regen_oown'>3.2.3.1 Getid function</h5>
+    <p>
+      <span class='todo'>Need more info</span>TODO: ask markus
+    </p>
+    <table class='pseudocode'>
+      <tr class='fnc'><th>string Getid()</th><th></th><th></th></tr>
+    </table>
+    -->
+    <br/>
+    <br/>
+  </body>
+</html>

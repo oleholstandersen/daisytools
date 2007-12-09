@@ -1,0 +1,1518 @@
+<charsetlist>
+  <charset>
+    <name>ANSI_X3.4-1968</name>
+    <alias>iso-ir-6</alias>
+    <alias>ANSI_X3.4-1986</alias>
+    <alias>ISO_646.irv:1991</alias>
+    <alias>ASCII</alias>
+    <alias>ISO646-US</alias>
+    <alias>US-ASCII</alias>
+    <alias>us</alias>
+    <alias>IBM367</alias>
+    <alias>cp367</alias>
+    <alias>csASCII</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-10646-UTF-1</name>
+    <alias>csISO10646UTF1</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_646.basic:1983</name>
+    <alias>ref</alias>
+    <alias>csISO646basic1983</alias>
+  </charset>
+
+  <charset>
+    <name>INVARIANT</name>
+    <alias>csINVARIANT</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_646.irv:1983</name>
+    <alias>iso-ir-2</alias>
+    <alias>irv</alias>
+    <alias>csISO2IntlRefVersion</alias>
+  </charset>
+
+  <charset>
+    <name>BS_4730</name>
+    <alias>iso-ir-4</alias>
+    <alias>ISO646-GB</alias>
+    <alias>gb</alias>
+    <alias>uk</alias>
+    <alias>csISO4UnitedKingdom</alias>
+  </charset>
+
+  <charset>
+    <name>NATS-SEFI</name>
+    <alias>iso-ir-8-1</alias>
+    <alias>csNATSSEFI</alias>
+  </charset>
+
+  <charset>
+    <name>NATS-SEFI-ADD</name>
+    <alias>iso-ir-8-2</alias>
+    <alias>csNATSSEFIADD</alias>
+  </charset>
+
+  <charset>
+    <name>NATS-DANO</name>
+    <alias>iso-ir-9-1</alias>
+    <alias>csNATSDANO</alias>
+  </charset>
+
+  <charset>
+    <name>NATS-DANO-ADD</name>
+    <alias>iso-ir-9-2</alias>
+    <alias>csNATSDANOADD</alias>
+  </charset>
+
+  <charset>
+    <name>SEN_850200_B</name>
+    <alias>iso-ir-10</alias>
+    <alias>FI</alias>
+    <alias>ISO646-FI</alias>
+    <alias>ISO646-SE</alias>
+    <alias>se</alias>
+    <alias>csISO10Swedish</alias>
+  </charset>
+
+  <charset>
+    <name>SEN_850200_C</name>
+    <alias>iso-ir-11</alias>
+    <alias>ISO646-SE2</alias>
+    <alias>se2</alias>
+    <alias>csISO11SwedishForNames</alias>
+  </charset>
+
+  <charset>
+    <name>KS_C_5601-1987</name>
+    <alias>iso-ir-149</alias>
+    <alias>KS_C_5601-1989</alias>
+    <alias>KSC_5601</alias>
+    <alias>korean</alias>
+    <alias>csKSC56011987</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-2022-KR</name>
+    <alias>csISO2022KR</alias>
+  </charset>
+
+  <charset>
+    <name>EUC-KR</name>
+    <alias>csEUCKR</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-2022-JP</name>
+    <alias>csISO2022JP</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-2022-JP-2</name>
+    <alias>csISO2022JP2</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-2022-CN</name>
+  </charset>
+
+  <charset>
+    <name>ISO-2022-CN-EXT</name>
+  </charset>
+
+  <charset>
+    <name>JIS_C6220-1969-jp</name>
+    <alias>JIS_C6220-1969</alias>
+    <alias>iso-ir-13</alias>
+    <alias>katakana</alias>
+    <alias>x0201-7</alias>
+    <alias>csISO13JISC6220jp</alias>
+  </charset>
+
+  <charset>
+    <name>JIS_C6220-1969-ro</name>
+    <alias>iso-ir-14</alias>
+    <alias>jp</alias>
+    <alias>ISO646-JP</alias>
+    <alias>csISO14JISC6220ro</alias>
+  </charset>
+
+  <charset>
+    <name>IT</name>
+    <alias>iso-ir-15</alias>
+    <alias>ISO646-IT</alias>
+    <alias>csISO15Italian</alias>
+  </charset>
+
+  <charset>
+    <name>PT</name>
+    <alias>iso-ir-16</alias>
+    <alias>ISO646-PT</alias>
+    <alias>csISO16Portuguese</alias>
+  </charset>
+
+  <charset>
+    <name>ES</name>
+    <alias>iso-ir-17</alias>
+    <alias>ISO646-ES</alias>
+    <alias>csISO17Spanish</alias>
+  </charset>
+
+  <charset>
+    <name>greek7-old</name>
+    <alias>iso-ir-18</alias>
+    <alias>csISO18Greek7Old</alias>
+  </charset>
+
+  <charset>
+    <name>latin-greek</name>
+    <alias>iso-ir-19</alias>
+    <alias>csISO19LatinGreek</alias>
+  </charset>
+
+  <charset>
+    <name>DIN_66003</name>
+    <alias>iso-ir-21</alias>
+    <alias>de</alias>
+    <alias>ISO646-DE</alias>
+    <alias>csISO21German</alias>
+  </charset>
+
+  <charset>
+    <name>NF_Z_62-010_(1973)</name>
+    <alias>iso-ir-25</alias>
+    <alias>ISO646-FR1</alias>
+    <alias>csISO25French</alias>
+  </charset>
+
+  <charset>
+    <name>Latin-greek-1</name>
+    <alias>iso-ir-27</alias>
+    <alias>csISO27LatinGreek1</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_5427</name>
+    <alias>iso-ir-37</alias>
+    <alias>csISO5427Cyrillic</alias>
+  </charset>
+
+  <charset>
+    <name>JIS_C6226-1978</name>
+    <alias>iso-ir-42</alias>
+    <alias>csISO42JISC62261978</alias>
+  </charset>
+
+  <charset>
+    <name>BS_viewdata</name>
+    <alias>iso-ir-47</alias>
+    <alias>csISO47BSViewdata</alias>
+  </charset>
+
+  <charset>
+    <name>INIS</name>
+    <alias>iso-ir-49</alias>
+    <alias>csISO49INIS</alias>
+  </charset>
+
+  <charset>
+    <name>INIS-8</name>
+    <alias>iso-ir-50</alias>
+    <alias>csISO50INIS8</alias>
+  </charset>
+
+  <charset>
+    <name>INIS-cyrillic</name>
+    <alias>iso-ir-51</alias>
+    <alias>csISO51INISCyrillic</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_5427:1981</name>
+    <alias>iso-ir-54</alias>
+    <alias>ISO5427Cyrillic1981</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_5428:1980</name>
+    <alias>iso-ir-55</alias>
+    <alias>csISO5428Greek</alias>
+  </charset>
+
+  <charset>
+    <name>GB_1988-80</name>
+    <alias>iso-ir-57</alias>
+    <alias>cn</alias>
+    <alias>ISO646-CN</alias>
+    <alias>csISO57GB1988</alias>
+  </charset>
+
+  <charset>
+    <name>GB_2312-80</name>
+    <alias>iso-ir-58</alias>
+    <alias>chinese</alias>
+    <alias>csISO58GB231280</alias>
+  </charset>
+
+  <charset>
+    <name>NS_4551-1</name>
+    <alias>iso-ir-60</alias>
+    <alias>ISO646-NO</alias>
+    <alias>no</alias>
+    <alias>csISO60DanishNorwegian</alias>
+    <alias>csISO60Norwegian1</alias>
+  </charset>
+
+  <charset>
+    <name>NS_4551-2</name>
+    <alias>ISO646-NO2</alias>
+    <alias>iso-ir-61</alias>
+    <alias>no2</alias>
+    <alias>csISO61Norwegian2</alias>
+  </charset>
+
+  <charset>
+    <name>NF_Z_62-010</name>
+    <alias>iso-ir-69</alias>
+    <alias>ISO646-FR</alias>
+    <alias>fr</alias>
+    <alias>csISO69French</alias>
+  </charset>
+
+  <charset>
+    <name>videotex-suppl</name>
+    <alias>iso-ir-70</alias>
+    <alias>csISO70VideotexSupp1</alias>
+  </charset>
+
+  <charset>
+    <name>PT2</name>
+    <alias>iso-ir-84</alias>
+    <alias>ISO646-PT2</alias>
+    <alias>csISO84Portuguese2</alias>
+  </charset>
+
+  <charset>
+    <name>ES2</name>
+    <alias>iso-ir-85</alias>
+    <alias>ISO646-ES2</alias>
+    <alias>csISO85Spanish2</alias>
+  </charset>
+
+  <charset>
+    <name>MSZ_7795.3</name>
+    <alias>iso-ir-86</alias>
+    <alias>ISO646-HU</alias>
+    <alias>hu</alias>
+    <alias>csISO86Hungarian</alias>
+  </charset>
+
+  <charset>
+    <name>JIS_C6226-1983</name>
+    <alias>iso-ir-87</alias>
+    <alias>x0208</alias>
+    <alias>JIS_X0208-1983</alias>
+    <alias>csISO87JISX0208</alias>
+  </charset>
+
+  <charset>
+    <name>greek7</name>
+    <alias>iso-ir-88</alias>
+    <alias>csISO88Greek7</alias>
+  </charset>
+
+  <charset>
+    <name>ASMO_449</name>
+    <alias>ISO_9036</alias>
+    <alias>arabic7</alias>
+    <alias>iso-ir-89</alias>
+    <alias>csISO89ASMO449</alias>
+  </charset>
+
+  <charset>
+    <name>iso-ir-90</name>
+    <alias>csISO90</alias>
+  </charset>
+
+  <charset>
+    <name>JIS_C6229-1984-a</name>
+    <alias>iso-ir-91</alias>
+    <alias>jp-ocr-a</alias>
+    <alias>csISO91JISC62291984a</alias>
+  </charset>
+
+  <charset>
+    <name>JIS_C6229-1984-b</name>
+    <alias>iso-ir-92</alias>
+    <alias>ISO646-JP-OCR-B</alias>
+    <alias>jp-ocr-b</alias>
+    <alias>csISO92JISC62991984b</alias>
+  </charset>
+
+  <charset>
+    <name>JIS_C6229-1984-b-add</name>
+    <alias>iso-ir-93</alias>
+    <alias>jp-ocr-b-add</alias>
+    <alias>csISO93JIS62291984badd</alias>
+  </charset>
+
+  <charset>
+    <name>JIS_C6229-1984-hand</name>
+    <alias>iso-ir-94</alias>
+    <alias>jp-ocr-hand</alias>
+    <alias>csISO94JIS62291984hand</alias>
+  </charset>
+
+  <charset>
+    <name>JIS_C6229-1984-hand-add</name>
+    <alias>iso-ir-95</alias>
+    <alias>jp-ocr-hand-add</alias>
+    <alias>csISO95JIS62291984handadd</alias>
+  </charset>
+
+  <charset>
+    <name>JIS_C6229-1984-kana</name>
+    <alias>iso-ir-96</alias>
+    <alias>csISO96JISC62291984kana</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_2033-1983</name>
+    <alias>iso-ir-98</alias>
+    <alias>e13b</alias>
+    <alias>csISO2033</alias>
+  </charset>
+
+  <charset>
+    <name>ANSI_X3.110-1983</name>
+    <alias>iso-ir-99</alias>
+    <alias>CSA_T500-1983</alias>
+    <alias>NAPLPS</alias>
+    <alias>csISO99NAPLPS</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_8859-1:1987</name>
+    <alias>iso-ir-100</alias>
+    <alias>ISO_8859-1</alias>
+    <alias>ISO-8859-1</alias>
+    <alias>latin1</alias>
+    <alias>l1</alias>
+    <alias>IBM819</alias>
+    <alias>CP819</alias>
+    <alias>csISOLatin1</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_8859-2:1987</name>
+    <alias>iso-ir-101</alias>
+    <alias>ISO_8859-2</alias>
+    <alias>ISO-8859-2</alias>
+    <alias>latin2</alias>
+    <alias>l2</alias>
+    <alias>csISOLatin2</alias>
+  </charset>
+
+  <charset>
+    <name>T.61-7bit</name>
+    <alias>iso-ir-102</alias>
+    <alias>csISO102T617bit</alias>
+  </charset>
+
+  <charset>
+    <name>T.61-8bit</name>
+    <alias>T.61</alias>
+    <alias>iso-ir-103</alias>
+    <alias>csISO103T618bit</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_8859-3:1988</name>
+    <alias>iso-ir-109</alias>
+    <alias>ISO_8859-3</alias>
+    <alias>ISO-8859-3</alias>
+    <alias>latin3</alias>
+    <alias>l3</alias>
+    <alias>csISOLatin3</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_8859-4:1988</name>
+    <alias>iso-ir-110</alias>
+    <alias>ISO_8859-4</alias>
+    <alias>ISO-8859-4</alias>
+    <alias>latin4</alias>
+    <alias>l4</alias>
+    <alias>csISOLatin4</alias>
+  </charset>
+
+  <charset>
+    <name>ECMA-cyrillic</name>
+    <alias>iso-ir-111</alias>
+    <alias>csISO111ECMACyrillic</alias>
+  </charset>
+
+  <charset>
+    <name>CSA_Z243.4-1985-1</name>
+    <alias>iso-ir-121</alias>
+    <alias>ISO646-CA</alias>
+    <alias>csa7-1</alias>
+    <alias>ca</alias>
+    <alias>csISO121Canadian1</alias>
+  </charset>
+
+  <charset>
+    <name>CSA_Z243.4-1985-2</name>
+    <alias>iso-ir-122</alias>
+    <alias>ISO646-CA2</alias>
+    <alias>csa7-2</alias>
+    <alias>csISO122Canadian2</alias>
+  </charset>
+
+  <charset>
+    <name>CSA_Z243.4-1985-gr</name>
+    <alias>iso-ir-123</alias>
+    <alias>csISO123CSAZ24341985gr</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_8859-6:1987</name>
+    <alias>iso-ir-127</alias>
+    <alias>ISO_8859-6</alias>
+    <alias>ISO-8859-6</alias>
+    <alias>ECMA-114</alias>
+    <alias>ASMO-708</alias>
+    <alias>arabic</alias>
+    <alias>csISOLatinArabic</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_8859-6-E</name>
+    <alias>csISO88596E</alias>
+    <alias>ISO-8859-6-E</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_8859-6-I</name>
+    <alias>csISO88596I</alias>
+    <alias>ISO-8859-6-I</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_8859-7:1987</name>
+    <alias>iso-ir-126</alias>
+    <alias>ISO_8859-7</alias>
+    <alias>ISO-8859-7</alias>
+    <alias>ELOT_928</alias>
+    <alias>ECMA-118</alias>
+    <alias>greek</alias>
+    <alias>greek8</alias>
+    <alias>csISOLatinGreek</alias>
+  </charset>
+
+  <charset>
+    <name>T.101-G2</name>
+    <alias>iso-ir-128</alias>
+    <alias>csISO128T101G2</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_8859-8:1988</name>
+    <alias>iso-ir-138</alias>
+    <alias>ISO_8859-8</alias>
+    <alias>ISO-8859-8</alias>
+    <alias>hebrew</alias>
+    <alias>csISOLatinHebrew</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_8859-8-E</name>
+    <alias>csISO88598E</alias>
+    <alias>ISO-8859-8-E</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_8859-8-I</name>
+    <alias>csISO88598I</alias>
+    <alias>ISO-8859-8-I</alias>
+  </charset>
+
+  <charset>
+    <name>CSN_369103</name>
+    <alias>iso-ir-139</alias>
+    <alias>csISO139CSN369103</alias>
+  </charset>
+
+  <charset>
+    <name>JUS_I.B1.002</name>
+    <alias>iso-ir-141</alias>
+    <alias>ISO646-YU</alias>
+    <alias>js</alias>
+    <alias>yu</alias>
+    <alias>csISO141JUSIB1002</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_6937-2-add</name>
+    <alias>iso-ir-142</alias>
+    <alias>csISOTextComm</alias>
+  </charset>
+
+  <charset>
+    <name>IEC_P27-1</name>
+    <alias>iso-ir-143</alias>
+    <alias>csISO143IECP271</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_8859-5:1988</name>
+    <alias>iso-ir-144</alias>
+    <alias>ISO_8859-5</alias>
+    <alias>ISO-8859-5</alias>
+    <alias>cyrillic</alias>
+    <alias>csISOLatinCyrillic</alias>
+  </charset>
+
+  <charset>
+    <name>JUS_I.B1.003-serb</name>
+    <alias>iso-ir-146</alias>
+    <alias>serbian</alias>
+    <alias>csISO146Serbian</alias>
+  </charset>
+
+  <charset>
+    <name>JUS_I.B1.003-mac</name>
+    <alias>macedonian</alias>
+    <alias>iso-ir-147</alias>
+    <alias>csISO147Macedonian</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_8859-9:1989</name>
+    <alias>iso-ir-148</alias>
+    <alias>ISO_8859-9</alias>
+    <alias>ISO-8859-9</alias>
+    <alias>latin5</alias>
+    <alias>l5</alias>
+    <alias>csISOLatin5</alias>
+  </charset>
+
+  <charset>
+    <name>greek-ccitt</name>
+    <alias>iso-ir-150</alias>
+    <alias>csISO150</alias>
+    <alias>csISO150GreekCCITT</alias>
+  </charset>
+
+  <charset>
+    <name>NC_NC00-10:81</name>
+    <alias>cuba</alias>
+    <alias>iso-ir-151</alias>
+    <alias>ISO646-CU</alias>
+    <alias>csISO151Cuba</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_6937-2-25</name>
+    <alias>iso-ir-152</alias>
+    <alias>csISO6937Add</alias>
+  </charset>
+
+  <charset>
+    <name>GOST_19768-74</name>
+    <alias>ST_SEV_358-88</alias>
+    <alias>iso-ir-153</alias>
+    <alias>csISO153GOST1976874</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_8859-supp</name>
+    <alias>iso-ir-154</alias>
+    <alias>latin1-2-5</alias>
+    <alias>csISO8859Supp</alias>
+  </charset>
+
+  <charset>
+    <name>ISO_10367-box</name>
+    <alias>iso-ir-155</alias>
+    <alias>csISO10367Box</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-8859-10</name>
+    <alias>iso-ir-157</alias>
+    <alias>l6</alias>
+    <alias>ISO_8859-10:1992</alias>
+    <alias>csISOLatin6</alias>
+    <alias>latin6</alias>
+  </charset>
+
+  <charset>
+    <name>latin-lap</name>
+    <alias>lap</alias>
+    <alias>iso-ir-158</alias>
+    <alias>csISO158Lap</alias>
+  </charset>
+
+  <charset>
+    <name>JIS_X0212-1990</name>
+    <alias>x0212</alias>
+    <alias>iso-ir-159</alias>
+    <alias>csISO159JISX02121990</alias>
+  </charset>
+
+  <charset>
+    <name>DS_2089</name>
+    <alias>DS2089</alias>
+    <alias>ISO646-DK</alias>
+    <alias>dk</alias>
+    <alias>csISO646Danish</alias>
+  </charset>
+
+  <charset>
+    <name>us-dk</name>
+    <alias>csUSDK</alias>
+  </charset>
+
+  <charset>
+    <name>dk-us</name>
+    <alias>csDKUS</alias>
+  </charset>
+
+  <charset>
+    <name>JIS_X0201</name>
+    <alias>X0201</alias>
+    <alias>csHalfWidthKatakana</alias>
+  </charset>
+
+  <charset>
+    <name>KSC5636</name>
+    <alias>ISO646-KR</alias>
+    <alias>csKSC5636</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-10646-UCS-2</name>
+    <alias>csUnicode</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-10646-UCS-4</name>
+    <alias>csUCS4</alias>
+  </charset>
+
+  <charset>
+    <name>DEC-MCS</name>
+    <alias>dec</alias>
+    <alias>csDECMCS</alias>
+  </charset>
+
+  <charset>
+    <name>hp-roman8</name>
+    <alias>roman8</alias>
+    <alias>r8</alias>
+    <alias>csHPRoman8</alias>
+  </charset>
+
+  <charset>
+    <name>macintosh</name>
+    <alias>mac</alias>
+    <alias>csMacintosh</alias>
+  </charset>
+
+  <charset>
+    <name>IBM037</name>
+    <alias>cp037</alias>
+    <alias>ebcdic-cp-us</alias>
+    <alias>ebcdic-cp-ca</alias>
+    <alias>ebcdic-cp-wt</alias>
+    <alias>ebcdic-cp-nl</alias>
+    <alias>csIBM037</alias>
+  </charset>
+
+  <charset>
+    <name>IBM038</name>
+    <alias>EBCDIC-INT</alias>
+    <alias>cp038</alias>
+    <alias>csIBM038</alias>
+  </charset>
+
+  <charset>
+    <name>IBM273</name>
+    <alias>CP273</alias>
+    <alias>csIBM273</alias>
+  </charset>
+
+  <charset>
+    <name>IBM274</name>
+    <alias>EBCDIC-BE</alias>
+    <alias>CP274</alias>
+    <alias>csIBM274</alias>
+  </charset>
+
+  <charset>
+    <name>IBM275</name>
+    <alias>EBCDIC-BR</alias>
+    <alias>cp275</alias>
+    <alias>csIBM275</alias>
+  </charset>
+
+  <charset>
+    <name>IBM277</name>
+    <alias>EBCDIC-CP-DK</alias>
+    <alias>EBCDIC-CP-NO</alias>
+    <alias>csIBM277</alias>
+  </charset>
+
+  <charset>
+    <name>IBM278</name>
+    <alias>CP278</alias>
+    <alias>ebcdic-cp-fi</alias>
+    <alias>ebcdic-cp-se</alias>
+    <alias>csIBM278</alias>
+  </charset>
+
+  <charset>
+    <name>IBM280</name>
+    <alias>CP280</alias>
+    <alias>ebcdic-cp-it</alias>
+    <alias>csIBM280</alias>
+  </charset>
+
+  <charset>
+    <name>IBM281</name>
+    <alias>EBCDIC-JP-E</alias>
+    <alias>cp281</alias>
+    <alias>csIBM281</alias>
+  </charset>
+
+  <charset>
+    <name>IBM284</name>
+    <alias>CP284</alias>
+    <alias>ebcdic-cp-es</alias>
+    <alias>csIBM284</alias>
+  </charset>
+
+  <charset>
+    <name>IBM285</name>
+    <alias>CP285</alias>
+    <alias>ebcdic-cp-gb</alias>
+    <alias>csIBM285</alias>
+  </charset>
+
+  <charset>
+    <name>IBM290</name>
+    <alias>cp290</alias>
+    <alias>EBCDIC-JP-kana</alias>
+    <alias>csIBM290</alias>
+  </charset>
+
+  <charset>
+    <name>IBM297</name>
+    <alias>cp297</alias>
+    <alias>ebcdic-cp-fr</alias>
+    <alias>csIBM297</alias>
+  </charset>
+
+  <charset>
+    <name>IBM420</name>
+    <alias>cp420</alias>
+    <alias>ebcdic-cp-ar1</alias>
+    <alias>csIBM420</alias>
+  </charset>
+
+  <charset>
+    <name>IBM423</name>
+    <alias>cp423</alias>
+    <alias>ebcdic-cp-gr</alias>
+    <alias>csIBM423</alias>
+  </charset>
+
+  <charset>
+    <name>IBM424</name>
+    <alias>cp424</alias>
+    <alias>ebcdic-cp-he</alias>
+    <alias>csIBM424</alias>
+  </charset>
+
+  <charset>
+    <name>IBM437</name>
+    <alias>cp437</alias>
+    <alias>437</alias>
+    <alias>csPC8CodePage437</alias>
+  </charset>
+
+  <charset>
+    <name>IBM500</name>
+    <alias>CP500</alias>
+    <alias>ebcdic-cp-be</alias>
+    <alias>ebcdic-cp-ch</alias>
+    <alias>csIBM500</alias>
+  </charset>
+
+  <charset>
+    <name>IBM775</name>
+    <alias>cp775</alias>
+    <alias>csPC775Baltic</alias>
+  </charset>
+
+  <charset>
+    <name>IBM850</name>
+    <alias>cp850</alias>
+    <alias>850</alias>
+    <alias>csPC850Multilingual</alias>
+  </charset>
+
+  <charset>
+    <name>IBM851</name>
+    <alias>cp851</alias>
+    <alias>851</alias>
+    <alias>csIBM851</alias>
+  </charset>
+
+  <charset>
+    <name>IBM852</name>
+    <alias>cp852</alias>
+    <alias>852</alias>
+    <alias>csPCp852</alias>
+  </charset>
+
+  <charset>
+    <name>IBM855</name>
+    <alias>cp855</alias>
+    <alias>855</alias>
+    <alias>csIBM855</alias>
+  </charset>
+
+  <charset>
+    <name>IBM857</name>
+    <alias>cp857</alias>
+    <alias>857</alias>
+    <alias>csIBM857</alias>
+  </charset>
+
+  <charset>
+    <name>IBM860</name>
+    <alias>cp860</alias>
+    <alias>860</alias>
+    <alias>csIBM860</alias>
+  </charset>
+
+  <charset>
+    <name>IBM861</name>
+    <alias>cp861</alias>
+    <alias>861</alias>
+    <alias>cp-is</alias>
+    <alias>csIBM861</alias>
+  </charset>
+
+  <charset>
+    <name>IBM862</name>
+    <alias>cp862</alias>
+    <alias>862</alias>
+    <alias>csPC862LatinHebrew</alias>
+  </charset>
+
+  <charset>
+    <name>IBM863</name>
+    <alias>cp863</alias>
+    <alias>863</alias>
+    <alias>csIBM863</alias>
+  </charset>
+
+  <charset>
+    <name>IBM864</name>
+    <alias>cp864</alias>
+    <alias>csIBM864</alias>
+  </charset>
+
+  <charset>
+    <name>IBM865</name>
+    <alias>cp865</alias>
+    <alias>865</alias>
+    <alias>csIBM865</alias>
+  </charset>
+
+  <charset>
+    <name>IBM866</name>
+    <alias>cp866</alias>
+    <alias>866</alias>
+    <alias>csIBM866</alias>
+  </charset>
+
+  <charset>
+    <name>IBM868</name>
+    <alias>CP868</alias>
+    <alias>cp-ar</alias>
+    <alias>csIBM868</alias>
+  </charset>
+
+  <charset>
+    <name>IBM869</name>
+    <alias>cp869</alias>
+    <alias>869</alias>
+    <alias>cp-gr</alias>
+    <alias>csIBM869</alias>
+  </charset>
+
+  <charset>
+    <name>IBM870</name>
+    <alias>CP870</alias>
+    <alias>ebcdic-cp-roece</alias>
+    <alias>ebcdic-cp-yu</alias>
+    <alias>csIBM870</alias>
+  </charset>
+
+  <charset>
+    <name>IBM871</name>
+    <alias>CP871</alias>
+    <alias>ebcdic-cp-is</alias>
+    <alias>csIBM871</alias>
+  </charset>
+
+  <charset>
+    <name>IBM880</name>
+    <alias>cp880</alias>
+    <alias>EBCDIC-Cyrillic</alias>
+    <alias>csIBM880</alias>
+  </charset>
+
+  <charset>
+    <name>IBM891</name>
+    <alias>cp891</alias>
+    <alias>csIBM891</alias>
+  </charset>
+
+  <charset>
+    <name>IBM903</name>
+    <alias>cp903</alias>
+    <alias>csIBM903</alias>
+  </charset>
+
+  <charset>
+    <name>IBM904</name>
+    <alias>cp904</alias>
+    <alias>904</alias>
+    <alias>csIBBM904</alias>
+  </charset>
+
+  <charset>
+    <name>IBM905</name>
+    <alias>CP905</alias>
+    <alias>ebcdic-cp-tr</alias>
+    <alias>csIBM905</alias>
+  </charset>
+
+  <charset>
+    <name>IBM918</name>
+    <alias>CP918</alias>
+    <alias>ebcdic-cp-ar2</alias>
+    <alias>csIBM918</alias>
+  </charset>
+
+  <charset>
+    <name>IBM1026</name>
+    <alias>CP1026</alias>
+    <alias>csIBM1026</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-AT-DE</name>
+    <alias>csIBMEBCDICATDE</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-AT-DE-A</name>
+    <alias>csEBCDICATDEA</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-CA-FR</name>
+    <alias>csEBCDICCAFR</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-DK-NO</name>
+    <alias>csEBCDICDKNO</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-DK-NO-A</name>
+    <alias>csEBCDICDKNOA</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-FI-SE</name>
+    <alias>csEBCDICFISE</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-FI-SE-A</name>
+    <alias>csEBCDICFISEA</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-FR</name>
+    <alias>csEBCDICFR</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-IT</name>
+    <alias>csEBCDICIT</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-PT</name>
+    <alias>csEBCDICPT</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-ES</name>
+    <alias>csEBCDICES</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-ES-A</name>
+    <alias>csEBCDICESA</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-ES-S</name>
+    <alias>csEBCDICESS</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-UK</name>
+    <alias>csEBCDICUK</alias>
+  </charset>
+
+  <charset>
+    <name>EBCDIC-US</name>
+    <alias>csEBCDICUS</alias>
+  </charset>
+
+  <charset>
+    <name>UNKNOWN-8BIT</name>
+    <alias>csUnknown8BiT</alias>
+  </charset>
+
+  <charset>
+    <name>MNEMONIC</name>
+    <alias>csMnemonic</alias>
+  </charset>
+
+  <charset>
+    <name>MNEM</name>
+    <alias>csMnem</alias>
+  </charset>
+
+  <charset>
+    <name>VISCII</name>
+    <alias>csVISCII</alias>
+  </charset>
+
+  <charset>
+    <name>VIQR</name>
+    <alias>csVIQR</alias>
+  </charset>
+
+  <charset>
+    <name>KOI8-R</name>
+    <alias>csKOI8R</alias>
+  </charset>
+
+  <charset>
+    <name>KOI8-U</name>
+  </charset>
+
+  <charset>
+    <name>IBM00858</name>
+    <alias>CCSID00858</alias>
+    <alias>CP00858</alias>
+    <alias>PC-Multilingual-850+euro</alias>
+  </charset>
+
+  <charset>
+    <name>IBM00924</name>
+    <alias>CCSID00924</alias>
+    <alias>CP00924</alias>
+    <alias>ebcdic-Latin9--euro</alias>
+  </charset>
+
+  <charset>
+    <name>IBM01140</name>
+    <alias>CCSID01140</alias>
+    <alias>CP01140</alias>
+    <alias>ebcdic-us-37+euro</alias>
+  </charset>
+
+  <charset>
+    <name>IBM01141</name>
+    <alias>CCSID01141</alias>
+    <alias>CP01141</alias>
+    <alias>ebcdic-de-273+euro</alias>
+  </charset>
+
+  <charset>
+    <name>IBM01142</name>
+    <alias>CCSID01142</alias>
+    <alias>CP01142</alias>
+    <alias>ebcdic-dk-277+euro</alias>
+    <alias>ebcdic-no-277+euro</alias>
+  </charset>
+
+  <charset>
+    <name>IBM01143</name>
+    <alias>CCSID01143</alias>
+    <alias>CP01143</alias>
+    <alias>ebcdic-fi-278+euro</alias>
+    <alias>ebcdic-se-278+euro</alias>
+  </charset>
+
+  <charset>
+    <name>IBM01144</name>
+    <alias>CCSID01144</alias>
+    <alias>CP01144</alias>
+    <alias>ebcdic-it-280+euro</alias>
+  </charset>
+
+  <charset>
+    <name>IBM01145</name>
+    <alias>CCSID01145</alias>
+    <alias>CP01145</alias>
+    <alias>ebcdic-es-284+euro</alias>
+  </charset>
+
+  <charset>
+    <name>IBM01146</name>
+    <alias>CCSID01146</alias>
+    <alias>CP01146</alias>
+    <alias>ebcdic-gb-285+euro</alias>
+  </charset>
+
+  <charset>
+    <name>IBM01147</name>
+    <alias>CCSID01147</alias>
+    <alias>CP01147</alias>
+    <alias>ebcdic-fr-297+euro</alias>
+  </charset>
+
+  <charset>
+    <name>IBM01148</name>
+    <alias>CCSID01148</alias>
+    <alias>CP01148</alias>
+    <alias>ebcdic-international-500+euro</alias>
+  </charset>
+
+  <charset>
+    <name>IBM01149</name>
+    <alias>CCSID01149</alias>
+    <alias>CP01149</alias>
+    <alias>ebcdic-is-871+euro</alias>
+  </charset>
+
+  <charset>
+    <name>Big5-HKSCS</name>
+  </charset>
+
+  <charset>
+    <name>UNICODE-1-1</name>
+    <alias>csUnicode11</alias>
+  </charset>
+
+  <charset>
+    <name>SCSU</name>
+  </charset>
+
+  <charset>
+    <name>UTF-7</name>
+  </charset>
+
+  <charset>
+    <name>UTF-16BE</name>
+  </charset>
+
+  <charset>
+    <name>UTF-16LE</name>
+  </charset>
+
+  <charset>
+    <name>UTF-16</name>
+  </charset>
+
+  <charset>
+    <name>CESU-8</name>
+    <alias>csCESU-8</alias>
+  </charset>
+
+  <charset>
+    <name>UTF-32</name>
+  </charset>
+
+  <charset>
+    <name>UTF-32BE</name>
+  </charset>
+
+  <charset>
+    <name>UTF-32LE</name>
+  </charset>
+
+  <charset>
+    <name>UNICODE-1-1-UTF-7</name>
+    <alias>csUnicode11UTF7</alias>
+  </charset>
+
+  <charset>
+    <name>UTF-8</name>
+  </charset>
+
+  <charset>
+    <name>ISO-8859-13</name>
+  </charset>
+
+  <charset>
+    <name>ISO-8859-14</name>
+    <alias>iso-ir-199</alias>
+    <alias>ISO_8859-14:1998</alias>
+    <alias>ISO_8859-14</alias>
+    <alias>latin8</alias>
+    <alias>iso-celtic</alias>
+    <alias>l8</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-8859-15</name>
+    <alias>ISO_8859-15</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-8859-16</name>
+  </charset>
+
+  <charset>
+    <name>GBK</name>
+    <alias>CP936</alias>
+    <alias>MS936</alias>
+    <alias>windows-936</alias>
+  </charset>
+
+  <charset>
+    <name>GB18030</name>
+  </charset>
+
+  <charset>
+    <name>JIS_Encoding</name>
+    <alias>csJISEncoding</alias>
+  </charset>
+
+  <charset>
+    <name>Shift_JIS</name>
+    <alias>MS_Kanji</alias>
+    <alias>csShiftJIS</alias>
+  </charset>
+
+  <charset>
+    <name>Extended_UNIX_Code_Packed_Format_for_Japanese</name>
+    <alias>csEUCPkdFmtJapanese</alias>
+    <alias>EUC-JP</alias>
+  </charset>
+
+  <charset>
+    <name>Extended_UNIX_Code_Fixed_Width_for_Japanese</name>
+    <alias>csEUCFixWidJapanese</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-10646-UCS-Basic</name>
+    <alias>csUnicodeASCII</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-10646-Unicode-Latin1</name>
+    <alias>csUnicodeLatin1</alias>
+    <alias>ISO-10646</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-10646-J-1</name>
+  </charset>
+
+  <charset>
+    <name>ISO-Unicode-IBM-1261</name>
+    <alias>csUnicodeIBM1261</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-Unicode-IBM-1268</name>
+    <alias>csUnicodeIBM1268</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-Unicode-IBM-1276</name>
+    <alias>csUnicodeIBM1276</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-Unicode-IBM-1264</name>
+    <alias>csUnicodeIBM1264</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-Unicode-IBM-1265</name>
+    <alias>csUnicodeIBM1265</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-8859-1-Windows-3.0-Latin-1</name>
+    <alias>csWindows30Latin1</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-8859-1-Windows-3.1-Latin-1</name>
+    <alias>csWindows31Latin1</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-8859-2-Windows-Latin-2</name>
+    <alias>csWindows31Latin2</alias>
+  </charset>
+
+  <charset>
+    <name>ISO-8859-9-Windows-Latin-5</name>
+    <alias>csWindows31Latin5</alias>
+  </charset>
+
+  <charset>
+    <name>Adobe-Standard-Encoding</name>
+    <alias>csAdobeStandardEncoding</alias>
+  </charset>
+
+  <charset>
+    <name>Ventura-US</name>
+    <alias>csVenturaUS</alias>
+  </charset>
+
+  <charset>
+    <name>Ventura-International</name>
+    <alias>csVenturaInternational</alias>
+  </charset>
+
+  <charset>
+    <name>PC8-Danish-Norwegian</name>
+    <alias>csPC8DanishNorwegian</alias>
+  </charset>
+
+  <charset>
+    <name>PC8-Turkish</name>
+    <alias>csPC8Turkish</alias>
+  </charset>
+
+  <charset>
+    <name>IBM-Symbols</name>
+    <alias>csIBMSymbols</alias>
+  </charset>
+
+  <charset>
+    <name>IBM-Thai</name>
+    <alias>csIBMThai</alias>
+  </charset>
+
+  <charset>
+    <name>HP-Legal</name>
+    <alias>csHPLegal</alias>
+  </charset>
+
+  <charset>
+    <name>HP-Pi-font</name>
+    <alias>csHPPiFont</alias>
+  </charset>
+
+  <charset>
+    <name>HP-Math8</name>
+    <alias>csHPMath8</alias>
+  </charset>
+
+  <charset>
+    <name>Adobe-Symbol-Encoding</name>
+    <alias>csHPPSMath</alias>
+  </charset>
+
+  <charset>
+    <name>HP-DeskTop</name>
+    <alias>csHPDesktop</alias>
+  </charset>
+
+  <charset>
+    <name>Ventura-Math</name>
+    <alias>csVenturaMath</alias>
+  </charset>
+
+  <charset>
+    <name>Microsoft-Publishing</name>
+    <alias>csMicrosoftPublishing</alias>
+  </charset>
+
+  <charset>
+    <name>Windows-31J</name>
+    <alias>csWindows31J</alias>
+  </charset>
+
+  <charset>
+    <name>GB2312</name>
+    <alias>csGB2312</alias>
+  </charset>
+
+  <charset>
+    <name>Big5</name>
+    <alias>csBig5</alias>
+  </charset>
+
+  <charset>
+    <name>windows-1250</name>
+  </charset>
+
+  <charset>
+    <name>windows-1251</name>
+  </charset>
+
+  <charset>
+    <name>windows-1252</name>
+  </charset>
+
+  <charset>
+    <name>windows-1253</name>
+  </charset>
+
+  <charset>
+    <name>windows-1254</name>
+  </charset>
+
+  <charset>
+    <name>windows-1255</name>
+  </charset>
+
+  <charset>
+    <name>windows-1256</name>
+  </charset>
+
+  <charset>
+    <name>windows-1257</name>
+  </charset>
+
+  <charset>
+    <name>windows-1258</name>
+  </charset>
+
+  <charset>
+    <name>TIS-620</name>
+  </charset>
+
+  <charset>
+    <name>HZ-GB-2312</name>
+  </charset>
+
+</charsetlist>

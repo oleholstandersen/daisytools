@@ -1,0 +1,27 @@
+<?xml version='1.0'?>
+<list type="meta_forbidden_in_import_doc">
+<!-- case is insignificant -->
+<name>ncc:page-normal</name>
+<name>ncc:pagenormal</name>
+<name>ncc:page-special</name>
+<name>ncc:pagespecial</name>
+<name>ncc:page-front</name>
+<name>ncc:pagefront</name>
+<name>ncc:maxpagenormal</name>
+<name>ncc:footnotes</name>
+<name>ncc:sidebars</name>
+<name>ncc:prodnotes</name>
+<name>ncc:totaltime</name>
+<name>ncc:files</name>
+<name>ncc:generator</name>
+<name>ncc:tocitems</name>
+<name>ncc:depth</name>
+<name>ncc:charset</name>
+<name>ncc:revision</name>
+<name>ncc:revisionDate</name>
+<name>ncc:setinfo</name>
+<name>ncc:multimediatype</name>
+<name>ncc:identifier</name>
+<name>http-equiv</name>
+<name>dc:format</name>
+</list>

@@ -1,0 +1,63 @@
+input-encoding: win1252
+output-encoding: utf8
+numeric-entities: yes
+ncr: yes
+
+fix-uri:no
+
+show-warnings: yes
+show-errors:1
+
+tidy-mark:no
+markup: yes
+quiet: no
+input-xml: yes
+output-xml: yes
+output-xhtml: no
+add-xml-decl: no
+assume-xml-procins: no
+clean: yes
+quote-marks: yes
+quote-nbsp: yes
+quote-ampersand: no
+write-back: no
+doctype: auto
+wrap:0
+tab-size: 1
+uppercase-tags: no
+uppercase-attributes: no
+bare: no
+logical-emphasis: yes
+word-2000: no
+drop-empty-paras: no
+drop-font-tags: yes
+enclose-text: yes
+enclose-block-text:yes
+alt-text:
+add-xml-space: no
+fix-bad-comments: yes
+split: no
+break-before-br: yes
+keep-time: no
+error-file: tidyerrs.txt
+show-body-only:no
+new-inline-tags:
+new-blocklevel-tags:
+new-empty-tags:
+new-pre-tags:
+fix-backslash:yes
+gnu-emacs:no
+lower-literals:no
+hide-comments: no
+indent:yes
+indent-cdata:no
+force-output:no
+ascii-chars:no
+join-classes:no
+join-styles:no
+escape-cdata:yes
+repeated-attributes:keep-first
+output-bom:no
+replace-color:yes
+
+

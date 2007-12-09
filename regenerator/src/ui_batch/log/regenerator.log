@@ -1,0 +1,120 @@
+<job>
+<regenerating dllVersion='1.0.21'>
+<stamp type='begin'>
+<time>2004-12-22 13:18:57: begin.</time>
+</stamp>
+<inParams>
+<sOrigNccPath value='E:\dtbs\hauy.202.rev4\ncc.html'/>
+<encoding>
+<lInputEncoding value='3'/>
+<sWantsThisEncoding value=''/>
+<derivedOutCharset value='utf-8'/>
+</encoding>
+<lDtbType value='3'/>
+<bolPreserveBiblioMeta value='True'/>
+<bolSeqRename value='True'/>
+<bolUseDcIdNum value='False'/>
+<sWantedPrefix value='hauuy'/>
+<bolIsMultiVolume value='False'/>
+<bolFixMultiTextInPar value='True'/>
+<bolRebuildLinkStructure value='True'/>
+<sMetaPath value='*fulldtbpath*\'/>
+<bolMergeShortPhrases value='True'/>
+<lClipSpan value='100'/>
+<lClipLessThan value='400'/>
+<lFirstClipLessThan value='1000'/>
+<lNextClipLessThan value='5000'/>
+<bolDisableBrokenXhtmlLinks value='True'/>
+<bolEstimateBrokenXhtmlLinks value='True'/>
+<bolPb2kLayoutFix value='True'/>
+<bolDoVerboseLog value='True'/>
+<bolAddCss value='True'/>
+<bolMakeTrueNccOnly value='True'/>
+<lSmilTarget value='0'/>
+</inParams>
+<message from='tidyATL' file='valentinhauy.html'>Tidy Warning: Line 124 Col 17, &lt;table&gt; lacks "summary" attribute</message>
+<previousGenerator value='Regenerator 0.6.108'/>
+<identifiers>
+<meta name="dc:identifier" content="C1093a"/>
+<meta name="dc:title" content="Valentin Haüy - the father of the education for the blind"/>
+</identifiers>
+<message>merged first audio phrase in hauy_0005.smil</message>
+<warning in='fncMakeTrueNccOnly'>warning: 'make true ncc only' is being run on a DTB that is not marked as ncc only</warning>
+</regenerating>
+<rendering>
+<inParams>
+<lRenderType value='1'/>
+<sRenderPath value='E:\dtbs\hauy.202.rev4\regenerated\'/>
+</inParams>
+<stamp type='end'>
+<time>13:19:24: done.</time>
+</stamp>
+</rendering>
+</job>
+<job>
+<regenerating dllVersion='1.0.21'>
+<stamp type='begin'>
+<time>2004-12-22 13:30:12: begin.</time>
+</stamp>
+<inParams>
+<sOrigNccPath value='E:\dtbs\hauy.202.rev4\ncc.html'/>
+<encoding>
+<lInputEncoding value='3'/>
+<sWantsThisEncoding value=''/>
+<derivedOutCharset value='utf-8'/>
+</encoding>
+<lDtbType value='3'/>
+<bolPreserveBiblioMeta value='True'/>
+<bolSeqRename value='True'/>
+<bolUseDcIdNum value='False'/>
+<sWantedPrefix value=''/>
+<bolIsMultiVolume value='False'/>
+<bolFixMultiTextInPar value='True'/>
+<bolRebuildLinkStructure value='True'/>
+<sMetaPath value='*fulldtbpath*\'/>
+<bolMergeShortPhrases value='True'/>
+<lClipSpan value='100'/>
+<lClipLessThan value='400'/>
+<lFirstClipLessThan value='1000'/>
+<lNextClipLessThan value='5000'/>
+<bolDisableBrokenXhtmlLinks value='True'/>
+<bolEstimateBrokenXhtmlLinks value='True'/>
+<bolPb2kLayoutFix value='True'/>
+<bolDoVerboseLog value='True'/>
+<bolAddCss value='True'/>
+<bolMakeTrueNccOnly value='True'/>
+<lSmilTarget value='0'/>
+</inParams>
+<message from='tidyATL' file='valentinhauy.html'>Tidy Warning: Line 124 Col 17, &lt;table&gt; lacks "summary" attribute</message>
+<previousGenerator value='Regenerator 0.6.108'/>
+<identifiers>
+<meta name="dc:identifier" content="C1093a"/>
+<meta name="dc:title" content="Valentin Haüy - the father of the education for the blind"/>
+</identifiers>
+<message>merged first audio phrase in hauy_0005.smil</message>
+<message>empty prefix found - using 'dtb' instead</message>
+<warning in='fncMakeTrueNccOnly'>warning: 'make true ncc only' is being run on a DTB that is not marked as ncc only</warning>
+</regenerating>
+<rendering>
+<inParams>
+<lRenderType value='1'/>
+<sRenderPath value='E:\dtbs\hauy.202.rev4\regenerated\'/>
+</inParams>
+<stamp type='end'>
+<time>13:30:39: done.</time>
+</stamp>
+</rendering>
+<validating>
+<dllProperties>
+<propLightMode value='True'/>
+<propTimeSpan value='0'/>
+<propTempPath value='C:\WINDOWS\System32\DaisyWare\'/>
+<propDTDPath value='E:\documents\daisyware\validator\src\ui\externals\'/>
+<propAdtdPath value='E:\documents\daisyware\validator\src\ui\externals\'/>
+<propVtmPath value='E:\documents\daisyware\validator\src\ui\'/>
+</dllProperties>
+<report>
+<congrats>No errors or warnings reported by validator</congrats>
+</report>
+</validating>
+</job>

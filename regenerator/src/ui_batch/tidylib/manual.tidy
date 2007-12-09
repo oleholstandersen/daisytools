@@ -1,0 +1,90 @@
+Configuration File Settings:
+
+Name                        Type       Allowable values
+==========================  =========  ========================================
+indent-spaces               Integer    0, 1, 2, ...
+wrap                        Integer    0 (no wrapping), 1, 2, ...
+wrap-attributes             Boolean    y/n, yes/no, t/f, true/false, 1/0
+wrap-script-literals        Boolean    y/n, yes/no, t/f, true/false, 1/0
+wrap-sections               Boolean    y/n, yes/no, t/f, true/false, 1/0
+wrap-asp                    Boolean    y/n, yes/no, t/f, true/false, 1/0
+wrap-jste                   Boolean    y/n, yes/no, t/f, true/false, 1/0
+wrap-php                    Boolean    y/n, yes/no, t/f, true/false, 1/0
+literal-attributes          Boolean    y/n, yes/no, t/f, true/false, 1/0
+tab-size                    Integer    0, 1, 2, ...
+markup                      Boolean    y/n, yes/no, t/f, true/false, 1/0
+quiet                       Boolean    y/n, yes/no, t/f, true/false, 1/0
+tidy-mark                   Boolean    y/n, yes/no, t/f, true/false, 1/0
+indent                      AutoBool   auto, y/n, yes/no, t/f, true/false, 1/0
+indent-attributes           Boolean    y/n, yes/no, t/f, true/false, 1/0
+hide-endtags                Boolean    y/n, yes/no, t/f, true/false, 1/0
+input-xml                   Boolean    y/n, yes/no, t/f, true/false, 1/0
+output-xml                  Boolean    y/n, yes/no, t/f, true/false, 1/0
+output-xhtml                Boolean    y/n, yes/no, t/f, true/false, 1/0
+output-html                 Boolean    y/n, yes/no, t/f, true/false, 1/0
+add-xml-pi                  Boolean    y/n, yes/no, t/f, true/false, 1/0
+add-xml-decl                Boolean    y/n, yes/no, t/f, true/false, 1/0
+assume-xml-procins          Boolean    y/n, yes/no, t/f, true/false, 1/0
+raw                         Boolean    y/n, yes/no, t/f, true/false, 1/0
+uppercase-tags              Boolean    y/n, yes/no, t/f, true/false, 1/0
+uppercase-attributes        Boolean    y/n, yes/no, t/f, true/false, 1/0
+bare                        Boolean    y/n, yes/no, t/f, true/false, 1/0
+clean                       Boolean    y/n, yes/no, t/f, true/false, 1/0
+logical-emphasis            Boolean    y/n, yes/no, t/f, true/false, 1/0
+word-2000                   Boolean    y/n, yes/no, t/f, true/false, 1/0
+drop-empty-paras            Boolean    y/n, yes/no, t/f, true/false, 1/0
+drop-font-tags              Boolean    y/n, yes/no, t/f, true/false, 1/0
+drop-proprietary-attribute  Boolean    y/n, yes/no, t/f, true/false, 1/0
+enclose-text                Boolean    y/n, yes/no, t/f, true/false, 1/0
+enclose-block-text          Boolean    y/n, yes/no, t/f, true/false, 1/0
+alt-text                    String
+add-xml-space               Boolean    y/n, yes/no, t/f, true/false, 1/0
+fix-bad-comments            Boolean    y/n, yes/no, t/f, true/false, 1/0
+split                       Boolean    y/n, yes/no, t/f, true/false, 1/0
+break-before-br             Boolean    y/n, yes/no, t/f, true/false, 1/0
+numeric-entities            Boolean    y/n, yes/no, t/f, true/false, 1/0
+quote-marks                 Boolean    y/n, yes/no, t/f, true/false, 1/0
+quote-nbsp                  Boolean    y/n, yes/no, t/f, true/false, 1/0
+quote-ampersand             Boolean    y/n, yes/no, t/f, true/false, 1/0
+write-back                  Boolean    y/n, yes/no, t/f, true/false, 1/0
+keep-time                   Boolean    y/n, yes/no, t/f, true/false, 1/0
+show-warnings               Boolean    y/n, yes/no, t/f, true/false, 1/0
+error-file                  String
+show-body-only              Boolean    y/n, yes/no, t/f, true/false, 1/0
+slide-style                 Name
+new-inline-tags             Tag names  tagX, tagY, ...
+new-blocklevel-tags         Tag names  tagX, tagY, ...
+new-empty-tags              Tag names  tagX, tagY, ...
+new-pre-tags                Tag names  tagX, tagY, ...
+char-encoding               Encoding   ascii, latin1, raw, utf8, iso2022, mac,
+                                       utf16le, utf16be, utf16,
+                                       win1252, big5, shiftjis
+input-encoding              Encoding   ascii, latin1, raw, utf8, iso2022, mac,
+                                       utf16le, utf16be, utf16,
+                                       win1252, big5, shiftjis
+output-encoding             Encoding   ascii, latin1, raw, utf8, iso2022, mac,
+                                       utf16le, utf16be, utf16,
+                                       win1252, big5, shiftjis
+language                    Name
+ncr                         Boolean    y/n, yes/no, t/f, true/false, 1/0
+doctype                     DocType    auto, omit, strict, loose, transitional,
+                                       user specified fpi (string)
+fix-backslash               Boolean    y/n, yes/no, t/f, true/false, 1/0
+gnu-emacs                   Boolean    y/n, yes/no, t/f, true/false, 1/0
+fix-uri                     Boolean    y/n, yes/no, t/f, true/false, 1/0
+lower-literals              Boolean    y/n, yes/no, t/f, true/false, 1/0
+hide-comments               Boolean    y/n, yes/no, t/f, true/false, 1/0
+indent-cdata                Boolean    y/n, yes/no, t/f, true/false, 1/0
+force-output                Boolean    y/n, yes/no, t/f, true/false, 1/0
+show-errors                 Integer    0, 1, 2, ...
+ascii-chars                 Boolean    y/n, yes/no, t/f, true/false, 1/0
+join-classes                Boolean    y/n, yes/no, t/f, true/false, 1/0
+join-styles                 Boolean    y/n, yes/no, t/f, true/false, 1/0
+escape-cdata                Boolean    y/n, yes/no, t/f, true/false, 1/0
+repeated-attributes         -          keep-first, keep-last
+output-bom                  AutoBool   auto, y/n, yes/no, t/f, true/false, 1/0
+replace-color               Boolean    y/n, yes/no, t/f, true/false, 1/0
+css-prefix                  Name       CSS1 selector
+accessibility-check         Integer    0, 1, 2, ...
+
+D:\>

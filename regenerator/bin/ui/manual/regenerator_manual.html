@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+ <meta http-equiv='Content-type' content='text/html; charset=windows-1252'/>
+ <title>Daisy 2.02 Regenerator Manual</title>
+ <link type="text/css" rel="stylesheet" href="daisy_manual.css"/>
+</head>
+<body>
+<h1 class='title'>Daisy 2.02 Regenerator Manual</h1>
+<div class="comment">Last revised: MG 2003-11-15</div>
+
+<div class='toc'>
+<h2 id='ctoc'>Collapsed Table of Contents</h2>
+<ul class="linklist">
+<li><a href='#intro'>1. Introduction</a></li>
+<li class="main"><a href='#install'>2. Installation and Requirements</a></li>
+<li class="main"><a href='#config'>3. Regenerator configuration</a>
+  <ul>
+    <li><a href='#cnfg_quick'>3.1 Quick Route</a></li>
+    <li><a href='#cnfg_jobs'>3.2 The Jobs Tab</a></li>
+    <li><a href='#cnfg_jobprops'>3.3 The Job Properties Tab</a></li>
+    <li><a href='#cnfg_validator'>3.4 The Validation Settings Tab</a></li>
+    <li><a href='#cnfg_advSettings'>3.5 The Advanced Settings Tab</a></li>
+    <li><a href='#cnfg_log'>3.6 The Log Settings Tab</a></li>
+    <li><a href='#pathvars'>3.7 The Path variables</a></li>
+  </ul>
+</li>
+<li class="main"><a href="#apndx1">Appendix 1. Job batch list formatting</a></li>
+<li class="main"><a href="#apndx2">Appendix 2. Metadata import document formatting</a></li>
+<li class="main"><a href="#apndx3">Appendix 3. Which characterset is my DTB using?</a></li>
+</ul>
+
+<h2 id='toc'>Expanded Table of Contents</h2>
+<ul class="linklist">
+<li><a href='#intro'>1. Introduction</a>
+  <ul>
+    <li><a href='#intro_do_short'>What does the Regenerator do? (short version)</a></li>
+    <li><a href='#intro_do_long'>What does the Regenerator do? (technical version)</a></li>
+    <li><a href='#intro_why'>Why use the Regenerator?</a></li>
+    <li><a href='#intro_license'>Use and Licensing</a></li>
+    <li><a href='#intro_related'>Related Tools</a></li>
+  </ul>
+</li>
+<li class="main"><a href='#install'>2. Installation and Requirements</a></li>
+<li class="main"><a href='#config'>3. Regenerator configuration</a>
+  <ul>
+    <li><a href='#cnfg_quick'>3.1 Quick Route</a></li>
+    <li><a href='#cnfg_jobs'>3.2 The Jobs Tab</a>
+       <ul>
+         <li><a href='#cnfg_jobs_batch'>The batch list grid</a></li>
+         <li><a href='#cnfg_jobs_log'>The log window</a></li>
+         <li><a href='#cnfg_jobs_import'>Importing a job batch list</a></li>
+       </ul>
+    </li>
+    <li><a href='#cnfg_jobprops'>3.3 The Job Properties Tab</a>
+       <ul>
+         <li><a href='#cnfg_jobprops_DTB'>Input DTB properties</a></li>
+         <li><a href='#cnfg_jobprops_meta'>Metadata handling</a></li>
+         <!-- <li><a href='#cnfg_jobprops_metaImport'>Importing a metadata document</a></li> -->
+         <li><a href='#cnfg_jobprops_filenames'>Alter filenames</a></li>
+         <li><a href='#cnfg_jobprops_output'>Output DTB Destination</a></li>
+         <li><a href='#cnfg_jobprops_backup'>The Backup Procedure</a></li>
+         <li><a href='#cnfg_jobprops_defconf'>Default configuration of job properties</a></li>
+       </ul>
+    </li>
+    <li><a href='#cnfg_validator'>3.4 The Validation Settings Tab</a>
+       <ul>
+         <li><a href='#cnfg_validator_log'>Validator Log settings</a></li>
+         <li><a href='#cnfg_validator_settings'>Validator General settings</a></li>
+       </ul>
+    </li>
+    <li><a href='#cnfg_advSettings'>3.5 The Advanced Settings Tab</a>
+       <ul>
+         <li><a href='#cnfg_advSettings_defpaths'>Job default settings</a></li>
+         <li><a href='#cnfg_advSettings_misc'>Misc settings</a></li>
+         <li><a href='#cnfg_advSettings_advFix'>Advanced fix</a>
+         <ul>
+           <li><a href="#advFix_invalidPar">Adjust invalid smil par elements</a></li>
+           <li><a href="#advFix_rebuildLinks">Rebuild link structure</a></li>
+           <li><a href="#advFix_trueNccOnly">Make True NCC Only</a></li>
+           <li><a href="#advFix_brokenLinks">Broken NCC/Content Doc Links</a></li>
+           <li><a href="#advFix_pointSmilTargets">Point SMIL targets to</a></li>
+           <li><a href="#advFix_mergePhrases">Merge short first phrases</a></li>
+         </ul>
+         </li>
+       </ul>
+    </li>
+    <li><a href='#cnfg_log'>3.6 The Log Settings Tab</a>
+       <ul>
+        <li><a href='#log_info'>Log Information</a></li>
+       </ul>
+    </li>
+    <li><a href='#pathvars'>3.7 The Path variables</a>
+       <ul>
+        <li><a href='#pathvarex'>Example of how to use the path variables</a></li>
+       </ul>
+    </li>
+  </ul>
+</li>
+
+<li class="main"><a href="#apndx1">Appendix 1. Job batch list formatting</a></li>
+<li class="main"><a href="#apndx2">Appendix 2. Metadata import document formatting</a></li>
+<li class="main"><a href="#apndx3">Appendix 3. Which characterset is my DTB using?</a></li>
+</ul>
+</div>
+
+<h2 id="intro">1. Introduction</h2>
+
+<h3 id="intro_do_short">What does the Regenerator do? (short version)</h3>
+<p>The Regenerator takes a Daisy DTB of formats Daisy 2.0 or 2.02 as input, and attempts to refresh, fix and update the content of the DTB files so that they comply to the 2.02 specification.</p>
+
+<p>When the regeneration process has been completed, the Regenerator can optionally call the Daisy 2.02 Validator to validate the result.</p>
+<a class="top" href="#toc">go to table of contents</a>
+
+<h3 id="intro_do_long">What does the Regenerator do? (technical version)</h3>
+<p>The Regenerator engine is built so that new fixes/corrections can be added as they are found in existing DTBs. The list below does not necessarily include all fixes that the Regenerator performs in the version you are currently using.</p>
+
+<p>The Regenerator makes an <em>attempt</em> to output a new version of the DTB. Under certain circumstances if will fail; the failure will result in either that no new files are output at all, or that files are output with partial fixes included.</p>
+<p>If the regeneration process is successful, the following modifications will have been performed on the DTB.</p>
+
+<h4>XML-related modifications</h4>
+<ul>
+<li>all output XML files are wellformed and valid to their respective W3C DTD</li>
+<li>reoccuring erroneous NAME tokens are corrected</li>
+<li>reoccuring erroneous element name spellings are corrected</li>
+<li>instances of duplicate IDs fixed</li>
+<li>xhtml namespace introduced to NCC and Content documents</li>
+</ul>
+
+<h4>Characterset-related modifications</h4>
+<ul>
+<li>for DTBs of any input characterset, adds an XML Declaration and explicit encoding information to the encoding pseudoattribute.</li>
+<li>for DTBs where the documents are using a western hemisphere characterset such as windows-1252 or iso-8859-1, converts these documents to utf-8 (unicode)</li>
+</ul>
+
+<h4>Metadata-related modifications</h4>
+<ul>
+<li>deletes all DTB related metadata (ncc:files, ncc:timeInThisSmil, ncc:totalTime etc) in the NCC, content document and smilfiles, and creates a new set by attempting to calculate correct values</li>
+<li>[optionally] deletes all existing bibliographical metadata (dc:title, dc:creator etc), and imports a new set from an external xml source</li>
+</ul>
+
+<h4>i18n-related modifications</h4>
+<ul>
+<li>fixes invalid (rfc2396) characters in URI values by modifying filenames and their corresponding URI references if necessary</li>
+<li>fixes any character case inconsistencies in URI file and fragment values</li>
+<li>adds lang attributes to ncc and content documents</li>
+</ul>
+
+<h4>SMIL/playback-related modifications</h4>
+<ul>
+<li>[optional] fixes multiplied text children of par by moving dupe to a created preceding par with short silent audio phrase</li>
+<li>[optional] fixes smilfiles not beginning with an heading par by moving preceeding pars to the end of the previous smilfile</li>
+<li>enters id attributes to container and media object elements in smilfiles where these are missing/unreferenced</li>
+<li>correlates smilfile playback endtime to audio file endtime: fixes "impossible values" in audiofiles</li>
+<li>generates a master.smil document</li>
+<li>merges first audio event of par with next event if first event is a short "silent phrase"</li>
+<li>[optional] renames (the smil and) audiofiles so that they are sequentially ordered and thus, if audio is in mp3 format, allows correctly ordered playback in mp3 players.</li>
+</ul>
+
+<h4>Miscellaneous modifications</h4>
+<ul>
+<li>enforces valid filename usage for all fileset members</li>
+<li>[optional] rebuilds the whole link/pointer structure of the DTB</li>
+<li>excludes all files in original DTB folder that do not belong to the DTB fileset (residue *.tmp, *.bak etc)</li>
+<li>trims whitespace surrounding integer string in pagenormals</li>
+<li>converts pagenormals with alphanumeric content to pagespecials</li>
+</ul>
+<a class="top" href="#toc">go to table of contents</a>
+
+<h3 id="intro_why">Why use the Regenerator?</h3>
+
+<ul>
+<li>The output book will be compliant and thus play better in current DTB reading devices. Note that some emerging reading devices have only limited support for the (HTML based) Daisy 2.0 standard, while having full support for the (XML based) Daisy 2.02 standard.</li>
+<li>The output book will be compliant to the extent that transformation to the Daisy 3.0 specification can be done at a later stage.
+<div class="notice">Only Daisy 2.02 books that are valid can be guaranteed to be upgradeable to the Daisy 3.0 specification. Therefore, regeneration and subsequent validation is a method to ensure the longevity of the DTB.</div>
+</li>
+<li>The output book, if the file rename option explained below is activated, will play in correct order in mp3 playback devices <div class="notice">Note however that some mp3 players does not support lower bitrates. Others may not support monaural mp3 files.</div></li>
+</ul>
+<a class="top" href="#toc">go to table of contents</a>
+
+<h3 id="intro_license">Use and Licensing</h3>
+
+<p>The binary distribution of the Daisy 2.02 Regenerator is made available by the Daisy Consortium at no cost. The use of the application is entirely at your own risk.</p>
+
+<p>The Daisy 2.02 Regenerator is available under the GPL license. Read more at <a href='http://www.gnu.org/licenses/licenses.html#GPL'>http://www.gnu.org/licenses/licenses.html#GPL</a>.</p>
+
+<p>Visit <a href="http://dsidtb.sourceforge.net">dsidtb.sourceforge.net</a> for further information on the Daisy Software initiative (DSI).</p>
+
+<a class="top" href="#toc">go to table of contents</a>
+
+<h3 id="intro_related">Related Tools</h3>
+
+<h4>Daisy 2.02 Validator</h4>
+<p>The Daisy 2.02 Validator can be used within the Regenerator application to validate the output. For more information, visit <a href="http://www.daisy.org/tools/validation.asp">www.daisy.org/tools/validation.asp</a>.</p>
+
+<h4>Daisy 2.02 Multivolume DTB Splitter/Merger</h4>
+
+<p>The Regenerator is built to work on single volume DTBs. It does not support multi volume DTBs. For this reason, the Daisy 2.02 Multivolume DTB Splitter/Merger can be used to (temporarily) merge Multivolume DTBs prior to regeneration.</p>
+
+<p>For more information, visit <a href="http://www.daisy.org/tools">www.daisy.org/tools</a>.</p>
+
+<a class="top" href="#toc">go to table of contents</a>
+
+<h2 id="install">2. Installation and requirements</h2>
+<p>The Regenerator will run under Windows&trade; 2000 and XP. It may also run under Windows&trade; 98SE and ME; however, these operating system versions are not explcitly supported.</p>
+
+<p>Before installing the Regenerator you need to make sure to have Microsoft XML Core Services(MSXML) 4.0 SP1 or higher installed. If you do not have this component installed, go to the following web adress for download:</p>
+
+<div><a href='http://msdn.microsoft.com/downloads/list/xmlgeneral.asp'>MSXML Download</a></div>
+<br/>
+<a class="top" href="#toc">go to table of contents</a>
+
+
+<h2 id="config">3. Regenerator configuration</h2>
+<h3 id='cnfg_quick'>3.1 Quick Route</h3>
+<p>Starting in section 3.2 below, the functionality and options of the Regenerator are explained in detail. This section is a Quick Route&trade; for those of you who want to get started sooner rather than later.</p>
+<dl>
+<dt>Add a DTB to the Job List</dt>
+<dd>Choose <kbd>CTRL+A</kbd> and point to the NCC document of the DTB you want to regenerate.</dd>
+
+<dt>Set vital input property #1</dt>
+<dd>Select the current DTB type in the drop down combo in the <span class="app">Job Properties</span> tab.</dd>
+
+<dt>Set vital input property #2</dt>
+<dd>Select current input characterset (characterset used in the to-be-regenerated DTB) in the drop down combo in the <span class="app">Job Properties</span> tab.</dd>
+
+<dt>Execute regeneration</dt>
+<dd>Choose <kbd>CTRL+R</kbd> or press the <span class="app">Run Batch</span> button at the lower right of the main window. The <span class="app">Log Window</span> in the <span class="app">Jobs</span> tab will display progress information.</dd>
+
+</dl>
+
+<a class="top" href="#toc">go to table of contents</a>
+
+<h3 id='cnfg_jobs'>3.2 The Jobs Tab</h3>
+<img src="gfx/jobstab.jpg" class="inline" alt="image of the jobs tab"/>
+<p>The Jobs Tab (<kbd>CTRL+F1</kbd>) is the primary tab of the Regenerator interface. This is where you add DTBs to be regenerated, and monitor the progress during the regeneration process.</p>
+
+<p>The left part of this tab consists of the <a href='#cnfg_jobs_batch'>batch list grid</a>. The window at the right is the <a href='#cnfg_jobs_log'>log window</a>.</p>
+
+<h4 id='cnfg_jobs_batch'>The batch list grid</h4>
+<p>The batch list grid lists all DTBs added for regeneration. You can add one DTB at a time by pressing the <span class="app">Add Job</span> button at the lower left of the main window, or by using <kbd>CTRL+A</kbd>. It is also possible to add several jobs at once; see <a href='#cnfg_jobs_import'>Importing a job batch list</a> below.</p>
+
+<h4 id='cnfg_jobs_log'>The log window</h4>
+<p>During the regeneration process, the <span class="app">log window</span> displays progress information and sometimes also warning and error messages. Note that a <a href="#cnfg_log">log file</a>, containing the same - and additional - information, is also stored on disk for later review.</p>
+
+<h4 id='cnfg_jobs_import'>Importing a job batch list</h4>
+
+<p>Several jobs can be added simultaneously by pointing the Regenerator to a <em>job batch list</em>. The job batch list is opened with the <span class="app">Add joblist</span> button at the lower left of the main window, or by using <kbd>CTRL+L</kbd>.</p>
+
+<p>The job batch list is an xml formatted document that has to comply to a certain set of rules in order to be understood by the Regenerator. See <a href="#apndx1">Appendix 1</a> for full information on job batch list formatting.</p>
+
+<a class="top" href="#toc">go to table of contents</a>
+<h3 id='cnfg_jobprops'>3.3 The Job Properties Tab</h3>
+
+<h4 id='cnfg_jobprops_DTB'>Input DTB properties</h4>
+<img src="gfx/jobpropstab.jpg" class="inline" alt="image of the job properties tab"/>
+<p>The <span class="app">Input DTB Properties</span> area contain fields that are <em>very</em> important to set up correctly before running the job.</p>
+
+<p>In the DTB box, you must select the type of DTB. (See <a href="http://www.daisy.org/publications/">DAISY structure guidelines</a> for more information.)</p>
+
+<p>In the Input charset field, you must select the characterset used in the input DTB. Note that this is not a selection of the <em>wanted output characterset</em>, but the characterset used before regeneration. See <a href="#apndx3">Appendix 3</a> for further recommendation.</p>
+<br /><br /><br />
+<p>For convenience, some commonly used charactersets are supplied as predefined choices. These are <em>western</em>, <em>Shift_jis</em>, <em>big-5</em> and <em>utf-8</em>. If the input DTB characterset is not one of these, select <span class="app">other</span>, and then select the characterset from the list.
+</p>
+<img src="gfx/charsetother.jpg" class="block" alt="image of the 'other' charset selection combobox"/>
+
+<div class="notice">If the input DTB meta data claims that the used characterset is "ISO-8859-1" you should as a general rule ignore this completely. See <a href="#apndx3">Appendix 3</a> for some regional recommmendations on characterset usage.</div>
+
+<div class="notice">To achieve a satisfactory regeneration result, read the notice above once again.</div>
+
+<p>Note that for input DTBs using a western characterset (select <span class="app">Western</span> in the dropdown list), the output DTB is converted to use the XML default characterset encoding "utf-8" (unicode). This feature is not an option.</p>
+
+<p>If your DTB are using a western characterset (windows-1252), but you dont want to change characterset to utf-8, select <span class="app">Other</span> in the dropdown list, and choose <span class="app">windows-1252</span> in the manual selection list. This method is useful if you intend to continue editing the DTB after Regeneration using a legacy tool that not supports unicode.</p>
+
+<p>Remember to confirm that no characterset misinterpretation has taken place by manually inspecting the DTBs textual content after regeneration. This is most easily done by opening the NCC or content document in an internet browser. Note that utf-8 encoded textfiles may appear to be erroneous when viewed in a text editor. This normally depends on the fact that the text editor does not support decoding utf-8.</p>
+<a class="top" href="#toc">go to table of contents</a>
+<h4 id='cnfg_jobprops_meta'>Metadata handling</h4>
+<p>The <span class="app">Metadata handling</span> area of the <span class="app">Job Properties</span> tab lets you decide whether to <em>preserve</em> the existing bibliographic metadata, or whether to <em>import a new bibliographic metadata set from an external source.</em></p>
+
+<p>If you want to preserve the existing metadata, check the <kbd>preserve</kbd> radiobutton. This will cause the Regenerator to analyze the existing metadata and attempt to convert it to a syntax that complies with the Daisy 2.02 specification. Note that this analysis is not always 100% successful, because of certain incongruencies between the Daisy 2.0 and Daisy 2.02 metadata definitions.<img src="gfx/metaimport.jpg" class="inline" alt="image of the meta data handling area"/></p>
+
+<p>If you want to import an entirely new bibliographic metadata set, check the <kbd>import</kbd> radiobutton. Then point to the external file that contains the data you want to import by using the <kbd>browse</kbd> button. (Here you may use the <a href="#pathvars">path variables</a> explained below.)</p>
+
+<p>Note that the preserve and import settings only apply to <em>bibliographic</em> metadata. DTB-related metadata, such as those describing total playback time, filecount, structure depth, etc are <strong>always</strong> recalculated by the Regenerator.</p>
+
+<p>The metadata import document has to be structured in a certain way for the import procedure to work correctly. See <a href="#apndx2">Appendix 2</a> for detailed instructions on how to create such a document.</p>
+
+
+<!-- <h4 id='cnfg_jobprops_metaImport'>Importing a metadata document</h4> -->
+<a class="top" href="#toc">go to table of contents</a>
+<h4 id='cnfg_jobprops_filenames'>Alter filenames</h4>
+<p id="sequrename">The Regenerator can perform a sequential rename of the SMIL and audio files in the DTB. Enable this feature by checking the <kbd>sequential rename</kbd> checkbox.</p>
+
+<p><img src="gfx/prefix.jpg" class="inline" alt="image of the meta data handling area"/>You are advised to fill in a value in the <span class="app">prefix</span> field. The Regenerator will use the value in this field in the filenames. </p>
+<p>If you for example set the <span class="app">prefix</span> field to "book", the resultant filenames will be as follows:</p>
+<pre>
+<code>
+book_0001.mp3
+book_0002.mp3
+book_0003.mp3
+etc...
+</code>
+</pre>
+<p>If you set no value for <span class="app">prefix</span>, the Regenerator will use the default prefix "dtb".</p>
+
+<p>Note that the Regenerator will change and/or truncate any characters that do not comply with filename and URI specifications. If you for example add the prefix "smålands stenar", the prefix actually used will be "smaalands_stenar". You are advised to use only the characters "A-Z", "a-z", "0-9", "_" and "-" in this field.</p>
+
+<p>The option <span class="app">Use numeric portion of id</span> will take the value of the dc:identifier meta data item, and use any numeric value found there converted to hexadecimal as the prefix. If the dc:identifier value does not exist, or does not contain any numeric value, the Regenerator will use the default prefix "dtb".</p>
+<a class="top" href="#toc">go to table of contents</a>
+<h4 id='cnfg_jobprops_output'>Output DTB Destination</h4>
+<p>The <span class="app">Output DTB Destination</span> area of the <span class="app">Job Properties</span> tab lets you choose the destination of the output DTB (assuming that the regeneration process passed without critical failures). You may choose to overwrite the existing book, or to move the result to another location, leaving the original book untouched.</p>
+
+<div class="notice">
+You are strongly recommended to run the regenerator on a copy of the original DTB.
+</div>
+
+<p>The options are:</p>
+<dl>
+<dt><span class="app">Save regenerated book in same folder (replace old book).</span></dt>
+<dd>This option will overwrite the original version of the DTB, after having performed a <a href="#cnfg_jobprops_backup">backup procedure</a> on the original DTB fileset.</dd>
+
+<dt><span class="app">Save regenerated book in same folder (replace old book), then move the folder</span></dt>
+<dd><p>This option will perform the overwrite process as described above, and after that it will <em>move the DTB folder to a destination specified in the path field at the bottom of the area</em>.</p>
+
+<img src="gfx/savesamemove.jpg" class="block" alt="the save regenerated book in path dialog" />
+<p>Here, you may make use of the <a href="#pathvars">path variables</a> to dynamically create destination folders. The example below shows how the <code>*dtbid*</code> variable is entered to the path field.</p>
+<!-- <div class="imgdesc">Figure x.x. The destinationpath field using path variables</div> -->
+<img src="gfx/destpathvar.jpg" class="block" alt="the destination path dialog using path variables" />
+</dd>
+<dt><span class="app">Save regenerated book in new folder</span></dt>
+<dd>Using this option, the original version of the DTB will not be overwritten. On the other hand, since the audio files will be copied, this options requires more time and disc space. You may use the path variables as described above.
+</dd>
+</dl>
+<a class="top" href="#toc">go to table of contents</a>
+
+<h4 id='cnfg_jobprops_backup'>The Backup Procedure</h4>
+<p>When using the <span class="app">Same folder</span> option as the <a href="#outputdest">Output destination</a>, the Regenerator will perform a backup procedure before overwriting the original files.</p>
+
+<p>The backup procedure creates a subfolder in the DTB directory called "rgn_backup". In here it copies all <em>non-audio fileset members</em>, that is, the original NCC document, SMIL files, text content documents, master smil document, images, etc.</p>
+
+<p>To save space and time, audio files are not copied. Instead (and only if the <a href="#sequrename">sequential rename</a> option has been selected), an xml file called <code>audioRename_nfo.xml</code> is created,  which contains the original and new audio filenames.</p>
+
+<p>If you for some reason want to revert the DTB to its original state, perform the following steps.</p>
+<ol>
+<li>In the original DTB folder, remove the NCC document and the SMIL files.</li>
+<li>Copy all files inside "rgn_backup" back into the original DTB folder (the same folder where the audiofiles of the book reside). If the copy process asks you to confirm overwrite, then confirm overwrite.</li>
+<li>If you did perform a <a href="#sequrename">sequential rename</a> of audio and smilfiles, start the supplied RegeneratorAudioNameReverter application, point to the audioRename_nfo.xml document and the folder where the audiofiles reside. Then press the <span class="app">run rename</span> button. The audiofiles will now be un-renamed.</li>
+</ol>
+
+<div class="notice">It is strongly recommended that you always make sure there is a backup of the original DTB fileset before executing regeneration.</div>
+<a class="top" href="#toc">go to table of contents</a>
+<h4 id='cnfg_jobprops_defconf'>Default configuration of job properties</h4>
+<img src="gfx/applysettings.jpg" class="inline" alt="the apply settings dialog" />
+<p>If you press the <kbd>Set all jobs to these settings</kbd> button, a dialog will appear that allows you to select which of you current job settings shall be applies to all jobs in the batch list.</p>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+<h3 id='cnfg_validator'>3.4 The Validation Settings Tab</h3>
+<p>If the <kbd>Validate job after regeneration</kbd> checkbox is checked, the DTB will automatically be validated after regeneration. The results of the validation are displayed in the <span class="app"><a href="#cnfg_jobs_log">Log window</a></span> and in the <span class="app"><a href="#cnfg_log">Log file</a></span>.</p>
+
+<p>You may also use the Validation results to sort the output DTBs - see <a href='#pathvarex'>Example of how to use the path variables</a> below.</p>
+
+<div class="notice">
+Note that for the validation feature to work, you need to install the Daisy 2.02 Validator separately, and prior to starting the Regenerator.
+</div>
+
+<h4 id='cnfg_validator_log'>Validator Log settings</h4>
+<img src="gfx/vallogsettings.jpg" class="inline" alt="picture of the validator log settings area" />
+<p>The three first checkboxes in the <span class="app">Validator Log Settings</span> area determine the amount of validator verbosity in the result messaging. If check the fourth checkbox, <kbd>Create standalone Validator report for each job</kbd> is checked, a report document containing only the Validator messages (that is, not the Regenerator messages) will be created in the path specified in the <span class="app">Validator report savepath</span> field. Note that you may use <a href='pathvars'>path variables</a> to define the output destination.</p>
+
+
+<p>The Validator report output here can be opened in the Daisy 2.02 Validator user interface for further analysis and editing of the DTB.</p>
+<a class="top" href="#toc">go to table of contents</a>
+<h4 id='cnfg_validator_settings'>Validator General settings</h4>
+<img src="gfx/valgeneralsettings.jpg" class="inline" alt="picture of the validator general settings area" />
+<p>If the <kbd>Synchronize settings with validator software</kbd> checkbox is checked, the Regenerator will use the settings and options you have specified in the Daisy 2.02 Validator user interface - if any. If the checkbox is unchecked, you may specify the following validation settings manually:</p>
+
+<dl>
+<dt>Allowed time fluctuation</dt>
+<dd>This slider determines how much deviation is allowed during time value validation. If the value is set to 500, all discrepancies in time values below 500 milliseconds will be disregarded (not reported) by the Validator. This setting defaults to zero. For full conformance checking, it should remain set to zero.</dd>
+</dl>
+<p>The three path fields should contain the following information:</p>
+
+<table id="docpathstable">
+<tbody>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>Externals directory</td>
+<td>The location of the document type definition (DTD) and attribute document type definition (ADTD) files. This path defaults to the 'externals' directory found in the validator install directory.
+</td>
+</tr>
+<tr>
+<td>VTM Directory</td>
+<td>The location of the Validator Test Map (VTM) document. This path defaults to the Validator installation directory.</td>
+</tr>
+<tr>
+<td>Temp directory</td>
+<td>An non writeprotected location where the validator can save temporary files</td>
+</tr>
+</tbody>
+</table>
+
+<div class="notice">
+Changing the value of the "Validate job after regeneration" checkbox, the "Synchronize settings with validator software" checkbox, or the path textboxes will not apply until you restart the program.
+</div>
+<a class="top" href="#toc">go to table of contents</a>
+<h3 id='cnfg_advSettings'>3.5 The Advanced Settings Tab</h3>
+<h4 id='cnfg_advSettings_defpaths'>Default Paths</h4>
+<img src="gfx/advanced_left_b.jpg" class="inline" alt="picture of the validator general settings area" />
+
+<p>The <span class="app">Default save path</span> and <span class="app">Default meta location</span> set the default location for DTB output and meta import file respectively. These will be applied to each job added to the Job list.</p>
+
+<h4 id='cnfg_advSettings_misc'>Misc settings</h4>
+<p>The <span class="app">Halt on regeneration/file rendering error</span> determines whether the Regenerator shall break or continue to process jobs in the batch queue when a critical error occurs in one of the Jobs. If this checkbox is checked, the Regenerator will proceed with the next Job in the queue after displaying a related error message in the <a href="#cnfg_jobs_log">Log Window</a>.</p>
+
+<!--
+<p>Setting the <span class="app">Safe mode</span> checkbox to checked will cause the Regenerator to perform some additional integrity checks to the DTB before and during the attempts to regenerate. You are recommended to always leave this setting on.</p>
+-->
+
+<h4 id='cnfg_advSettings_miscfix'>Misc Fix</h4>
+<h5 id="miscFix_layoutFix">Adjust invalid smil par elements</h5>
+<p>Checking the <span class="app">PB2K/TK NCC Layout fix</span> checkbox will change the pretty print routine for the NCC document for compatibility with the Playback 2000 software and the Plextalk TK series of hardware players. To ensure playability in these devices, you are recommended to enable this option.</p>
+<h5 id="miscFix_addCss">Add default CSS</h5>
+<p>If this option is enabled, the Regenerator will add a Cascading Stylesheet link to each XHTML document (NCC, Content document) where no previous CSS reference exists.</p>
+<p>The Regenerator will look inside the <code>resources</code> subfolder of the installation folder for a CSS document to include. One css document ("default.css") is included here by default. You can replace this with your own stylesheet by removing the "default.css" document and adding another one. The only requirement is that the CSS document has the extension "css".</p>
+
+<h4 id='cnfg_advSettings_advFix'>Advanced fix</h4>
+<img src="gfx/advanced_right_b.jpg" class="inline" alt="picture of the validator general settings area" />
+<p>The advanced fix area of the Advanced Settings tab includes a series of Regenerator actions that are not always desired to be performed. Therefore you have here the option to disable these actions.</p>
+
+<h5 id="advFix_invalidPar">Adjust invalid smil par elements</h5>
+<p>The <span class="app">Adjust invalid smil par elements</span> option will locate smilfiles where the first par element is not referenced by an NCC heading, and move the par element to the end of the previous smilfile (if existing).</p>
+<p>Further, the <span class="app">Adjust invalid smil par elements</span> option will find any par elements in the SMIL file that contain duplicated text elements. It will then try to move the duplicated events to a newly created preceeding par, and associate this text event with a short silent audio clip (0.8 seconds long).</p>
+<p>These fixes will make the SMIL file valid to the specifications, and it will also solve the problem where it is impossible in a player to "move backwards" using for example "previous page" as navigation mode.</p>
+<p>The backside of the fix is that short silent audioclips are added to the presentation. If the book is encoded in mp3 format, the Regenerator will try to add an audiofile of the same bitrate as the original audio. Still, it means that the 1:1 relationship between audiofiles and smilfiles is broken. Although a 1:1 relationsship is not required by the specifications, some older playback devices may not handle this in a satisfactory way.</p>
+
+<h5 id="advFix_rebuildLinks">Rebuild link structure</h5>
+<p>The <span class="app">Rebuild link structure</span> option will recreate the whole pointer structure in the DTB fileset. Each <code>id</code> will be given a new value, and each link that points to this <code>id</code> will reflect the change.</p>
+<p>Although case inconsistencies in <code>id</code> and <code>URI</code> values are handled elsewhere (the case fix feature is not an option), this feature will help eliminating duplicate <code>id</code> instances in documents. Further, since the renaming is done using a predefined naming scheme - new values always begin with "rgn_" - it becomes easier to manually locate erroneous constructs within the book that may remain after the regeneration process. Any fragment value that does not begin with "rgn_" indicates that something weird is going on.</p>
+<p>This option also eliminates any invalid characters within <code>id</code> and <code>URI</code> values.</p>
+
+<h5 id="advFix_trueNccOnly">Make True NCC Only</h5>
+<p>The <span class="app">Make True NCC Only</span> option will convert the DTB fileset so that <em>any auxilliary XHTML document is removed</em>. The term "true NCC only" refers to one of the two kinds of NCC-Only DTBs that exist;</p>
+<ul>
+<li>True NCC-Only: No auxilliary XHTML document exists. The text displayed is the text of elements in the NCC document.</li>
+<li>Untrue NCC-Only: At least one auxilliary XHTML document exists. The text displayed is the text of elements in the auxilliary documents. If the DTB is NCC-Only (that is, not full nor partial text) this text is however the same text as that in the NCC document, so logically and content-wise, the auxilliary XHTML document(s) fill no purpose.</li>
+</ul>
+
+<p>Converting the DTB to true NCC only is beneficial for two major reasons:</p>
+<ol>
+<li>Further editing of the DTB will be facilitated in many of the existing production tools</li>
+<li>Future upgrades to DAISY 3 will be smoother and give a better result.</li>
+</ol>
+
+<div class="notice">
+Note that the <span class="app">Make True NCC Only</span> option can be run on full or partial text DTBs as well, if you for some funky reason want to convert this DTB to NCC-Only.
+</div>
+
+<h5 id="advFix_brokenLinks">Broken NCC/Content Doc Links</h5>
+<p>This option (turned off by default) will disable all SMIL fragment references in the NCC and XHTML Content documents that do not resolve. The disabling is done by converting the items into comments. This means that although they are still there for a technician to troubleshoot, the will not be available for (bound to fail) navigation in a playback device.</p>
+<p>Assume that the following NCC item points to void:</p>
+<pre>
+<code>
+  &lt;h4 id="heading_000033" class="section"&gt;
+    &lt;a href="dtb_0003.smil#bookid_000003x"&gt;Karl Marx&lt;/a&gt;
+  &lt;/h4&gt;
+</code>
+</pre>
+<p>If the <span class="app">Disable broken NCC links</span> option is enabled, the Regenerator will convert the item into the following;</p>
+<pre>
+<code>
+  &lt;!-- &lt;span class="disabled"&gt;
+  &lt;h4 id="heading_000033" class="section"&gt;
+    &lt;a href="dtb_0003.smil#bookid_000003x"&gt;Karl Marx&lt;/a&gt;
+  &lt;/h4&gt;
+  &lt;/span&gt; --&gt;
+</code>
+</pre>
+
+<p>If NCC links are actually disabled during the regeneration process, the Regenerator <span class="app">log</span> will issue a warning message.</p>
+
+<p>If the <span class="app">Attempt estimation first</span> option is enabled, the Regenerator will try to estimate the original target position of the broken link, and reinstate it. If it fails in this estimation, the link will be disabled as described above.</p>
+
+<p>The Regenerator will issue a warning message for each estimated and/or disabled link.</p>
+
+<h5 id="advFix_pointSmilTargets">Point SMIL targets to...</h5>
+<p>In DAISY 2.02 there are two positions within a SMIL file to which other documents (NCC, Content documents) can point, the &lt;par&gt; element and the &lt;text&gt; element. The <span class="app">Point SMIL targets to</span> option lets you decide which one of these should be used. The options are:</p>
+
+<dl>
+<dt>no change</dt>
+<dd>The SMIL target will not be changed. This is the same as disabling this option.</dd>
+<dt>&lt;par&gt;</dt>
+<dd>The SMIL target will reside on the &lt;par&gt; element. </dd>
+<dt>&lt;text&gt;</dt>
+<dd>The SMIL target will reside on the &lt;text&gt; element. </dd>
+</dl>
+
+<div class="notice">Note that in DAISY 3, pointers to the &lt;text&gt; element are not allowed; the targets must reside on the &lt;par&gt; element. This is the primary reason to enable this option. If further editing of the DTB is done in a DAISY 2.02 production tool, you may need to readjust the pointers so that the SMIL targets reside on the &lt;text&gt; element yet again. This can easily be done by running the DTB through the Regenerator a second time, with this option set to the &lt;text&gt; alternative.
+</div>
+
+<h5 id="advFix_mergePhrases">Merge short first phrases</h5>
+<p>If the <span class="app">Merge short first phrases</span> option is enabled, the Regenerator will attempt to <em>merge short audio phrases occuring first in an audio sequence</em>. This means that "silent" phrases that sometimes occur before heading or page announcements will be eliminated.</p>
+
+<p>The four sliders below the <span class="app">merge short first phrases</span> checkbox determine the behavior of the short phrase detection algorithm - here the values are set that decide when a phrase is to be considered merge matter.</p>
+
+<dl>
+<dt>merge with next if clip is shorter than</dt>
+<dd>The value of this slider determines a minimum millisecond length count; <em>all first phrases that are shorter than this will be merged with the next phrase in the sequence</em>.</dd>
+
+<dt>merge with next if clip is shorter than</dt>
+<dd>This slider determines a minimum millisecond length count, and relates this to the next slider;</dd>
+
+<dt>and next clip is shorter than</dt>
+<dd>... so if the value of the slider above is "1000" and the value of this slider is "5000", this means that a phrase that is shorter than 1000 milliseconds will be merged with the next phrase only if this next phrase is shorter than 5000 milliseconds.</dd>
+
+<dt>allowed span inbetween clip-end and clip-begin</dt>
+<dd>If there is a time difference between the two phrases that is larger than this value, the merging process will be cancelled. This would happen in this scenario:
+<pre>
+<code>
+  &lt;seq&gt;
+    &lt;audio src="audio.mp3" clip-begin="npt=10.123s" clip-end="npt=10.245" /&gt;
+    &lt;audio src="audio.mp3" clip-begin="npt=17.123s" clip-end="18.387s" /&gt;
+  &lt;/seq&gt;
+</code>
+</pre>
+Note how the first phrase ends at 10 seconds, while the second phrase begins at 17 seconds; merging these would not be a good idea.
+</dd>
+</dl>
+
+<h3 id='cnfg_log'>3.6 The Log Settings Tab</h3>
+<p>The log settings tab save path field allows specifying where the Regenerator <span class="app">Log</span> is to be saved. Note that you can <strong>not</strong> use the <a href='#pathvars'>Path variables</a> here. Also note that you should point to a <strong>folder only</strong>; and omit the filename.</p>
+
+<p>If the <span class="app">verbose log</span> option is enabled, the Regenator log will include large amounts of information. If the option is disabled, the Regenerator log will only include warning and error items.</p>
+
+
+<a class="top" href="#toc">go to table of contents</a>
+
+<h4 id='log_info'>Log Information</h4>
+<p>The <span class="app">Log</span> that is saved to disk is XML formatted. This means that it can be traversed and analyzed using XML processing.</p>
+
+<p>Note that the same log file can be used for several Regenerator Jobs, even between sessions; the Regenerator will append data to this file, not overwrite.</p>
+
+<p>In the case several jobs have been logged to the same Log file, you will, in order to make the file well-formed, need to manually add a root element. In some cases, you will need to add encoding information as well.</p>
+
+<p>Log file prior to manual modification:</p>
+<pre>
+<code>
+  &lt;job&gt;
+    [...]
+  &lt;job&gt;
+  &lt;job&gt;
+    [...]
+  &lt;job&gt;
+</code>
+</pre>
+
+<p>Log file after manual modification, adding a root element and encoding information:</p>
+<pre>
+<code>
+ &lt;?xml version="1.0" encoding="windows-1252"?&gt;
+ &lt;root&gt;
+  &lt;job&gt;
+    [...]
+  &lt;job&gt;
+  &lt;job&gt;
+    [...]
+  &lt;job&gt;
+ &lt;/root&gt;
+</code>
+</pre>
+
+<a class="top" href="#toc">go to table of contents</a>
+<h3 id='pathvars'>3.7 The Path variables</h3>
+<p>The regenerator makes use of <em>path variables</em> to enable smooth handling of input and output data. This is especially useful when running the Regenerator in <a href="#cnfg_jobs_batch">batch mode</a>.</p>
+<p>The different path variables are:</p>
+<dl>
+<dt>*dtbid*</dt>
+<dd>This variable contains a string that correlates to the <code>dc:identifer</code> meta data value of the DTB. If neither <code>dc:identifer</code> (nor <code>ncc:identifer</code>) exist, the value is set to "unknown".</dd>
+<dt>*validationresult*</dt>
+<dd>This variable contains a string that describes the result of the validation of the book. This string can
+be any of these values: "pass", "not_tested", "error_critical", "error_noncritical", "warning".</dd>
+<dt>*dtbdirectory*</dt>
+<dd>This variable contains a value that is equal to the name of the folder in which the DTB is placed. If the DTB is placed in the folder "D:\books\thisbook\", the value of *dtbdirectory* will be "thisbook"</dd>
+<dt>*fulldtbpath*</dt>
+<dd>This variable contains the full path of the DTB directory. If the DTB is placed in the folder "D:\books\thisbook\", the value of *fulldtbpath* will be "D:\books\thisbook\".</dd>
+</dl>
+
+<h4 id='pathvarex'>Example of how to use the path variables</h4>
+<p>A <a href="#cnfg_jobs_batch">batch</a> job is set up with four books to be regenerated in one pass. For all these books, the <span class="app"><a href="#cnfg_jobprops_meta">metadata import path</a></span> is set to "*fulldtbpath*\metadata.xml". This means that for every book regenerated, the Regenerator will look in the DTB folder for a file called "metadata.xml" and attempt to import the data held there.</p>
+
+<p>If instead the <span class="app"><a href="#cnfg_jobprops_meta">metadata import path</a></span> is set to "D:\metadata\*dtbid*\metadata.xml", the Regenerator will expect a subfolder of the "metadata" folder whose name is the same as the <code>dc:identifier</code> of the book. For example, the metadata folder may look like this:</p>
+<pre>
+<code>
+D:\metadata\se-tpb-c12456\metadata.xml
+D:\metadata\se-tpb-c12236\metadata.xml
+D:\metadata\se-tpb-c12223\metadata.xml
+D:\metadata\se-tpb-c12224\metadata.xml
+</code>
+</pre>
+
+
+<p>Further, for all books in the batch job, the <span class="app"><a href="#cnfg_jobprops_output">output DTB destination path</a></span> is set to "D:\books\*validationresult*\*dtbid*\". This means that all books that pass through the Regenerator successfully will be placed in a folder carrying the dc:identifier value of the DTB metadata. Each such folder will then in its turn be placed in a folder describing the result of the validation. After the batch job has been completed, the DTBs may have been placed as below.</p>
+<pre>
+<code>
+D:\books\pass\se-tpb-c12456\ncc.html
+D:\books\pass\se-tpb-c12236\ncc.html
+D:\books\warning\se-tpb-c12223\ncc.html
+D:\books\error_critical\se-tpb-c12224\ncc.html
+</code>
+</pre>
+
+<a class="top" href="#toc">go to table of contents</a>
+<h2 id="apndx1">Appendix 1. Job batch list formatting</h2>
+
+<p>The Job batchlist root element is &lt;joblist&gt;. &lt;job&gt; elements occurs as children of &lt;joblist&gt;.
+Various properties can be set by adding subelements to the &lt;job&gt; element;</p>
+
+<dl>
+  <dt>&lt;nccfile&gt;</dt>
+  <dd>Sets the book nccpath, REQUIRED (string value)</dd>
+	<dt>&lt;metafile&gt;</dt>
+	<dd>Sets the book metadata import location and file (string value)</dd>
+	<dt>&lt;outputpath&gt;</dt>
+	<dd>Sets the books rendering path (string value)</dd>
+	<dt>&lt;dtbtype&gt;</dt>
+	<dd>Sets the books dtbtype, can have the following values (integer values):
+  <pre>
+	0 (audioOnly)
+	1 (audioNcc)
+	2 (audioPartialText)
+	3 (audioFullText)
+	4 (textPartialAudio)
+	5 (textNcc)
+	</pre>
+  </dd>
+	<dt>&lt;charset&gt;</dt>
+	<dd>Sets the books input charset, can have the following values (integer values):
+	<pre>
+	0 (western)
+	1 (shift-jis)
+	2 (big5)
+	3 (utf-8)
+	4 (other, see subcharset)
+	</pre>
+	</dd>
+	<dt>&lt;subcharset&gt;</dt>
+	<dd>Sets the books charset if 4 (other) was selected using the charset tag. The values here (integer value) are selected on a 0 basis from the charactersets found in the 'charsets.xml' file, which exists in the "resources" subfolder of the application installation folder.</dd>
+	<dt>&lt;seqrename&gt;</dt>
+	<dd>Sets whether the book files should be rendered with a sequence number. This is a boolean value ('true' or 'false')</dd>
+	<dt>&lt;prefix&gt;</dt>
+	<dd>Sets the books file renaming prefix (string value). This value will be ignored if 'usenumeric' is set to 'true'.</dd>
+	<dt>&lt;usenumeric&gt;</dt>
+	<dd>Sets wheter the book files should be rendered with a prefix that corresponds to the books 'dc:identifier' or 'ncc:identifier'. This is a boolean value ('true' or 'false')</dd>
+</dl>
+
+
+<p>If a property is not set the regenerator will insert it using the default value for the specific property. By declaring the optional &lt;default&gt; element, you can set which values to default to. This element is used exactly like the &lt;job&gt; element.</p>
+
+<p>Job batch list example:</p>
+<pre><code>
+&lt;joblist&gt;
+  &lt;default&gt;
+    &lt;dtbtype&gt;1&lt;/dtbtype&gt;
+      &lt;!-- sets the dtb type to audioNcc for all jobs in list --&gt;
+    &lt;charset&gt;0&lt;/charset&gt;
+      &lt;!-- sets the charset to western for all jobs in list --&gt;
+    &lt;seqrename&gt;true&lt;/seqrename&gt;
+      &lt;!-- enables sequential rename for all jobs in list --&gt;
+    &lt;usenumeric&gt;false&lt;/usenumeric&gt;
+      &lt;!-- sets the "use numeric portion of dc:identifier
+      as rename prefix" to false --&gt;
+  &lt;/default&gt;
+  &lt;job&gt;
+    &lt;nccfile&gt;d:\dtbs\book1\NCC.HTM&lt;/nccfile&gt;
+    &lt;metafile&gt;d:\dtbs\book1\meta.xml&lt;/metafile&gt;
+    &lt;prefix&gt;C10972&lt;/prefix&gt;
+  &lt;/job&gt;
+  &lt;job&gt;
+    &lt;nccfile&gt;d:\dtbs\book2\ncc.html&lt;/nccfile&gt;
+    &lt;metafile&gt;d:\dtbs\book2\meta.xml&lt;/metafile&gt;
+    &lt;prefix&gt;C10873&lt;/prefix&gt;
+  &lt;/job&gt;
+&lt;/joblist&gt;
+</code></pre>
+
+<p>Note that a job batchlist template called "batchlist.xml" exists in the "resources" subfolder of the application installation folder.</p>
+<a class="top" href="#toc">go to table of contents</a>
+
+<h2 id="apndx2">Appendix 2. Metadata import document formatting</h2>
+<p>The metadata import document has a syntax almost identical to the syntax of the &lt;head&gt; element with &lt;meta&gt; children in XHTML and Daisy 2.02. The rules are:</p>
+<ul>
+<li>There must be one root element, its name is insignificant.</li>
+<li>As children of this root element, &lt;meta&gt; elements must occur, conforming to the rules of XHTML 1.0 and the Daisy 2.02 specification</li>
+</ul>
+<p>Example:</p>
+<pre>
+<code>
+
+  &lt;root&gt;
+    &lt;meta name='dc:identifier' content='se-tpb-c23671' /&gt;
+    &lt;meta name='dc:date' content='1970-09-17' scheme='iso8601'/&gt;
+    ...
+    &lt;meta name='ncc:narrator' content='Brian Burrows'/&gt;
+    &lt;meta name='prod:recEngineer' content='Jesper Klein'/&gt;
+  &lt;/root&gt;
+
+</code>
+</pre>
+
+<div class="notice">
+The Regenerator will deflect meta elements that are added or recalculated internally. If for example the meta element <code>ncc:totalTime</code> is added to the metadata import set, it will be ignored. (The list of elements that are deflected in this way is held in the file "forbiddenMeta.xml" that exists in the "resources" subdirectory of the application folder.)
+</div>
+
+<p>Remember to specify character encoding in the prolog of the document in case the used encoding is other than utf-8 or 7bit ascii. In the following example, the meta data import document uses western characters, and was created on a Windows&trade; platform.</p>
+
+<pre>
+<code>
+
+  &lt;?xml version="1.0" encoding="windows-1252"?&gt;
+  &lt;root&gt;
+    &lt;meta name='dc:identifier' content="se-tpb-c23671" /&gt;
+    ...
+  &lt;/root&gt;
+
+</code>
+</pre>
+
+<h2 id="apndx3">Appendix 3. Which characterset is my DTB using?</h2>
+
+<p>This is a listing of the most common charactersets used in Daisy DTBs.</p>
+<div class="notice"><p>Note that the preexisting  characterset information inside the DTBs (in metadata sections for example) is seldom true; you should <strong>not</strong> rely on this information. For example, it is very common that the meta element <code>charset</code> contains "iso-8859-1". This is almost never a true statement.</p>
+<p>Instead, you should take the time to find out which characterset is <em>actually</em> used and provide that information to the Regenerator. Only then can a satisfactory regeneration result be expected.</p></div>
+
+<p>The list assumes that the DTB was created using one of the existing Daisy DTB production tools, such as LpStudio/Pro, LpStudio/Plus, Sigtuna DAR 2, Sigtuna DAR 3, TIPS, WIPS, MyStudio PC, or Plextalk Recording System.</p>
+
+<dl>
+<dt>DTBs created using western characters including A-Z, nordic, german and hispanic special characters</dt>
+<dd>The actual characterset in the DTB is most probably <code>windows-1252</code>. In the Regenerator, select either "western" in the Input Charset dropdown box - this will interpret the input as windows-1252, and output utf-8. If you do not want to convert the encoding to utf-8, select "other" and then choose "windows-1252" in the adjacent dropdown box.</dd>
+
+<dt>DTBs created using Japanese characters</dt>
+<dd>The actual characterset in the DTB is most probably <code>Shift_Jis</code> (which can also be labeled as windows-932). In the Regenerator, select "Shift_Jis" in the Input Charset dropdpown box.</dd>
+
+<dt>DTBs created using Thai characters</dt>
+<dd>The actual characterset in the DTB is most probably <code>windows-874</code> (which can also be labeled as TIS-620). In the Regenerator, select "other" in the Input Charset dropdpown box, and then choose "windows-874" in the adjacent dropdown box.</dd>
+
+<dt>DTBs created using Korean characters</dt>
+<dd>The actual characterset in the DTB is most probably <code>kcs5601</code>. In the Regenerator, select "other" in the Input Charset dropdpown box, and then choose "kcs5601" in the adjacent dropdown box.</dd>
+
+<dt>DTBs created using Traditional Chinese characters</dt>
+<dd>The actual characterset in the DTB is most probably <code>big5</code>. In the Regenerator, select "Big5" in the Input Charset dropdpown box. Note: at the time of writing, support for GB2312 is not tested.</dd>
+
+</dl>
+
+<p>If the information provided here is not sufficient, please contact the <a href="mailto:support@mail.daisy.org">Daisy Support Emailing list</a>.</p>
+<p>
+      <a href="http://validator.w3.org/check/referer"><img
+          src="http://www.w3.org/Icons/valid-xhtml10"
+          alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+    </p>
+
+</body>
+</html>

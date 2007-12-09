@@ -1,0 +1,10 @@
+frmMain = 105, 15, 603, 463, , 31, 57, 752, 604, C
+mMain = 70, 111, 568, 559, 
+mRegistryControl = 198, 198, 696, 646, 
+mValidator = 0, 0, 499, 448, 
+mLocale = 132, 132, 651, 534, 
+mHelpers = 0, 0, 533, 448, 
+oLogItem = 154, 154, 687, 602, 
+frmApplySettings = 154, 154, 685, 602, , 110, 110, 641, 558, C
+oJobItem = 0, 0, 531, 448, 
+frmAbout = 0, 0, 578, 445, , 22, 22, 600, 467, C
