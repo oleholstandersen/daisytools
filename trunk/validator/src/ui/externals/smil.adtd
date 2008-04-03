@@ -83,7 +83,7 @@
 <!ENTITY %Fraction "(%DIGIT;)+">
 <!ENTITY %Seconds "%TIMEDIGITS;">
 <!ENTITY %Minutes "%TIMEDIGITS;">
-<!ENTITY %Hours "(%DIGIT;, (%DIGIT;)?)">
+<!ENTITY %Hours "(%DIGIT;, (%DIGIT;, (%DIGIT;)?)?)">
 <!ENTITY %Timecount-val "(%Timecount;, ('.', %Fraction;)?, ('h' | 'min' | 's' | 'ms')?)">
 <!ENTITY %Partial-clock-val "(%Minutes;, ':', %Seconds;, ('.', %Fraction;)?)">
 <!ENTITY %Full-clock-val "(%Hours;, ':', %Minutes;, ':', %Seconds;, ('.', %Fraction;)?)">

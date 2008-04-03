@@ -142,7 +142,7 @@ Sub Main()
 '  ****************************************************************
 '  *********************** for dll debug **************************
 '  ****************************************************************
-'  ***** change the properties project type to active x exe  ******
+'  ***** change the properties project type to active x exe (instead of ActiveX DLL)  ******
 '  *****       change component starttype to standalone      ******
 '  *****          decomment and mod the lines below          ******
 '
@@ -162,9 +162,9 @@ Sub Main()
 '    Dim objVal As New oValidateDTB
 '    'Dim objVal As New oValidateContent
 '
-'    objUC.fncSetLightMode (True)
+'    objUC.fncSetLightMode (False)
 '
-'    objVal.fncValidate "E:\dtbs\temp\"
+'    objVal.fncValidate "D:\hauy.202.rev4.short.temp\"
 '    Stop
 '
 '
