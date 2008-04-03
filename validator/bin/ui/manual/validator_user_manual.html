@@ -369,6 +369,8 @@ Keep in mind that an error that seems harmless to reading devices of today, may 
 <dd><strong>A:</strong> This is because each document except the content document is validated against two DTDs. The first one is the "canonical" DTD (the XHTML 1.0 or SMIL 1.0 DTDs published by the W3C). The second one is the "custom" or "subset" DTD created by the developers of the Validator. The "custom" or "subset" DTDs are more finely grained (they find invalidity errors that related specifically to the Daisy 2.02 specification). A document that is valid to the "canonical" DTD may be invalid to the "custom" DTD. A document that is valid to the "custom" DTD must be valid also to the "canonical" DTD. If not, this is an error that should be reported to the developers.</dd>
 <dt><strong>Q:</strong> What does "attribute pair error" mean?</dt>
 <dd><strong>A:</strong> Reports including the text "attribute pair error" almost always relate to missing or erroneous meta data. The validator looks at <code>&lt;meta/&gt;</code> elements, and compares the values in the <code>name</code> and <code>content</code> attributes of these elements. The the <code>name</code> and <code>content</code> attributes is the "attribute pair" referred to.</dd>
+<dt><strong>Q:</strong> I get a message that MP3 files are corrupt or invalid, is this true?</dt>
+<dd><strong>A:</strong> Maybe not. The validator does not recognize ID3 tags, and will report them as corrupt data in the MP3 file header. This is a known deficiency in the validator, and something that cannot be fixed easily due to 3d part dependencies. If you know that your MP3 files contain ID3 tags, and if they otherwise play fine in DAISY (or general audio) players, you can ignore this error.</dd>
 
 </dl>
 

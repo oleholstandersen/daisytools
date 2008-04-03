@@ -91,7 +91,7 @@
 <!ENTITY %TIMEDIGITS "((([0-5])?, [0-9]) | ([0-9]))">
 <!ENTITY %Seconds "%TIMEDIGITS;">
 <!ENTITY %Minutes "%TIMEDIGITS;">
-<!ENTITY %Hours "(%DIGIT;, (%DIGIT;)?)">
+<!ENTITY %Hours "(%DIGIT;, (%DIGIT;, (%DIGIT;)?)?)">
 <!ENTITY %HHMMSS "(%Hours;, ':', %Minutes;, ':', %Seconds;)">
 
 <!-- ***********************************************************************************
