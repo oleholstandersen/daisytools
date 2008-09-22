@@ -145,7 +145,6 @@ SectionEnd
 
 Section "Desktop icon"
   CreateShortcut "$DESKTOP\${ProgName}.lnk" "$INSTDIR\d202validator.exe"
-  CreateShortcut "$DESKTOP\${ProgName}.lnk" "$INSTDIR\IteratorValidator.exe"
 SectionEnd
 
 UninstallText "Do you want to remove ${ProgName}?"
