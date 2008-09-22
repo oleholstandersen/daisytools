@@ -8,6 +8,7 @@ RELEASE COMMENTS
 -----------------------------------------------------------
 VERSION 20080402 (Engine version 1.0.15, Main Interface version 1.0.18)
 * Fixed a bug occurring when using full mode on DTBs longer than 99 hours, reported by David Gordon, RNIB.
+* Fixed erroneous desktop shortcut (the Validator shortcut was pointing to ValidatorIterator executable)
 
 -----------------------------------------------------------
 VERSION 20050401 (Engine version 1.0.15, Main Interface version 1.0.18)
