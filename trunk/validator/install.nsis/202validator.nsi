@@ -6,7 +6,7 @@
 
 !Define ProgName "Daisy 2.02 Validator"
 !Define ProgNameUiIterator "Iterator Validator"
-!Define ProgVer "20080402"
+!Define ProgVer "20091008"
 
 OutFile "Daisy.2.02.Validator.${ProgVer}.Install.exe"
 Name "${ProgName} ${ProgVer} Installer"
