@@ -6,6 +6,10 @@ This is a validator for Daisy 2.02 digital talking books (DTB).
 
 RELEASE COMMENTS
 -----------------------------------------------------------
+VERSION 20091009 (Engine version 1.0.15, Main Interface version 1.0.18)
+* Fixed a bug occurring when validating DTBs longer than 99 hours using full mode.
+
+-----------------------------------------------------------
 VERSION 20080402 (Engine version 1.0.15, Main Interface version 1.0.18)
 * Fixed a bug occurring when using full mode on DTBs longer than 99 hours, reported by David Gordon, RNIB.
 * Fixed erroneous desktop shortcut (the Validator shortcut was pointing to ValidatorIterator executable)

@@ -36,7 +36,7 @@ Private Const sTimeCount = "(" & sDigit & ")+"
 Private Const sFraction = "(" & sDigit & ")+"
 Private Const sSeconds = sTimeDigits
 Private Const sMinutes = sTimeDigits
-Private Const sHours = "(" & sDigit & ", (" & sDigit & ")?)"
+Private Const sHours = "(" & sDigit & ", (" & sDigit & ", (" & sDigit & ")?)?)"
 Private Const sTimecount_val = "(" & sTimeCount & ", ('.', (" & sFraction & _
   "))? ('h' | 'min' | 's' | 'ms')?)"
 Private Const sPartial_clock_val = "(" & sMinutes & ", ':', " & sSeconds & ", ('.', " & _
